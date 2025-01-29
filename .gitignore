@@ -1,2 +1,4 @@
-*.db
-*_ignore.*
+*
+!*.*
+!*/
+!Makefile
