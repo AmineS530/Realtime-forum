@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+
+	handlers "RTF/back-end/Handlers"
 )
 
 func main() {
@@ -15,7 +17,7 @@ func main() {
 
 	srv := http.Server{
 		Addr:    ":" + httpPort,
-		Handler: http.DefaultServeMux,
+		Handler: handlers.Routes(),
 	}
 
 	fmt.Printf("Starting server on: \033[1;32mhttp://localhost%s\033[0m\n", srv.Addr)

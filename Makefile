@@ -3,7 +3,7 @@ NAME=Real-time-forum
 all: $(NAME) run
 
 $(NAME):
-	go build -o $(NAME).exec ./back-end/main.go
+	go build -o $(NAME).exec main.go
 
 run: $(NAME)
 	./$(NAME).exec
