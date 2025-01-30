@@ -2,22 +2,9 @@ package main
 
 import (
 	"fmt"
-	"html/template"
 	"net/http"
 	"os"
 )
-
-var HtmlTemplates *template.Template
-
-func init() {
-	var err error
-	HtmlTemplates, err = template.ParseGlob("./front-end/templates/*.html")
-	if err != nil {
-		fmt.Println("Error parsing templates: ", err.Error())
-		//! send internal server error here instead of quitting
-		os.Exit(1)
-	}
-}
 
 func main() {
 	httpPort := os.Getenv("PORT")
