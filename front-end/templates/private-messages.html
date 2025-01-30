@@ -1,0 +1,22 @@
+{{ define "private-messages"}}
+<!-- Private Messages Section -->
+<div id="messages-container">
+    <div id="online-users">
+        <h3>Online Users</h3>
+        <div class="user" id="user-1">
+            <span>John Doe</span>
+            <button class="send-message" data-user-id="1">Send Message</button>
+        </div>
+        <!-- More users will be dynamically added here -->
+    </div>
+
+    <div id="chat-container" style="display: none;">
+        <h3>Chat with <span id="chat-user-name">User</span></h3>
+        <div id="chat-box">
+            <!-- Chat messages will be dynamically added here -->
+        </div>
+        <textarea id="message-input" placeholder="Type your message..."></textarea>
+        <button id="send-message">Send</button>
+    </div>
+</div>
+{{ end }}

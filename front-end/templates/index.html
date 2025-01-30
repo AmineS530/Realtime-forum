@@ -1,10 +1,40 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Forum</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    Hello world
+
+    {{template "auth"}}
+
+    <!-- Main Forum Section -->
+    <div id="forum-container" style="display: none;">
+        
+        {{ template "nav"}}
+
+
+        <!-- Create Post Section -->
+        {{ template "post" }}
+        <!-- Feed Section (Posts Display) -->
+        <div id="feed-container">
+            <div class="post" id="post-1">
+                <h3>Post Title 1</h3>
+                <p>Post content...</p>
+                <button class="view-comments" data-post-id="1">View Comments</button>
+            </div>
+            <!-- More posts will be dynamically added here -->
+        </div>
+
+        <!-- Comments Section (Visible when clicking on a post) -->
+        {{ template "comments" }}
+
+        <!-- Private Messages Section -->
+        {{ template "private-messages" }}
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
