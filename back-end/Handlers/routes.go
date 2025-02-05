@@ -31,7 +31,9 @@ func Routes() *http.ServeMux {
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		IndexHandler(w, r)
 	})
-
+	mux.HandleFunc("/front-end/", func(w http.ResponseWriter, r *http.Request) {
+		FileHandler(w, r)
+	})
 	return mux
 }
 
@@ -51,7 +53,16 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func FileHandler(w http.ResponseWriter, r *http.Request) {
+	if Err != nil {
+		ErrorPagehandler(w, http.StatusInternalServerError, Err.Error())
+		return
+	}
+	fmt.Println(r.URL.Path)
+	http.ServeFile(w, r, r.URL.Path[1:])
+}
+
 func ErrorPagehandler(w http.ResponseWriter, statusCode int, errMsg string) {
-	w.WriteHeader(statusCode)
+	// w.WriteHeader(statusCode)
 	http.Error(w, errMsg, statusCode)
 }
