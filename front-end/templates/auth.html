@@ -62,21 +62,6 @@
             </div>
         </div>
     </main>
-    <script>
-        // TODO: actualy sending the request
-        function fetching(e,target) {
-            e.preventDefault();
-            let azer ={};
-            for (const element of e.target) {
-                if (element.value != '') {
-                    console.log(element.value,element.id, element);
-                    azer[element.id] = element.value;
-                }
-            }
-            console.log(e.target,e.this,azer, target);
-        }
-
-    </script>
     <script src="/front-end/scripts/log_reg.js"></script>
 </body>
 
