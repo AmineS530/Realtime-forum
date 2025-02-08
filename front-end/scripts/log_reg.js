@@ -10,12 +10,14 @@ document.addEventListener("DOMContentLoaded", () => {
     function showLoginForm() {
         formSection.style.transform = "translateX(0)";
         slider.style.left = "0";
+        window.location.hash = '#login'
     }
 
     // Function to switch to Sign Up Form
     function showSignUpForm() {
         formSection.style.transform = "translateX(-50%)";
         slider.style.left = "50%";
+        window.location.hash = '#registration'
     }
 
     // Detect the current page based on URL path
