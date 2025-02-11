@@ -14,7 +14,7 @@ const postjson = `[
     "title": "Top 10 Budget-Friendly Travel Destinations",
     "content": "Looking for an affordable vacation? Here are the top 10 budget-friendly travel destinations you should consider. From tropical beaches to vibrant cities, these spots offer great experiences without breaking the bank.",
     "author": "WanderlustExplorer",
-    "creation_time": "2025-02-10T14:45:00Z",
+    "timestamp": "2025-02-10T14:45:00Z",
     "categories": ["Travel", "Budget", "Adventure"]
   },
   {
@@ -33,36 +33,31 @@ const commentjson = `[
     "id": 1,
     "author": "JohnDoe",
     "content": "Great post! I really enjoyed reading it.",
-    "timestamp": "2025-02-11T08:30:00Z",
-    "likes": 12
+    "creation_time": "2025-02-11T08:30:00Z"
   },
   {
     "id": 2,
     "author": "JaneSmith",
     "content": "I disagree with some points, but overall it's a good article.",
-    "timestamp": "2025-02-11T09:00:00Z",
-    "likes": 3
+    "creation_time": "2025-02-11T09:00:00Z"
   },
   {
     "id": 3,
     "author": "TechGuru",
     "content": "This is exactly what I was looking for. Thanks for sharing!",
-    "timestamp": "2025-02-11T09:15:00Z",
-    "likes": 25
+    "creation_time": "2025-02-11T09:15:00Z"
   },
   {
     "id": 4,
     "author": "CreativeMind",
     "content": "Interesting perspective! I would love to see more articles like this.",
-    "timestamp": "2025-02-11T09:30:00Z",
-    "likes": 18
+    "creation_time": "2025-02-11T09:30:00Z"
   },
   {
     "id": 5,
     "author": "FoodieExplorer",
     "content": "Could you elaborate on the section about healthy recipes?",
-    "timestamp": "2025-02-11T10:00:00Z",
-    "likes": 8
+    "creation_time": "2025-02-11T10:00:00Z"
   }
 ]
 `
