@@ -1,13 +1,13 @@
 NAME=Real-time-forum
 
-all: $(NAME) run
+all: $(NAME)
 
 $(NAME):
 # go build -o $(NAME).exec main.go
 	@go run main.go
 
-run: $(NAME)
-	@./$(NAME).exec
+#run: $(NAME)
+#	@./$(NAME).exec
 
 clean:
 	@rm -f $(NAME).exec

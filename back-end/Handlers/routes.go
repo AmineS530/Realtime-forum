@@ -29,6 +29,10 @@ func init() {
 
 func Routes() *http.ServeMux {
 	mux := http.NewServeMux()
+	for _, middleware := range Middleware {
+		middleware(IndexHandler)
+	}
+
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		IndexHandler(w, r)
 	})
@@ -100,12 +104,12 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	} else {
-		ErrorPagehandler(w, http.StatusNotFound, "Where do you think you're going ehehehe?")
+		ErrorPagehandler(w, http.StatusNotFound, http.StatusText(http.StatusNotFound))
 		return
 	}
 }
 
 func ErrorPagehandler(w http.ResponseWriter, statusCode int, errMsg string) {
-	// w.WriteHeader(statusCode)
+	w.WriteHeader(statusCode)
 	http.Error(w, errMsg, statusCode)
 }

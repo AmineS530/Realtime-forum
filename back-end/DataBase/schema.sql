@@ -15,6 +15,13 @@ CREATE TABLE
     );
 
 CREATE TABLE
+    IF NOT EXISTS `cerdentials` (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT UNIQUE NOT NULL,
+        hash BLOB NOT NULL
+    );
+
+CREATE TABLE
     IF NOT EXISTS `posts` (
         posts_id INTEGER PRIMARY KEY AUTOINCREMENT,
         uid INTEGER NOT NULL,
