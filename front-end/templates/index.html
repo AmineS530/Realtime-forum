@@ -11,30 +11,23 @@
     {{template "auth"}}
 
     <!-- Main Forum Section -->
+    {{ template "nav"}}
     <div id="forum-container" >
         
-        {{ template "nav"}}
 
 
         <!-- Create Post Section -->
         {{ template "post" }}
-        <!-- Feed Section (Posts Display) -->
-        <div id="feed-container">
-            <div class="post" id="post-1">
-                <h3>Post Title 1</h3>
-                <p>Post content...</p>
-                <button class="view-comments" data-post-id="1">View Comments</button>
-            </div>
-            <!-- More posts will be dynamically added here -->
-        </div>
+
+        <button onclick="viewPosts(event)"class="view-comments" id="postSeeMore">See azer More</button>
 
         <!-- Comments Section (Visible when clicking on a post) -->
-        {{ template "comments" }}
-
-        <!-- Private Messages Section -->
-        {{ template "private-messages" }}
     </div>
+    {{ template "comments" }}
 
+    <!-- Private Messages Section -->
+    {{ template "private-messages" }}
+    
     <script src="/front-end/scripts/script.js"></script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 console.log("hello world");
-commentLimit= undefined;
+commentLimit = undefined;
 window.addEventListener("hashchange", () => {
     switch (window.location.hash) {
         case "#home":
@@ -65,36 +65,92 @@ function fetching(e, target) {
     });
 }
 
-async function viewComments(event,offset) {
+async function viewComments(event, offset) {
     let parent = event.target.parentElement;
     console.log(event, parent);
+    let comments = [];
     try {
-        let response = await fetch(`/api/v1/get/comments?pid=${parent.id}${commentLimit ? `&limit=${commentLimit}` : ''}${offset ? `&offset=${offset}`: ''}`)
+        let response = await fetch(
+            `/api/v1/get/comments?pid=${parent.id}${
+                commentLimit ? `&limit=${commentLimit}` : ""
+            }${offset ? `&offset=${offset}` : ""}`
+        );
         console.log(response);
         if (!response.ok) {
-            throw new Error(`Error: ${response.status} - ${response.statusText}`);
+            throw new Error(
+                `Error: ${response.status} - ${response.statusText}`
+            );
         }
-        let comments = await response.json();
-        console.log(comments); 
-    }catch (error) {
-        console.error('Error:', error);
+        comments = await response.json();
+        console.log(comments);
+    } catch (error) {
+        console.error("Error:", error);
         return;
+    }
+    console.log("azer", comments);
+    let commentall = '';
+    for (const comment of comments) {
+        commentall += `<div class="comment" id="${comment.id}" style="borderwidth: 5px;">
+        <span class="comment-info">
+            <span class="comment-author">published by ${comment.author}</span>
+            <span class="comment-date">published ${new Date(comment.creation_time)}</span>
+        </span>
+        <p>${comment.content}<p>
+        </div>`;
+    }
+    if (offset) {
+        event.target.setAttribute('onclick',`viewComments(event, ${offset + comments.length})`)
+        event.target.insertAdjacentHTML("beforebegin", commentall)
+    } else {
+        let azer = `<details class="comment-container" open>
+        <summary>Click to see comments</summary> ${commentall}<button onclick="viewComments(event, ${(comments.length)})">load more comments</button>
+        </details>`
+        event.target.outerHTML = azer;
     }
 }
 
-async function viewPosts(event,offset) {
-    let parent = event.target.parentElement;
-    console.log(event, parent);
+async function viewPosts(event, offset) {
+    console.log(event);
+    let posts = [];
     try {
-        let response = await fetch(`/api/v1/get/comments?pid=${parent.id}${offset ? `&offset=${offset}` : ''}`)
+        let response = await fetch(
+            `/api/v1/get/posts?${offset ? `&offset=${offset}` : ""}`
+        );
         console.log(response);
         if (!response.ok) {
-            throw new Error(`Error: ${response.status} - ${response.statusText}`);
+            throw new Error(
+                `Error: ${response.status} - ${response.statusText}`
+            );
         }
-        let comments = await response.json();
-        console.log(comments); 
-    }catch (error) {
-        console.error('Error:', error);
+        let data = await response.json();
+        console.log(data);
+        posts = data;
+    } catch (error) {
+        console.error("Error:", error);
         return;
     }
+    console.log("azer", posts);
+    let postall = "";
+    for (const post of posts) {
+        postall += `<div class="post" id="post_id-${post.pid}">
+        <h3>${post.title}</h3>
+        <p>${post.content}</p>
+        <span class="post-info">
+            <span class="post-author">Posted by ${post.author}</span>
+            <span class="post-date">${new Date(post.creation_time)}</span>
+            <span class="post-category">${post.categories.join(" | ")}</span>
+        </span>
+        <button onclick="viewComments(event)" class="view-comments">View Comments</button>
+    </div>`;
+    }
+    event.target.insertAdjacentHTML("beforebegin", postall);
 }
+document.addEventListener("DOMContentLoaded", () => {
+    let qsdf = document.getElementById("postSeeMore");
+    console.log(qsdf);
+    qsdf.click();
+    setTimeout(() => {
+        document.getElementById("post_id-1").lastElementChild.click();
+        console.log("5 seconds have passed!");
+      }, 500);
+});
