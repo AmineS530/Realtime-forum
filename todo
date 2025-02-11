@@ -1,0 +1,7 @@
+the structure i have in mind is something similar to what facebook looks like, we'd have everything displayed at once, but the messages we can make a drop down to show the chat and sent a message, maybe if we get too deep have a message section to show u the message history with all the users etc
+
+
+-- edit: last i changed was the files handler to handle the js and style path will need to know how you thinking of the rest to djust the code accordingly and account for extra features or just mandatory ones :)
+
+------------------------------------
+    also type in here when you change something for summary to know what new | i changed the makefile to only ignore the .exec when using make and make it run instantly for now, will see if we need docker later
