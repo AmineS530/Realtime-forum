@@ -1,5 +1,5 @@
 console.log("hello world");
-
+commentLimit= undefined;
 window.addEventListener("hashchange", () => {
     switch (window.location.hash) {
         case "#home":
@@ -63,4 +63,38 @@ function fetching(e, target) {
             }
         }
     });
+}
+
+async function viewComments(event,offset) {
+    let parent = event.target.parentElement;
+    console.log(event, parent);
+    try {
+        let response = await fetch(`/api/v1/get/comments?pid=${parent.id}${commentLimit ? `&limit=${commentLimit}` : ''}${offset ? `&offset=${offset}`: ''}`)
+        console.log(response);
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status} - ${response.statusText}`);
+        }
+        let comments = await response.json();
+        console.log(comments); 
+    }catch (error) {
+        console.error('Error:', error);
+        return;
+    }
+}
+
+async function viewPosts(event,offset) {
+    let parent = event.target.parentElement;
+    console.log(event, parent);
+    try {
+        let response = await fetch(`/api/v1/get/comments?pid=${parent.id}${offset ? `&offset=${offset}` : ''}`)
+        console.log(response);
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status} - ${response.statusText}`);
+        }
+        let comments = await response.json();
+        console.log(comments); 
+    }catch (error) {
+        console.error('Error:', error);
+        return;
+    }
 }

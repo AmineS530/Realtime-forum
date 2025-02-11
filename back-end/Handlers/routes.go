@@ -34,8 +34,27 @@ func Routes() *http.ServeMux {
 	})
 	mux.Handle("/front-end/styles/", http.StripPrefix("/front-end/styles/", http.FileServer(http.Dir("./front-end/styles"))))
 	mux.Handle("/front-end/scripts/", http.StripPrefix("/front-end/scripts/", http.FileServer(http.Dir("./front-end/scripts"))))
+	mux.HandleFunc("/api/v1/get/{type}", dumbjson)
 	mux.HandleFunc("POST /api/login", AuthLogin)
 	return mux
+}
+
+// TODO sMArT
+func dumbjson(w http.ResponseWriter, r *http.Request) {
+	fmt.Println(r.URL)
+	x := r.PathValue("type")
+
+	// ErrorPagehandler(w, http.StatusInternalServerError, "azerqsdfwxcv")
+	if x == "comments" {
+		w.Header().Set("Content-Type", "application/json")
+		w.Write([]byte(commentjson))
+	} else if x == "posts" {
+		w.Header().Set("Content-Type", "application/json")
+		w.Write([]byte(postjson))
+	} else {
+		ErrorPagehandler(w, http.StatusNotFound, "Invalid endpoint")
+		return
+	}
 }
 
 func AuthLogin(w http.ResponseWriter, r *http.Request) {

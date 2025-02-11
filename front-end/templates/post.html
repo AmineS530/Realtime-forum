@@ -1,4 +1,4 @@
-{{ define "post" }}
+{{ define "create-post" }}
 <!-- Create Post Section -->
 <div id="create-post-section" style="display: none;">
     <h3>Create a new Post</h3>
@@ -12,5 +12,23 @@
         </select>
         <button type="submit">Submit Post</button>
     </form>
+</div>
+{{ end }}
+
+
+{{ define "post" }}
+<!-- Single Post Section -->
+<div class="post" id="post{{ .PID }}">
+    <script>
+        
+    </script>
+    <h3>{{ .Title }}</h3>
+    <p>{{ .Content }}</p>
+    <span class="post-info">
+        <span class="post-author">Posted by {{ .Author }}</span>
+        <span class="post-date">{{ .CreatedAt }}</span>
+        <span class="post-category">{{ .Category }}</span>
+    </span>
+    <button onclick="viewComments(event)" class="view-comments" data-post-id="{{ .PID }}">View Comments</button>
 </div>
 {{ end }}
