@@ -1,5 +1,4 @@
-PRAGMA ON;
-
+PRAGMA foreign_keys = ON;
 CREATE TABLE
     IF NOT EXISTS `users` (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -7,7 +6,6 @@ CREATE TABLE
         first_name TEXT NOT NULL,
         last_name TEXT NOT NULL,
         email TEXT UNIQUE NOT NULL,
-        password TEXT NOT NULL,
         age INTEGER NOT NULL,
         gender CHAR NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -16,9 +14,11 @@ CREATE TABLE
 
 CREATE TABLE
     IF NOT EXISTS `cerdentials` (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        username TEXT UNIQUE NOT NULL,
-        hash BLOB NOT NULL
+        id INTEGER PRIMARY KEY NOT NULL,
+        hash BLOB NOT NULL,
+        FOREIGN KEY (id) REFERENCES users (id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
     );
 
 CREATE TABLE
@@ -109,6 +109,12 @@ WHERE c.post_id = ?
 ORDER BY c.comment_date DESC
 LIMIT ?,10;
 
+-- select  hash
+SELECT c.hash
+FROM users u
+JOIN cerdentials c ON u.id = c.uid
+WHERE u.username = ? OR u.email = ?;
+
 -- insert new post and it's categories
 INSERT INTO posts (title, content, categories, id) VALUES (?, ?, ?);
 
@@ -119,4 +125,7 @@ INSERT INTO comments (comment_text, id, post_id) VALUES (?, ?, ?);
 INSERT INTO dms (sender_id, recipient_id, message) VALUES (?, ?, ?);
 
 -- insert new user
-INSERT INTO users (username, password, email, first_name, last_name, age, gender) VALUES (?, ?, ?, ?, ?, ?, ?);
+INSERT INTO users (username, email, first_name, last_name, age, gender) VALUES (?, ?, ?, ?, ?, ? );
+
+-- insert new credentials
+INSERT INTO credentials (uid, hash) VALUES ((SELECT TOP 1 id FROM users WHERE username = ? AND email= ?),? );
