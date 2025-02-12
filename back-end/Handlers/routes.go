@@ -6,6 +6,8 @@ import (
 	"html/template"
 	"net/http"
 	"os"
+
+	helpers "RTF/back-end"
 )
 
 var (
@@ -22,7 +24,6 @@ func init() {
 	HtmlTemplates, Err = template.ParseGlob("./front-end/templates/*.html")
 	if Err != nil {
 		fmt.Println("Error parsing templates: ", Err.Error())
-		//! send internal server error here instead of quitting
 		os.Exit(1)
 	}
 }
@@ -34,12 +35,16 @@ func Routes() *http.ServeMux {
 	}
 
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		if Err != nil {
+			ErrorPagehandler(w, http.StatusInternalServerError, Err.Error())
+		}
 		IndexHandler(w, r)
 	})
 	mux.Handle("/front-end/styles/", http.StripPrefix("/front-end/styles/", http.FileServer(http.Dir("./front-end/styles"))))
 	mux.Handle("/front-end/scripts/", http.StripPrefix("/front-end/scripts/", http.FileServer(http.Dir("./front-end/scripts"))))
 	mux.HandleFunc("/api/v1/get/{type}", dumbjson)
-	mux.HandleFunc("POST /api/login", AuthLogin)
+	mux.HandleFunc("/api/login", LoginHandler)
+	mux.HandleFunc("/api/register", RegisterHandler)
 	return mux
 }
 
@@ -99,7 +104,9 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if r.URL.Path == "/" {
-		if err := HtmlTemplates.ExecuteTemplate(w, "index.html", nil); err != nil {
+		if err := HtmlTemplates.ExecuteTemplate(w, "index.html", helpers.Placeholder{
+			Online: false,
+		}); err != nil {
 			ErrorPagehandler(w, http.StatusInternalServerError, err.Error())
 			return
 		}

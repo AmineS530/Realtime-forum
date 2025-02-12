@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else if (currentHash === "#registration") {
         showSignUpForm();
     } else {
-        auth.style.display = "none";
+        auth.style.display = "flex";
     }
 
     // Link to Sign Up
@@ -46,4 +46,37 @@ function showSignUpForm() {
     if (window.location.hash !== "#registration"){
         window.location.hash = "#registration";
     };
+}
+
+async function fetching(event, endpoint) {
+    event.preventDefault(); // Prevent form from refreshing the page
+
+    const form = event.target;
+    const formData = new FormData(form);
+    
+    // Convert FormData to JSON object
+    const jsonData = Object.fromEntries(formData.entries());
+    console.log(JSON.stringify(jsonData));
+    try {
+        const response = await fetch(endpoint, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(jsonData),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            alert("Success: " + result.message);
+            console.log(result);
+        } else {
+            alert("Error: " + result.error || "Something went wrong");
+            console.error(result);
+        }
+    } catch (error) {
+        console.error("Fetch error:", error);
+        alert("Network error. Please try again.");
+    }
 }

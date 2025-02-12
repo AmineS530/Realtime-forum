@@ -7,26 +7,28 @@
     <link rel="stylesheet" href="/front-end/styles/style.css">
 </head>
 <body>
-
-    {{template "auth"}}
-
-    <!-- Main Forum Section -->
-    {{ template "nav"}}
-    <div id="forum-container" >
-        
-
-
-        <!-- Create Post Section -->
-        {{ template "post" }}
-
-        <button onclick="viewPosts(event)"class="view-comments" id="postSeeMore">See azer More</button>
-
-        <!-- Comments Section (Visible when clicking on a post) -->
-    </div>
-    {{ template "comments" }}
-
-    <!-- Private Messages Section -->
-    {{ template "private-messages" }}
+    
+   <!-- if (localStorage.getItem("token")) --> 
+    {{if .Online }} 
+        <!-- Main Forum Section -->
+        {{ template "nav"}}
+        <div id="forum-container" >
+            
+            <!-- Create Post Section -->
+            {{ template "post" }}
+    
+            <button onclick="viewPosts(event)"class="view-comments" id="postSeeMore">See azer More</button>
+    
+            <!-- Comments Section (Visible when clicking on a post) -->
+        </div>
+        {{ template "comments" }}
+    
+        <!-- Private Messages Section -->
+        {{ template "private-messages" }}
+    {{else}} 
+        {{template "auth"}}
+    
+    {{end}}
     
     <script src="/front-end/scripts/script.js"></script>
 </body>
