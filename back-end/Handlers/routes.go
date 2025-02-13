@@ -15,7 +15,7 @@ var (
 )
 
 type ErrorPage struct {
-	Num string
+	Num int
 	Msg string
 }
 
@@ -36,6 +36,7 @@ func Routes() *http.ServeMux {
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if Err != nil {
 			ErrorPagehandler(w, http.StatusInternalServerError)
+			return
 		}
 		IndexHandler(w, r)
 	})
@@ -86,7 +87,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 func ErrorPagehandler(w http.ResponseWriter, statusCode int) {
 	w.WriteHeader(statusCode)
 	errorData := ErrorPage{
-		Num: http.StatusText(statusCode),
+		Num: statusCode,
 		Msg: http.StatusText(statusCode),
 	}
 	if err := HtmlTemplates.ExecuteTemplate(w, "error_page.html", errorData); err != nil {

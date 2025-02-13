@@ -12,12 +12,11 @@ type UserReg struct {
 	Email           string `json:"email"`
 	Password        string `json:"password"`
 	PasswordConfirm string `json:"password_confirmation"`
-	Age             int    `json:"age,string"`  // <-- Fix: Accept string and convert to int
+	Age             int    `json:"age,string"` // <-- Fix: Accept string and convert to int
 	Gender          string `json:"gender"`
 	FirstName       string `json:"first_name"`
 	LastName        string `json:"last_name"`
 }
-
 
 // RegisterHandler processes user registrations
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
