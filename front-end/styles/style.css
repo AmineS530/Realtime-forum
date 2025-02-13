@@ -21,6 +21,22 @@ body {
     color: #333;
 }
 
+.nav {
+    position: sticky;
+    top: 0;
+    height: 6vh;
+    background-color: red;
+    display: flex;
+    justify-content:space-between;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    list-style-type: none;
+    align-items: center;
+    *{
+        font-size: 4vh;
+    }
+}
+
 /* Header styling from template */
 /* header {
     background: #333;

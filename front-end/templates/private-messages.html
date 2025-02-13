@@ -37,8 +37,8 @@
     </div>
 
     <div class="offcanvas offcanvas-start" id="demo">
-        <div class="offcanvas-header">
-            <h1 class="offcanvas-title">Messages</h1>
+        <div style="display: flex;align-items: center;padding: 1vh 2vw;justify-content: space-between;">
+            <h1 style="margin-bottom: 0;line-height:5vh;">Messages</h1>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
         </div>
         <div class="I-body">
@@ -59,10 +59,10 @@
             <li>my_uname : bye</li>
         </ul>
         
-        <div class="input-group" >
+        <form class="input-group" >
             <input type="text" class="form-control" placeholder="New Message..." aria-label="Message">
-            <button class="btn btn-primary" type="button">SEND</button>
-        </div>
+            <button class="btn btn-primary" type="button">{{ template "svg-send"}}SEND</button>
+        </form>
     </div>
 
     <div class="container-fluid mt-3">
