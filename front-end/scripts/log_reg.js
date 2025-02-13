@@ -1,3 +1,5 @@
+let current = "login"
+
 document.addEventListener("DOMContentLoaded", () => {
     formSection = document.querySelector(".form-section");
     const goToRegister = document.getElementById("go-to-register");
@@ -7,10 +9,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     
     // Detect the current page based on URL path
-    const currentHash = window.location.hash;
-    if (currentHash === "#login") {
+
+    if (current === "login") {
         showLoginForm();
-    } else if (currentHash === "#registration") {
+    } else if (current === "registration") {
         showSignUpForm();
     } else {
         auth.style.display = "flex";
@@ -33,8 +35,8 @@ function showLoginForm() {
     auth.style.display = "flex";
     formSection.style.transform = "translateX(0)";
     slider.style.left = "0";
-    if (window.location.hash !== "#login"){
-        window.location.hash = "#login";
+    if (current !== "login"){
+        current = "login";
     };
 }
 
@@ -43,8 +45,8 @@ function showSignUpForm() {
     auth.style.display = "flex";
     formSection.style.transform = "translateX(-50%)";
     slider.style.left = "50%";
-    if (window.location.hash !== "#registration"){
-        window.location.hash = "#registration";
+    if (current !== "registration"){
+        current = "registration";
     };
 }
 

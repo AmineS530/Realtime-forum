@@ -9,7 +9,7 @@ import (
 )
 
 // User struct to handle login and registration data
-type User struct {
+type UserReg struct {
 	Username        string `json:"username,omitempty"`
 	Email           string `json:"email,omitempty"`
 	Password        string `json:"password"`
@@ -20,6 +20,11 @@ type User struct {
 	LastName        string `json:"last_name,omitempty"`
 }
 
+type UserLogin struct {
+	NameEmail string `json:"name_or_email"`
+	Password  string `json:"password"`
+}
+
 // LoginHandler processes login requests
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
@@ -27,7 +32,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var user User
+	var user UserLogin
 	err := json.NewDecoder(r.Body).Decode(&user)
 	if err != nil {
 		http.Error(w, "Invalid request body", http.StatusBadRequest)
@@ -35,14 +40,14 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// TODO: Authenticate user (check credentials from a database)
-	if user.Username != "" && user.Email != "" && user.Password != "" {
+	/*if user.Username != "" && user.Email != "" && user.Password != "" {
 		response := map[string]string{"message": "Login successful"}
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(response)
 	} else {
-		fmt.Println(user, user.Email, user.Password)
 		http.Error(w, "Invalid credentials", http.StatusUnauthorized)
-	}
+		}*/
+	fmt.Println("login", user.NameEmail, "password", user.Password)
 }
 
 // RegisterHandler processes user registrations
@@ -52,7 +57,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var user User
+	var user UserReg
 	err := json.NewDecoder(r.Body).Decode(&user)
 	if err != nil {
 		http.Error(w, "Invalid request body", http.StatusBadRequest)
