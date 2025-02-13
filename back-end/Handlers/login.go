@@ -9,16 +9,6 @@ import (
 )
 
 // User struct to handle login and registration data
-type UserReg struct {
-	Username        string `json:"username,omitempty"`
-	Email           string `json:"email,omitempty"`
-	Password        string `json:"password"`
-	PasswordConfirm string `json:"password_confirmation,omitempty"`
-	Age             int    `json:"age,omitempty"`
-	Gender          string `json:"gender,omitempty"`
-	FirstName       string `json:"first_name,omitempty"`
-	LastName        string `json:"last_name,omitempty"`
-}
 
 type UserLogin struct {
 	NameEmail string `json:"name_or_email"`
@@ -48,30 +38,4 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Invalid credentials", http.StatusUnauthorized)
 		}*/
 	fmt.Println("login", user.NameEmail, "password", user.Password)
-}
-
-// RegisterHandler processes user registrations
-func RegisterHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodPost {
-		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
-		return
-	}
-
-	var user UserReg
-	err := json.NewDecoder(r.Body).Decode(&user)
-	if err != nil {
-		http.Error(w, "Invalid request body", http.StatusBadRequest)
-		return
-	}
-
-	// Basic validation
-	if user.Password != user.PasswordConfirm {
-		http.Error(w, "Passwords do not match", http.StatusBadRequest)
-		return
-	}
-
-	// TODO: Save user to database
-	response := map[string]string{"message": "Registration successful"}
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(response)
 }

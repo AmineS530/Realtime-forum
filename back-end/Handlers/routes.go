@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"encoding/json"
 	"fmt"
 	"html/template"
 	"net/http"
@@ -36,7 +35,7 @@ func Routes() *http.ServeMux {
 
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if Err != nil {
-			ErrorPagehandler(w, http.StatusInternalServerError, Err.Error())
+			ErrorPagehandler(w, http.StatusInternalServerError)
 		}
 		IndexHandler(w, r)
 	})
@@ -61,62 +60,36 @@ func dumbjson(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.Write([]byte(postjson))
 	} else {
-		ErrorPagehandler(w, http.StatusNotFound, "Invalid endpoint")
+		ErrorPagehandler(w, http.StatusNotFound)
 		return
 	}
-}
-
-func AuthLogin(w http.ResponseWriter, r *http.Request) {
-	if r.Header.Get("Content-Type") != "application/json" {
-		ErrorPagehandler(w, http.StatusUnsupportedMediaType, "Unsupported media type")
-		return
-	}
-	if r.Body == nil {
-		ErrorPagehandler(w, http.StatusBadRequest, "Request body is empty")
-		return
-	}
-	// Decode body JSON object
-	defer r.Body.Close()
-	var loginData loginData
-	err := json.NewDecoder(r.Body).Decode(&loginData)
-	if err != nil {
-		ErrorPagehandler(w, http.StatusBadRequest, "Invalid JSON data")
-		return
-	}
-	// TODO Implement authentication logic here
-	// if err := validateInput(loginData); err != nil {
-	// 	ErrorPagehandler(w, http.StatusBadRequest, err.Error())
-	// 	return
-	// }
-	// For demonstration purposes, let's assume successful authentication
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(map[string]string{"message": "no logic Logged in successfully"})
-}
-
-type loginData struct {
-	Username string `json:"name_or_email"`
-	Password string `json:"password"`
 }
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	if Err != nil {
-		ErrorPagehandler(w, http.StatusInternalServerError, Err.Error())
+		ErrorPagehandler(w, http.StatusInternalServerError)
 		return
 	}
 	if r.URL.Path == "/" {
 		if err := HtmlTemplates.ExecuteTemplate(w, "index.html", helpers.Placeholder{
 			Online: false,
 		}); err != nil {
-			ErrorPagehandler(w, http.StatusInternalServerError, err.Error())
+			ErrorPagehandler(w, http.StatusInternalServerError)
 			return
 		}
 	} else {
-		ErrorPagehandler(w, http.StatusNotFound, http.StatusText(http.StatusNotFound))
+		ErrorPagehandler(w, http.StatusNotFound)
 		return
 	}
 }
 
-func ErrorPagehandler(w http.ResponseWriter, statusCode int, errMsg string) {
+func ErrorPagehandler(w http.ResponseWriter, statusCode int) {
 	w.WriteHeader(statusCode)
-	http.Error(w, errMsg, statusCode)
+	errorData := ErrorPage{
+		Num: http.StatusText(statusCode),
+		Msg: http.StatusText(statusCode),
+	}
+	if err := HtmlTemplates.ExecuteTemplate(w, "error_page.html", errorData); err != nil {
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+	}
 }

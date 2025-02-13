@@ -9,6 +9,7 @@ registerBtnToggle.addEventListener('click', () => {
     container.classList.add("active");
 });
 
+let age = document.getElementById("age");
 let pass = document.getElementById("pass");
 let confirmPass = document.getElementById("confirmPass");
 let user = document.getElementById("user");
@@ -56,6 +57,24 @@ function validateForm() {
         usernameMessage.style.display = "block";
     } else {
         usernameMessage.style.display = "none";
+    }
+
+    if (!passwordValid && pass.value !== "") {
+        confirmPassMessage.style.display = "block";
+    } else {
+        confirmPassMessage.style.display = "none";
+    }
+
+    if (!confirmPasswordValid && confirmPass.value !== "") {
+        confirmPassMessage.style.display = "block";
+    } else {
+        confirmPassMessage.style.display = "none";
+    }
+
+    if (age.value > "90" || age.value < "14" || age.value === "") {
+        age.style.display = "block";
+    } else {
+        age.style.display = "none";
     }
 
     if (!emailValid && email.value !== "") {

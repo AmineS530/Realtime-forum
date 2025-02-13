@@ -1,15 +1,17 @@
-let current = "login"
+let current = "login";
+
 
 document.addEventListener("DOMContentLoaded", () => {
-    formSection = document.querySelector(".form-section");
-    const goToRegister = document.getElementById("go-to-register");
-    const goToLogin = document.getElementById("go-to-login");
+    const formSection = document.querySelector(".form-section");
     const auth = document.getElementById("auth");
-    slider = document.querySelector(".slider");
+    const slider = document.querySelector(".slider");
 
-    
+    if (!auth || !formSection || !slider) {
+        console.error("Required elements not found in DOM");
+        return;
+    }
+
     // Detect the current page based on URL path
-
     if (current === "login") {
         showLoginForm();
     } else if (current === "registration") {
@@ -18,36 +20,33 @@ document.addEventListener("DOMContentLoaded", () => {
         auth.style.display = "flex";
     }
 
-    // Link to Sign Up
-    goToRegister.addEventListener("click", (e) => {
-        e.preventDefault();
-        showSignUpForm();
-    });
-
-    // Link to Login
-    goToLogin.addEventListener("click", (e) => {
-        e.preventDefault();
-        showLoginForm();
-    });
 });
 
 function showLoginForm() {
+    const auth = document.getElementById("auth");
+    const formSection = document.querySelector(".form-section");
+    const slider = document.querySelector(".slider");
+
+    if (!auth || !formSection || !slider) return;
+
     auth.style.display = "flex";
     formSection.style.transform = "translateX(0)";
     slider.style.left = "0";
-    if (current !== "login"){
-        current = "login";
-    };
+    current = "login";
 }
 
 // Function to switch to Sign Up Form
 function showSignUpForm() {
+    const auth = document.getElementById("auth");
+    const formSection = document.querySelector(".form-section");
+    const slider = document.querySelector(".slider");
+
+    if (!auth || !formSection || !slider) return;
+
     auth.style.display = "flex";
     formSection.style.transform = "translateX(-50%)";
     slider.style.left = "50%";
-    if (current !== "registration"){
-        current = "registration";
-    };
+    current = "registration";
 }
 
 async function fetching(event, endpoint) {
@@ -55,10 +54,10 @@ async function fetching(event, endpoint) {
 
     const form = event.target;
     const formData = new FormData(form);
-    
+
     // Convert FormData to JSON object
     const jsonData = Object.fromEntries(formData.entries());
-    console.log(JSON.stringify(jsonData));
+
     try {
         const response = await fetch(endpoint, {
             method: "POST",
@@ -68,17 +67,25 @@ async function fetching(event, endpoint) {
             body: JSON.stringify(jsonData),
         });
 
-        const result = await response.json();
+        const contentType = response.headers.get("content-type");
+        let result;
+
+        if (contentType && contentType.includes("application/json")) {
+            result = await response.json();
+        } else {
+            result = { error: await response.text() };
+        }
 
         if (response.ok) {
-            alert("Success: " + result.message);
+            alert("Success: " + (result.message || "Operation successful"));
             console.log(result);
         } else {
-            alert("Error: " + result.error || "Something went wrong");
+            alert("Error: " + (result.error || "Something went wrong"));
             console.error(result);
         }
     } catch (error) {
         console.error("Fetch error:", error);
         alert("Network error. Please try again.");
     }
+    console.log(jsonData);
 }
