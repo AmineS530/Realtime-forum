@@ -35,6 +35,7 @@ func Routes() *http.ServeMux {
 
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if Err != nil {
+			fmt.Println("Error parsing templates: ", Err.Error())
 			ErrorPagehandler(w, http.StatusInternalServerError)
 			return
 		}
@@ -75,6 +76,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		if err := HtmlTemplates.ExecuteTemplate(w, "index.html", helpers.Placeholder{
 			Online: false,
 		}); err != nil {
+			fmt.Println("Error executing template: ", err.Error())
 			ErrorPagehandler(w, http.StatusInternalServerError)
 			return
 		}
@@ -90,7 +92,9 @@ func ErrorPagehandler(w http.ResponseWriter, statusCode int) {
 		Num: statusCode,
 		Msg: http.StatusText(statusCode),
 	}
+
 	if err := HtmlTemplates.ExecuteTemplate(w, "error_page.html", errorData); err != nil {
+	//	fmt.Println("Error executing template: ", err.Error())
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	}
 }

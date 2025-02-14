@@ -11,37 +11,39 @@
 
 <body>
 
-    <!-- if (localStorage.getItem("token")) -->
-    {{if .Online }}
+    {{ if .Online }}
 
         <!-- Main Forum Section -->
-        <!-- TODO NAV -->
         <ul class="nav">
             <li>
                 <a href="#" title="Messages">
-                    {{ template "svg-two-bubble"}}
+                    {{ template "svg-two-bubble" }}
                 </a>
             </li>
             <li>
-                <a href="#" title="logout">
-                    {{ template "svg-logout"}}
+                <a href="#" title="Logout">
+                    {{ template "svg-logout" }}
                 </a>
             </li>
         </ul>
         <div id="forum-container">
             <!-- Create Post Section -->
             {{ template "post" }}
-            <button onclick="viewPosts(event)" class="view-comments" id="postSeeMore">See azer More</button>
-
-
-            <!-- Comments Section (Visible when clicking on a post) -->
+            <button onclick="viewPosts(event)" class="view-comments" id="postSeeMore">See More</button>
         </div>
+        
+        <!-- Comments Section -->
         {{ template "comments" }}
-        <!-- Private Messages Section -->
+        
+        <!-- Private Messages Section
         {{ template "private-messages" }}
-    {{else}}
-        {{template "auth"}}
-    {{end}}
+        -->
+    
+    {{ else }}
+
+        {{ template "auth" }}
+
+    {{ end }}
 
     <script src="/front-end/scripts/script.js"></script>
 </body>

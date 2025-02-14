@@ -36,6 +36,6 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(response)
 	} else {
 		http.Error(w, "Invalid credentials", http.StatusUnauthorized)
-		}*/
-	fmt.Println("login", user.NameEmail, "password", user.Password)
+	}*/
+	fmt.Printf("Login data:\nuser: %s\npassword: %s\n", user.NameEmail, user.Password)	
 }
