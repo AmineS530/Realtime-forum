@@ -1,6 +1,5 @@
 let current = "login";
 
-
 document.addEventListener("DOMContentLoaded", () => {
     const formSection = document.querySelector(".form-section");
     const auth = document.getElementById("auth");
@@ -19,7 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
         auth.style.display = "flex";
     }
-
 });
 
 function showLoginForm() {
@@ -48,6 +46,19 @@ function showSignUpForm() {
     slider.style.left = "50%";
     current = "registration";
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Select all input fields and textareas
+    const inputs = document.querySelectorAll("input, textarea");
+
+    inputs.forEach((input) => {
+        if (input.type !== "password") {
+            input.addEventListener("blur", function () {
+                this.value = this.value.replace(/^\s+|\s+$/g, "");
+            });
+        }
+    });
+});
 
 async function fetching(event, endpoint) {
     event.preventDefault(); // Prevent form from refreshing the page

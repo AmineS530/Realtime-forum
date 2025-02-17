@@ -1,11 +1,11 @@
-const container = document.getElementById('container');
-const registerBtnToggle = document.getElementById('registerBtnToggle');
-const loginBtn = document.getElementById('loginBtn');
-loginBtn.addEventListener('click', () => {
+const container = document.getElementById("container");
+const registerBtnToggle = document.getElementById("registerBtnToggle");
+const loginBtn = document.getElementById("loginBtn");
+loginBtn.addEventListener("click", () => {
     container.classList.remove("active");
 });
 
-registerBtnToggle.addEventListener('click', () => {
+registerBtnToggle.addEventListener("click", () => {
     container.classList.add("active");
 });
 
@@ -25,23 +25,23 @@ function checkPassword() {
         upper: /(?=.*[A-Z])/,
         number: /(?=.*\d)/,
         symbol: /(?=.*[\W_])/,
-        length: /^.{8,}$/
+        length: /^.{8,}$/,
     };
 
     let Divs = {
-        lower: document.querySelector('.lower'),
-        upper: document.querySelector('.upper'),
-        number: document.querySelector('.number'),
-        symbol: document.querySelector('.symbol'),
-        length: document.querySelector('.length'),
-        passChecker: document.querySelector('.passChecker'),
+        lower: document.querySelector(".lower"),
+        upper: document.querySelector(".upper"),
+        number: document.querySelector(".number"),
+        symbol: document.querySelector(".symbol"),
+        length: document.querySelector(".length"),
+        passChecker: document.querySelector(".passChecker"),
     };
 
     Divs.passChecker.style.display = pass.value ? "block" : "none";
 
     for (const [k, v] of Object.entries(patterns)) {
-        const icon = Divs[k].querySelector('.material-icons');
-        icon.innerHTML = v.test(pass.value) ? '&#xe86c;' : '&#xe5c9;';
+        const icon = Divs[k].querySelector(".material-icons");
+        icon.innerHTML = v.test(pass.value) ? "&#xe86c;" : "&#xe5c9;";
         icon.style.color = v.test(pass.value) ? "green" : "red";
         Divs[k].style.color = v.test(pass.value) ? "green" : "red";
     }
@@ -49,9 +49,13 @@ function checkPassword() {
 
 function validateForm() {
     let usernameValid = /^[\w]+$/.test(user.value);
-    let emailValid = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email.value);
+    let emailValid = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
+        email.value
+    );
     let confirmPasswordValid = pass.value === confirmPass.value;
-    let passwordValid = pass.value.match(/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}/);
+    let passwordValid = pass.value.match(
+        /(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}/
+    );
 
     if (!usernameValid && user.value !== "") {
         usernameMessage.style.display = "block";
@@ -71,7 +75,7 @@ function validateForm() {
         confirmPassMessage.style.display = "none";
     }
 
-    if (age.value > "90" || age.value < "14" || age.value === "") {
+    if (age.value > "90" || age.value < "15" || age.value === "") {
         age.style.display = "block";
     } else {
         age.style.display = "none";
@@ -89,7 +93,12 @@ function validateForm() {
         confirmPassMessage.style.display = "none";
     }
 
-    registerBtn.disabled = !(usernameValid && emailValid && confirmPasswordValid && passwordValid);
+    registerBtn.disabled = !(
+        usernameValid &&
+        emailValid &&
+        confirmPasswordValid &&
+        passwordValid
+    );
 }
 
 pass.addEventListener("input", () => {

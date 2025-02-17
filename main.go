@@ -8,6 +8,27 @@ import (
 	handlers "RTF/back-end/Handlers"
 )
 
+func init() {
+	// var err error
+	// helpers.DataBase, err = sql.Open("sqlite3", "./forum.db")
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// sqlFile := "./DataBase/schema.sql"
+	// sqlContent, err := os.ReadFile(sqlFile)
+	// if err != nil {
+	// 	log.Fatal("Error at reading sql file!", err)
+	// }
+
+	// // Execute the SQL content to create tables.
+	// _, err = helpers.DataBase.Exec(string(sqlContent))
+	// if err != nil {
+	// 	log.Fatal("Error at executing sql!", err)
+	// }
+
+	// fmt.Println("db successfully created!")
+}
+
 func main() {
 	httpPort := os.Getenv("PORT")
 
