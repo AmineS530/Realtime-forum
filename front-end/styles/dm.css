@@ -14,13 +14,21 @@
     visibility: hidden; 
     background-color: #fff;
     transition: .2s cubic-bezier(.62,1.56,.72,.89);
-}
-
-select {
+    & select {
     font-size: 3vh;
     width: 100%;
     padding: auto;
+    }
+    & .btn {
+        background: none;
+        border: none;
+        color: #fff;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: color 0.3s;
+    }
 }
+
 
 #backdrop {
     visibility: hidden;
@@ -54,14 +62,4 @@ select {
     padding-left: 2rem;
     margin-top: 0;
     margin-bottom: 1rem;
-}
-
-.btn {
-
-    background: none;
-    border: none;
-    color: #fff;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: color 0.3s;
 }
