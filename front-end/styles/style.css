@@ -15,6 +15,7 @@ body {
     padding: 0;
     box-sizing: border-box;
 }
+
 body {
     font-family: Arial, sans-serif;
     background: #f4f4f9;
@@ -22,19 +23,37 @@ body {
 }
 
 .nav {
+    z-index: 1;
     position: sticky;
     top: 0;
     height: 6vh;
     background-color: red;
     display: flex;
-    justify-content:space-between;
+    justify-content: space-between;
     padding-left: 1vw;
     padding-right: 1vw;
     list-style-type: none;
     align-items: center;
-    *{
+
+    * {
         font-size: 4vh;
     }
+}
+
+.card , .post , .comment-container {
+    background-color: #ccc;
+    border-radius: 10px;
+    border: #333 solid 2px;
+    box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    margin: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    mix-blend-mode: multiply;
+}
+
+.card:hover , .post:hover {
+    transform: translate(5px , -5px);
+    box-shadow: -7px 7px 10px rgba(255, 0, 0, 0.5);
 }
 
 /* Header styling from template */
