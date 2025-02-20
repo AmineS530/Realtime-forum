@@ -15,7 +15,7 @@ type UserReg struct {
 	Email           string `json:"email"`
 	Password        string `json:"password"`
 	PasswordConfirm string `json:"password_confirmation"`
-	Age             int    `json:"age,string"` // <-- Fix: Accept string and convert to int
+	Age             int    `json:"age,string"`
 	Gender          string `json:"gender"`
 	FirstName       string `json:"first_name"`
 	LastName        string `json:"last_name"`
@@ -117,3 +117,31 @@ func HashPassword(password string) (string, error) {
 func CheckPassword(password, hashedPassword string) bool {
 	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password)) == nil
 }
+
+/*
+func setToken() {
+	token, err := uuid.NewV4()
+	if err != nil {
+		fmt.Println("Error generating token:", err)
+	}
+
+	query = `
+		UPDATE users
+		SET token = ?
+		WHERE id = ?
+	`
+	_, err = db.Exec(query, token.String(), userInfo.ID)
+	if err != nil {
+		fmt.Println("Error storing token:", err)
+	}
+
+	http.SetCookie(w, &http.Cookie{
+		Name:     "token",
+		Value:    token.String(),
+		Path:     "/",
+		Secure:   true,
+		HttpOnly: true,
+		Expires:  time.Now().Add(24 * time.Hour),
+	})
+}
+*/

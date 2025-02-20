@@ -5,28 +5,14 @@ import (
 	"net/http"
 	"os"
 
+	database "RTF/DataBase"
+	helpers "RTF/back-end"
 	handlers "RTF/back-end/Handlers"
 )
 
 func init() {
-	// var err error
-	// helpers.DataBase, err = sql.Open("sqlite3", "./forum.db")
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-	// sqlFile := "./DataBase/schema.sql"
-	// sqlContent, err := os.ReadFile(sqlFile)
-	// if err != nil {
-	// 	log.Fatal("Error at reading sql file!", err)
-	// }
-
-	// // Execute the SQL content to create tables.
-	// _, err = helpers.DataBase.Exec(string(sqlContent))
-	// if err != nil {
-	// 	log.Fatal("Error at executing sql!", err)
-	// }
-
-	// fmt.Println("db successfully created!")
+	helpers.DataBase = database.SetTables()
+	defer helpers.DataBase.Close()
 }
 
 func main() {
