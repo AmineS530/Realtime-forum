@@ -1,0 +1,43 @@
+ERROR: 2025/02/22 08:12:04 validation.go:56: Database error: sql: database is closed
+ERROR: 2025/02/22 08:12:23 validation.go:56: Database error: sql: database is closed
+ERROR: 2025/02/22 08:12:56 validation.go:56: Database error: sql: database is closed
+ERROR: 2025/02/22 08:13:37 validation.go:56: Database error: sql: database is closed
+ERROR: 2025/02/22 08:14:11 validation.go:56: Database error: sql: database is closed
+ERROR: 2025/02/22 08:16:14 validation.go:56: Database error: sql: database is closed
+ERROR: 2025/02/22 08:17:00 validation.go:56: Database error: sql: database is closed
+ERROR: 2025/02/22 08:18:07 validation.go:56: Database error: sql: database is closed
+ERROR: 2025/02/22 08:21:04 validation.go:56: Database error: sql: database is closed
+ERROR: 2025/02/22 08:21:49 validation.go:56: Database error: sql: database is closed
+ERROR: 2025/02/22 08:22:08 validation.go:56: Database error: sql: database is closed
+ERROR: 2025/02/22 08:22:33 validation.go:56: Database error: sql: database is closed
+ERROR: 2025/02/22 08:22:47 validation.go:56: Database error: sql: database is closed
+ERROR: 2025/02/22 08:25:49 validation.go:56: Database error: sql: database is closed
+ERROR: 2025/02/22 08:26:18 validation.go:56: Database error: sql: database is closed
+ERROR: 2025/02/22 08:26:46 validation.go:56: Database error: sql: database is closed
+ERROR: 2025/02/22 08:28:17 validation.go:56: Database error: sql: database is closed
+ERROR: 2025/02/22 08:29:21 validation.go:55: Database error: sql: database is closed
+ERROR: 2025/02/22 08:30:38 validation.go:55: Database error: sql: database is closed
+ERROR: 2025/02/22 08:31:19 validation.go:55: Database error: sql: database is closed
+ERROR: 2025/02/22 08:32:24 validation.go:55: Database error: sql: database is closed
+ERROR: 2025/02/22 08:32:33 validation.go:55: Database error: sql: database is closed
+2025/02/22 08:36:33 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.RegisterHandler (registration.go:39)
+2025/02/22 08:37:00 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.RegisterHandler (registration.go:39)
+2025/02/22 08:37:07 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.RegisterHandler (registration.go:39)
+2025/02/22 08:37:14 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.RegisterHandler (registration.go:39)
+2025/02/22 08:38:38 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.RegisterHandler (registration.go:39)
+2025/02/22 08:40:09 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.respondWithError (validation.go:65)
+2025/02/22 08:40:57 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.respondWithError (validation.go:65)
+2025/02/22 08:41:15 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.respondWithError (validation.go:65)
+2025/02/22 08:42:17 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.RegisterHandler (registration.go:43)
+2025/02/22 08:42:47 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.respondWithError (validation.go:65)
+2025/02/22 08:43:15 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.respondWithError (validation.go:65)
+2025/02/22 08:48:00 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.respondWithError (validation.go:65)
+2025/02/22 08:51:34 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.respondWithError (validation.go:65)
+2025/02/22 08:51:58 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.respondWithError (validation.go:65)
+2025/02/22 08:52:17 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.respondWithError (validation.go:65)
+2025/02/22 08:52:21 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.respondWithError (validation.go:65)
+ERROR: 2025/02/22 09:01:11 validation.go:56: Database error: sql: database is closed
+ERROR: 2025/02/22 09:04:43 validation.go:56: Database error: sql: database is closed
+ERROR: 2025/02/22 09:08:19 validation.go:56: Database error: sql: database is closed
+ERROR: 2025/02/22 09:12:13 validation.go:56: Database error: sql: database is closed
+2025/02/22 09:12:41 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.respondWithError (validation.go:65)

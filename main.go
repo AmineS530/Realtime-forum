@@ -12,10 +12,10 @@ import (
 
 func init() {
 	helpers.DataBase = database.SetTables()
-	defer helpers.DataBase.Close()
 }
 
 func main() {
+	defer helpers.DataBase.Close()
 	httpPort := os.Getenv("PORT")
 
 	if httpPort == "" {

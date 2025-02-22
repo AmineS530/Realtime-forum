@@ -35,46 +35,11 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	/*
-		password policy and regex ^(?=.*\d)(?=.*[a-zA-Z])(?=.*[A-Z])(?=.*[-\#\$\.\%\&\*])(?=.*[a-zA-Z]).{8,16}$
-			At least 8 - 16 characters,
-			must contain at least 1 uppercase letter,
-			must contain at least 1 lowercase letter,
-			and 1 number
-			Can contain any of this special characters $ % # * & - .
-	*/
-	// check if poassword follow policy
-	if isValidPassword(user.Password) {
-		http.Error(w, "Invalid password format", http.StatusBadRequest)
-		return
-	}
-	// check if passwords match
-	if user.Password != user.PasswordConfirm {
-		http.Error(w, "Passwords do not match", http.StatusBadRequest)
+	if !validInfo(w, user) {
+		respondWithError(w, "Registration failed", http.StatusBadRequest)
 		return
 	}
 
-	// check if username is valid and exists in the db
-
-	// check if email is valid and exists in the db
-	emailRegex := regexp.MustCompile(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`)
-	if !emailRegex.MatchString(user.Email) {
-		http.Error(w, "Invalid email format", http.StatusBadRequest)
-	}
-
-	// check if age is between 15 and 90
-	if user.Age < 15 || user.Age > 90 {
-		http.Error(w, "Invalid age", http.StatusBadRequest)
-	}
-	// check if gender is valid
-	if user.Gender != "male" && user.Gender != "female" && user.Gender != "Attack Helicopter" {
-		http.Error(w, "Invalid gender", http.StatusBadRequest)
-	}
-	// check if first name and last name are valid (no numbers and special characters)
-	nameRegex := *regexp.MustCompile(`^[a-z A-Z]+$`)
-	if !nameRegex.MatchString(user.FirstName) || !nameRegex.MatchString(user.LastName) {
-		http.Error(w, "Invalid name format", http.StatusBadRequest)
-	}
 	// use bcrypt to hash the password and store it in the database
 
 	// store cerdentials and infos in different tables
@@ -86,23 +51,59 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(response)
 }
 
-func isValidPassword(password string) bool {
-	// Ensure length is between 8 and 16 characters
-	if len(password) < 8 || len(password) > 16 {
+func validInfo(w http.ResponseWriter, user UserReg) bool {
+	// check if username is valid and exists in the db
+	if !isValidUsername(user.Username) {
+		respondWithError(w, "Invalid username", http.StatusBadRequest)
+		return false
+	}
+	if entryExists("username", user.Username, true) {
+		respondWithError(w, "Username already exists", http.StatusBadRequest)
+		return false
+	}
+	// check if password follows policy
+	if !isValidPassword(user.Password) {
+		respondWithError(w, "Invalid password format", http.StatusBadRequest)
 		return false
 	}
 
-	// Define separate regexes for each condition
-	hasDigit := regexp.MustCompile(`[0-9]`)
-	hasLower := regexp.MustCompile(`[a-z]`)
-	hasUpper := regexp.MustCompile(`[A-Z]`)
-	hasSpecial := regexp.MustCompile(`[-#$.%&*]`)
+	// check if passwords match
+	if user.Password != user.PasswordConfirm {
+		respondWithError(w, "Passwords do not match", http.StatusBadRequest)
+		return false
+	}
 
-	// Check all conditions
-	return hasDigit.MatchString(password) &&
-		hasLower.MatchString(password) &&
-		hasUpper.MatchString(password) &&
-		hasSpecial.MatchString(password)
+	// // check if email is valid and exists in the db
+	emailRegex := regexp.MustCompile(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`)
+	if !emailRegex.MatchString(user.Email) {
+		respondWithError(w, "Invalid email format", http.StatusBadRequest)
+		return false
+	}
+	if entryExists("email", user.Email, true) {
+		respondWithError(w, "Email already exists", http.StatusBadRequest)
+		return false
+	}
+
+	// check if age is between 15 and 90
+	if user.Age < 15 || user.Age > 90 {
+		respondWithError(w, "Invalid age", http.StatusBadRequest)
+		return false
+	}
+
+	// check if gender is valid
+	if user.Gender != "male" && user.Gender != "female" && user.Gender != "Attack Helicopter" {
+		respondWithError(w, "Invalid option", http.StatusBadRequest)
+		return false
+	}
+
+	// check if first name and last name are valid (no numbers and special characters)
+	nameRegex := *regexp.MustCompile(`^[a-zA-Z ]+$`)
+	if !nameRegex.MatchString(user.FirstName) || !nameRegex.MatchString(user.LastName) {
+		respondWithError(w, "Invalid name format", http.StatusBadRequest)
+		return false
+	}
+
+	return true
 }
 
 func HashPassword(password string) (string, error) {

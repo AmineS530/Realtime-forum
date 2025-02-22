@@ -35,7 +35,6 @@ func SetTables() *sql.DB {
 	if err != nil {
 		helpers.ErrorLog.Fatalf("Error opening database: %v", err)
 	}
-	defer db.Close()
 
 	sqlContent, err := os.ReadFile("./DataBase/schema.sql")
 	if err != nil {
@@ -47,6 +46,5 @@ func SetTables() *sql.DB {
 		helpers.ErrorLog.Fatalf("Error executing SQL: %v", err)
 	}
 	helpers.InfoLog.Println("Database successfully created!")
-
 	return db
 }
