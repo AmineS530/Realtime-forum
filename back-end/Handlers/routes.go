@@ -44,6 +44,7 @@ func Routes() *http.ServeMux {
 	mux.Handle("/front-end/styles/", http.StripPrefix("/front-end/styles/", http.FileServer(http.Dir("./front-end/styles"))))
 	mux.Handle("/front-end/scripts/", http.StripPrefix("/front-end/scripts/", http.FileServer(http.Dir("./front-end/scripts"))))
 	mux.HandleFunc("/api/v1/get/{type}", dumbjson)
+	mux.HandleFunc("/api/v1/ws", handleConnections)
 	mux.HandleFunc("/api/login", LoginHandler)
 	mux.HandleFunc("/api/register", RegisterHandler)
 	return mux
@@ -74,7 +75,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	if r.URL.Path == "/" {
 		if err := HtmlTemplates.ExecuteTemplate(w, "index.html", helpers.Placeholder{
-			Online: false,
+			Online: true,
 		}); err != nil {
 			fmt.Println("Error executing template: ", err.Error())
 			ErrorPagehandler(w, http.StatusInternalServerError)
@@ -94,7 +95,7 @@ func ErrorPagehandler(w http.ResponseWriter, statusCode int) {
 	}
 
 	if err := HtmlTemplates.ExecuteTemplate(w, "error_page.html", errorData); err != nil {
-	//	fmt.Println("Error executing template: ", err.Error())
+		//	fmt.Println("Error executing template: ", err.Error())
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	}
 }

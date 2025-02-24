@@ -1,0 +1,36 @@
+2025/02/24 11:22:22 Error marshaling response: json: error calling MarshalJSON for type json.RawMessage: invalid character 'g' looking for beginning of value
+2025/02/24 11:22:22 Error sending response: json: error calling MarshalJSON for type json.RawMessage: invalid character 'g' looking for beginning of value map[guest0:0xc00032c2c0 guest1:0xc0001ec580]
+2025/02/24 11:24:11 Error marshaling response: json: error calling MarshalJSON for type json.RawMessage: invalid character 'g' looking for beginning of value
+2025/02/24 11:24:11 Error sending response: json: error calling MarshalJSON for type json.RawMessage: invalid character 'g' looking for beginning of value map[guest0:0xc0002be420 guest1:0xc0002be580]
+2025/02/24 12:35:12 Error parsing JSON: invalid character 'o' looking for beginning of value
+2025/02/24 12:35:12 websocket: close 1001 (going away)
+2025/02/24 12:35:14 websocket: close 1001 (going away)
+2025/02/24 12:35:31 Error parsing JSON: invalid character 'o' looking for beginning of value
+2025/02/24 12:35:31 websocket: close 1001 (going away)
+2025/02/24 12:36:14 websocket: close 1001 (going away)
+2025/02/24 12:36:28 websocket: close 1001 (going away)
+2025/02/24 12:36:45 Error parsing JSON: invalid character 'o' looking for beginning of value
+2025/02/24 12:36:45 websocket: close 1001 (going away)
+2025/02/24 12:36:59 websocket: close 1001 (going away)
+2025/02/24 12:37:06 Error parsing JSON: invalid character 'o' looking for beginning of value
+2025/02/24 12:38:30 websocket: close 1001 (going away)
+2025/02/24 12:38:32 Error parsing JSON: invalid character 'o' looking for beginning of value
+2025/02/24 12:38:37 websocket: close 1001 (going away)
+2025/02/24 12:38:41 Error parsing JSON: invalid character 'o' looking for beginning of value
+2025/02/24 12:39:15 Error parsing JSON: invalid character 'o' looking for beginning of value
+2025/02/24 12:39:19 Error parsing JSON: invalid character 'o' looking for beginning of value
+2025/02/24 12:39:36 websocket: close 1001 (going away)
+2025/02/24 12:39:40 Error parsing JSON: invalid character 'o' looking for beginning of value
+2025/02/24 12:39:53 websocket: close 1001 (going away)
+2025/02/24 12:39:56 Error parsing JSON: invalid character 'o' looking for beginning of value
+2025/02/24 12:40:32 websocket: close 1001 (going away)
+2025/02/24 12:40:39 Error parsing JSON: invalid character 'o' looking for beginning of value
+2025/02/24 12:41:03 websocket: close 1001 (going away)
+2025/02/24 12:41:13 websocket: close 1001 (going away)
+2025/02/24 12:41:14 websocket: close 1001 (going away)
+2025/02/24 12:41:19 Error parsing JSON: invalid character 'o' looking for beginning of value
+2025/02/24 12:41:44 websocket: close 1001 (going away)
+2025/02/24 12:41:51 Error parsing JSON: invalid character 'o' looking for beginning of value
+2025/02/24 12:43:57 Error parsing JSON: invalid character 'o' looking for beginning of value
+2025/02/24 12:44:19 websocket: close 1001 (going away)
+2025/02/24 12:44:34 websocket: close 1001 (going away)

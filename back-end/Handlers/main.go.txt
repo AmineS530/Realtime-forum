@@ -1,0 +1,49 @@
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"log"
+)
+
+func main() {
+	m0 := Message{
+		Type:    "message",
+		Content: []byte(`{"receiver":"guest1","message":"Hello World"}`),
+		sender:  "guest0",
+	}
+	err := m0.Send()
+	if err != nil {
+		log.Print(err)
+	} else {
+		fmt.Println("good")
+	}
+}
+
+type Message struct {
+	Type    string `json:"type"`
+	Content []byte `json:"content"`
+	sender  string
+}
+
+type msg struct {
+	sender   string
+	Receiver string `json:"receiver"`
+	Message  string `json:"message"`
+}
+
+func (m *Message) Send() error {
+	var azer msg
+	err := json.Unmarshal([]byte(m.Content), &azer)
+	// fmt.Println(string(m.Content), err, azer.Receiver)
+	if err != nil {
+		fmt.Println(err)
+		log.Println("Error parsing JSON:", err)
+		return err
+	}
+	azer.sender = m.sender
+	fmt.Println(azer)
+	fmt.Println(*m, string(m.Content))
+	// return azer.send()
+	return nil
+}

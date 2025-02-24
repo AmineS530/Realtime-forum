@@ -63,3 +63,15 @@
     margin-top: 0;
     margin-bottom: 1rem;
 }
+
+.input-group {
+    display: inline-table;
+    margin-bottom: 1rem;
+    position: relative;
+    display: flex;
+    width: 100%;
+    border-collapse: collapse;
+    input[type="text"] {
+        flex-grow: 1;
+    }
+}
