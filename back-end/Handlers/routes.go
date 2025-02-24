@@ -5,8 +5,6 @@ import (
 	"html/template"
 	"net/http"
 	"os"
-
-	helpers "RTF/back-end"
 )
 
 var (
@@ -46,6 +44,15 @@ func Routes() *http.ServeMux {
 	mux.HandleFunc("/api/v1/get/{type}", dumbjson)
 	mux.HandleFunc("/api/login", LoginHandler)
 	mux.HandleFunc("/api/register", RegisterHandler)
+	mux.HandleFunc("/api/logout", func(w http.ResponseWriter, r *http.Request) {
+		http.SetCookie(w, &http.Cookie{
+			Name:   "token",
+			Value:  "",
+			Path:   "/",
+			MaxAge: -1,
+		})
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+	})
 	return mux
 }
 
@@ -72,10 +79,13 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		ErrorPagehandler(w, http.StatusInternalServerError)
 		return
 	}
+	isOnline := false
+	cookie, err := r.Cookie("token")
+	if err == nil {
+		isOnline = VerifyToken(cookie.Value)
+	}
 	if r.URL.Path == "/" {
-		if err := HtmlTemplates.ExecuteTemplate(w, "index.html", helpers.Placeholder{
-			Online: false,
-		}); err != nil {
+		if err := HtmlTemplates.ExecuteTemplate(w, "index.html", isOnline); err != nil {
 			fmt.Println("Error executing template: ", err.Error())
 			ErrorPagehandler(w, http.StatusInternalServerError)
 			return
@@ -94,7 +104,7 @@ func ErrorPagehandler(w http.ResponseWriter, statusCode int) {
 	}
 
 	if err := HtmlTemplates.ExecuteTemplate(w, "error_page.html", errorData); err != nil {
-	//	fmt.Println("Error executing template: ", err.Error())
+		//	fmt.Println("Error executing template: ", err.Error())
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	}
 }

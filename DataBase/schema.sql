@@ -9,11 +9,12 @@ CREATE TABLE
         age INTEGER NOT NULL,
         gender CHAR NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        token TEXT UNIQUE,
         CHECK (gender IN ("male", "female", "Attack helicopter"))
     );
 
 CREATE TABLE
-    IF NOT EXISTS `cerdentials` (
+    IF NOT EXISTS `credentials` (
         id INTEGER PRIMARY KEY NOT NULL,
         hash BLOB NOT NULL,
         FOREIGN KEY (id) REFERENCES users (id)

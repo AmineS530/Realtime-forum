@@ -5,7 +5,11 @@ import (
 	"fmt"
 	"net/http"
 	"regexp"
+	"time"
 
+	helpers "RTF/back-end"
+
+	"github.com/gofrs/uuid"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -39,13 +43,20 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 		respondWithError(w, "Registration failed", http.StatusBadRequest)
 		return
 	}
+	// store cerdentials and infos in different tables
+	if !insertInfo(user) {
+		respondWithError(w, "Registration failed", http.StatusInternalServerError)
+		return
+	}
+	// get the id of the inserted values
 
 	// use bcrypt to hash the password and store it in the database
-
-	// store cerdentials and infos in different tables
+	fmt.Println(user.Username, "qwerqwerqwererqwer")
+	userID := int(getElemVal("id", "users", `username = "`+user.Username+`"`).(int64))
+	changePassword(user.Password, userID)
 
 	fmt.Printf("Registration data:\nusername: %s\nemail: %s\npassword: %s\npassword confirm: %s\nage: %d\ngender: %s\nfirst name: %s\nlast name: %s\n", user.Username, user.Email, user.Password, user.PasswordConfirm, user.Age, user.Gender, user.FirstName, user.LastName)
-	// TODO: Save user to database
+	authorize(userID, w)
 	response := map[string]string{"message": "Registration successful"}
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(response)
@@ -73,7 +84,7 @@ func validInfo(w http.ResponseWriter, user UserReg) bool {
 		return false
 	}
 
-	// // check if email is valid and exists in the db
+	// check if email is valid and exists in the db
 	emailRegex := regexp.MustCompile(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`)
 	if !emailRegex.MatchString(user.Email) {
 		respondWithError(w, "Invalid email format", http.StatusBadRequest)
@@ -91,7 +102,7 @@ func validInfo(w http.ResponseWriter, user UserReg) bool {
 	}
 
 	// check if gender is valid
-	if user.Gender != "male" && user.Gender != "female" && user.Gender != "Attack Helicopter" {
+	if user.Gender != "male" && user.Gender != "female" && user.Gender != "Attack helicopter" {
 		respondWithError(w, "Invalid option", http.StatusBadRequest)
 		return false
 	}
@@ -106,32 +117,79 @@ func validInfo(w http.ResponseWriter, user UserReg) bool {
 	return true
 }
 
-func HashPassword(password string) (string, error) {
-	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 16)
-	if err != nil {
-		return "", err
-	}
+func insertInfo(user UserReg) bool {
+	query := `INSERT INTO users (username, email, age, gender, first_name, last_name) 
+	          VALUES (?, ?, ?, ?, ?, ?)`
 
-	return string(bytes), nil
+	_, err := helpers.DataBase.Exec(query,
+		user.Username,
+		user.Email,
+		user.Age,
+		user.Gender,
+		user.FirstName,
+		user.LastName,
+	)
+	if err != nil {
+		helpers.ErrorLog.Fatalln("Database insertion error:", err)
+		return false
+	}
+	return true
 }
 
-func CheckPassword(password, hashedPassword string) bool {
+func changePassword(password string, userID int) {
+	query := `INSERT INTO credentials (id, hash) VALUES (?, ?)`
+	_, err := helpers.DataBase.Exec(query, userID, HashPassword(password))
+	if err != nil {
+		helpers.ErrorLog.Fatalln(err.Error())
+	}
+}
+
+func HashPassword(password string) string {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 16)
+	if err != nil {
+		helpers.ErrorLog.Fatalln(err.Error())
+		return ""
+	}
+	return string(bytes)
+}
+
+func CheckPassword(password string, userID int) bool {
+	var hashedPassword string
+
+	query := `SELECT hash FROM credentials WHERE id = ?`
+	err := helpers.DataBase.QueryRow(query, userID).Scan(&hashedPassword)
+	if err != nil {
+		helpers.ErrorLog.Fatalln(err.Error())
+	}
+
 	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password)) == nil
 }
 
-/*
-func setToken() {
+func getElemVal(selectedElem, from, where string) any {
+	var res any
+
+	query := fmt.Sprintf("SELECT %s FROM %s WHERE %s", selectedElem, from, where)
+
+	err := helpers.DataBase.QueryRow(query).Scan(&res)
+	fmt.Println(res, query, err)
+	if err != nil {
+		helpers.ErrorLog.Fatalln("Database error:", err)
+	}
+
+	return res
+}
+
+func authorize(userID int, w http.ResponseWriter) {
 	token, err := uuid.NewV4()
 	if err != nil {
 		fmt.Println("Error generating token:", err)
 	}
-
-	query = `
+	query := `
 		UPDATE users
 		SET token = ?
 		WHERE id = ?
 	`
-	_, err = db.Exec(query, token.String(), userInfo.ID)
+	_, err = helpers.DataBase.Exec(query, token.String(), userID)
 	if err != nil {
 		fmt.Println("Error storing token:", err)
 	}
@@ -141,8 +199,20 @@ func setToken() {
 		Value:    token.String(),
 		Path:     "/",
 		Secure:   true,
+		SameSite: http.SameSiteDefaultMode,
 		HttpOnly: true,
-		Expires:  time.Now().Add(24 * time.Hour),
+		Expires:  time.Now().Add(24 * 7 * time.Hour),
 	})
 }
-*/
+
+func VerifyToken(token string) bool {
+	var count int
+	query := `SELECT COUNT(*) FROM users WHERE token = ?`
+	err := helpers.DataBase.QueryRow(query, token).Scan(&count)
+	if err != nil {
+		helpers.ErrorLog.Fatalln("Database error:", err)
+		return false
+	}
+
+	return count == 1
+}

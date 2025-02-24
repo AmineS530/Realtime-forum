@@ -41,3 +41,1987 @@ ERROR: 2025/02/22 09:04:43 validation.go:56: Database error: sql: database is cl
 ERROR: 2025/02/22 09:08:19 validation.go:56: Database error: sql: database is closed
 ERROR: 2025/02/22 09:12:13 validation.go:56: Database error: sql: database is closed
 2025/02/22 09:12:41 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.respondWithError (validation.go:65)
+ERROR: 2025/02/24 13:24:15 getdb.go:46: Error executing SQL: near "token": syntax error
+ERROR: 2025/02/24 13:24:30 getdb.go:46: Error executing SQL: near "token": syntax error
+2025/02/24 13:27:37 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.ErrorPagehandler (routes.go:91)
+2025/02/24 13:27:39 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.ErrorPagehandler (routes.go:91)
+2025/02/24 13:29:26 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.respondWithError (validation.go:65)
+2025/02/24 13:29:48 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.respondWithError (validation.go:65)
+2025/02/24 13:31:49 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.respondWithError (validation.go:65)
+2025/02/24 13:56:16 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.respondWithError (validation.go:65)
+2025/02/24 13:57:33 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.respondWithError (validation.go:65)
+ERROR: 2025/02/24 14:02:55 registration.go:174: Database error: no such column: Admin
+2025/02/24 14:03:31 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.respondWithError (validation.go:65)
+2025/02/24 14:12:34 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.respondWithError (validation.go:65)
+2025/02/24 14:13:05 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.respondWithError (validation.go:65)
+ERROR: 2025/02/24 14:13:22 registration.go:174: Database error: no such column: qwerpp
+2025/02/24 14:16:22 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.respondWithError (validation.go:65)
+2025/02/24 14:16:33 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.respondWithError (validation.go:65)
+ERROR: 2025/02/24 14:16:42 registration.go:175: Database error: no such column: qwerppp
+ERROR: 2025/02/24 14:18:54 registration.go:176: Database error: no such column: qwerpppqwer
+2025/02/24 14:25:36 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.respondWithError (validation.go:65)
+2025/02/24 14:25:48 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.respondWithError (validation.go:65)
+ERROR: 2025/02/24 14:25:55 registration.go:176: Database error: unrecognized token: """
+2025/02/24 14:26:36 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.respondWithError (validation.go:65)
+2025/02/24 14:26:44 http: panic serving [::1]:46460: interface conversion: interface {} is int64, not int
+goroutine 8 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d9580?, 0xc000114690?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.RegisterHandler({0x9e6058, 0xc000132000}, 0xc000116000)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/registration.go:55 +0x726
+net/http.HandlerFunc.ServeHTTP(0xc0000d60e0?, {0x9e6058?, 0xc000132000?}, 0x1?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x413c65?, {0x9e6058, 0xc000132000}, 0xc000116000)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0x9e4818?}, {0x9e6058?, 0xc000132000?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0000da090, {0x9e67b0, 0xc00018d140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:26:44 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.respondWithError (validation.go:65)
+ERROR: 2025/02/24 14:29:51 registration.go:143: no such table: credentials
+2025/02/24 14:52:41 http: panic serving [::1]:56832: runtime error: invalid memory address or nil pointer dereference
+goroutine 8 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc00012e7e0}, 0xc00012a780)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc00012e7e0?}, 0xc000031b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0000d60e0?, {0x9e6098?, 0xc00012e7e0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc00012e7e0}, 0xc00012a780)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00018d230?}, {0x9e6098?, 0xc00012e7e0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0000da090, {0x9e67f0, 0xc00018d140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:52:41 http: panic serving [::1]:56842: runtime error: invalid memory address or nil pointer dereference
+goroutine 18 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc00012e8c0}, 0xc00012a000)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc00012e8c0?}, 0xc00006cb38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0000d60e0?, {0x9e6098?, 0xc00012e8c0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc00012e8c0}, 0xc00012a000)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc000118090?}, {0x9e6098?, 0xc00012e8c0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00011c000, {0x9e67f0, 0xc00018d140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:52:41 http: panic serving [::1]:41318: runtime error: invalid memory address or nil pointer dereference
+goroutine 38 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc000220460}, 0xc000206500)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc000220460?}, 0xc000254b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0000d60e0?, {0x9e6098?, 0xc000220460?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc000220460}, 0xc000206500)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0002046f0?}, {0x9e6098?, 0xc000220460?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00020a2d0, {0x9e67f0, 0xc00018d140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:52:42 http: panic serving [::1]:41322: runtime error: invalid memory address or nil pointer dereference
+goroutine 40 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc000220540}, 0xc000206640)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc000220540?}, 0xc000254b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0000d60e0?, {0x9e6098?, 0xc000220540?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc000220540}, 0xc000206640)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc000204840?}, {0x9e6098?, 0xc000220540?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00020a480, {0x9e67f0, 0xc00018d140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:52:42 http: panic serving [::1]:41328: runtime error: invalid memory address or nil pointer dereference
+goroutine 42 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc00012e9a0}, 0xc00012a8c0)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc00012e9a0?}, 0xc00006cb38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0000d60e0?, {0x9e6098?, 0xc00012e9a0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc00012e9a0}, 0xc00012a8c0)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc000118750?}, {0x9e6098?, 0xc00012e9a0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00020a630, {0x9e67f0, 0xc00018d140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:52:42 http: panic serving [::1]:41340: runtime error: invalid memory address or nil pointer dereference
+goroutine 27 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc00012ea80}, 0xc00012aa00)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc00012ea80?}, 0xc00006cb38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0000d60e0?, {0x9e6098?, 0xc00012ea80?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc00012ea80}, 0xc00012aa00)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001188a0?}, {0x9e6098?, 0xc00012ea80?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00011c630, {0x9e67f0, 0xc00018d140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:52:47 http: panic serving [::1]:41346: runtime error: invalid memory address or nil pointer dereference
+goroutine 29 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc00012ec40}, 0xc00012adc0)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc00012ec40?}, 0xc00006cb38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0000d60e0?, {0x9e6098?, 0xc00012ec40?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc00012ec40}, 0xc00012adc0)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001189f0?}, {0x9e6098?, 0xc00012ec40?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00011c7e0, {0x9e67f0, 0xc00018d140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:52:47 http: panic serving [::1]:41350: runtime error: invalid memory address or nil pointer dereference
+goroutine 30 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc00012ed20}, 0xc00012ac80)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc00012ed20?}, 0xc00006db38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0000d60e0?, {0x9e6098?, 0xc00012ed20?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc00012ed20}, 0xc00012ac80)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc000118ab0?}, {0x9e6098?, 0xc00012ed20?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00011c870, {0x9e67f0, 0xc00018d140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:52:47 http: panic serving [::1]:41366: runtime error: invalid memory address or nil pointer dereference
+goroutine 50 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc00012ee00}, 0xc00012af00)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc00012ee00?}, 0xc00006db38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0000d60e0?, {0x9e6098?, 0xc00012ee00?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc00012ee00}, 0xc00012af00)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc000118d80?}, {0x9e6098?, 0xc00012ee00?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00011cbd0, {0x9e67f0, 0xc00018d140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:52:48 http: panic serving [::1]:41378: runtime error: invalid memory address or nil pointer dereference
+goroutine 13 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0000d67e0}, 0xc0000c6780)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0000d67e0?}, 0xc000071b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0000d60e0?, {0x9e6098?, 0xc0000d67e0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0000d67e0}, 0xc0000c6780)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001e6750?}, {0x9e6098?, 0xc0000d67e0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0000da3f0, {0x9e67f0, 0xc00018d140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:52:49 http: panic serving [::1]:41380: runtime error: invalid memory address or nil pointer dereference
+goroutine 15 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0000d69a0}, 0xc0000c68c0)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0000d69a0?}, 0xc000071b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0000d60e0?, {0x9e6098?, 0xc0000d69a0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0000d69a0}, 0xc0000c68c0)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001e68a0?}, {0x9e6098?, 0xc0000d69a0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0000da5a0, {0x9e67f0, 0xc00018d140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:52:49 http: panic serving [::1]:41392: runtime error: invalid memory address or nil pointer dereference
+goroutine 66 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0000d6b60}, 0xc0000c6a00)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0000d6b60?}, 0xc000071b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0000d60e0?, {0x9e6098?, 0xc0000d6b60?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0000d6b60}, 0xc0000c6a00)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001e69f0?}, {0x9e6098?, 0xc0000d6b60?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0000da750, {0x9e67f0, 0xc00018d140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:52:49 http: panic serving [::1]:41394: runtime error: invalid memory address or nil pointer dereference
+goroutine 68 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc000220700}, 0xc000206780)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc000220700?}, 0xc000254b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0000d60e0?, {0x9e6098?, 0xc000220700?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc000220700}, 0xc000206780)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc000204990?}, {0x9e6098?, 0xc000220700?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0000da900, {0x9e67f0, 0xc00018d140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:52:50 http: panic serving [::1]:34298: runtime error: invalid memory address or nil pointer dereference
+goroutine 52 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc00012eee0}, 0xc00012b040)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc00012eee0?}, 0xc00006db38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0000d60e0?, {0x9e6098?, 0xc00012eee0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc00012eee0}, 0xc00012b040)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc000118ed0?}, {0x9e6098?, 0xc00012eee0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00011cd80, {0x9e67f0, 0xc00018d140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:52:52 http: panic serving [::1]:34304: runtime error: invalid memory address or nil pointer dereference
+goroutine 69 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0000d6c40}, 0xc0000c6b40)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0000d6c40?}, 0xc000071b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0000d60e0?, {0x9e6098?, 0xc0000d6c40?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0000d6c40}, 0xc0000c6b40)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001e6c00?}, {0x9e6098?, 0xc0000d6c40?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0000da990, {0x9e67f0, 0xc00018d140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:52:52 http: panic serving [::1]:34320: runtime error: invalid memory address or nil pointer dereference
+goroutine 70 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0002207e0}, 0xc0000c6c80)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0002207e0?}, 0xc000072b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0000d60e0?, {0x9e6098?, 0xc0002207e0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0002207e0}, 0xc0000c6c80)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001e6cc0?}, {0x9e6098?, 0xc0002207e0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0000daa20, {0x9e67f0, 0xc00018d140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:52:52 http: panic serving [::1]:34336: runtime error: invalid memory address or nil pointer dereference
+goroutine 45 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0002208c0}, 0xc0002068c0)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0002208c0?}, 0xc000072b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0000d60e0?, {0x9e6098?, 0xc0002208c0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0002208c0}, 0xc0002068c0)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc000204ba0?}, {0x9e6098?, 0xc0002208c0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00020a900, {0x9e67f0, 0xc00018d140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:52:55 http: panic serving [::1]:34348: runtime error: invalid memory address or nil pointer dereference
+goroutine 72 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0000d6e00}, 0xc0000c6dc0)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0000d6e00?}, 0xc000071b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0000d60e0?, {0x9e6098?, 0xc0000d6e00?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0000d6e00}, 0xc0000c6dc0)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001e6e10?}, {0x9e6098?, 0xc0000d6e00?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0000dabd0, {0x9e67f0, 0xc00018d140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:52:56 http: panic serving [::1]:34360: runtime error: invalid memory address or nil pointer dereference
+goroutine 74 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0000d6ee0}, 0xc0000c6f00)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0000d6ee0?}, 0xc000071b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0000d60e0?, {0x9e6098?, 0xc0000d6ee0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0000d6ee0}, 0xc0000c6f00)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001e6f60?}, {0x9e6098?, 0xc0000d6ee0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0000dad80, {0x9e67f0, 0xc00018d140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:52:56 http: panic serving [::1]:34370: runtime error: invalid memory address or nil pointer dereference
+goroutine 76 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0000d6fc0}, 0xc0000c7040)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0000d6fc0?}, 0xc000071b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0000d60e0?, {0x9e6098?, 0xc0000d6fc0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0000d6fc0}, 0xc0000c7040)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001e70b0?}, {0x9e6098?, 0xc0000d6fc0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0000daf30, {0x9e67f0, 0xc00018d140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:53:01 http: panic serving [::1]:34382: runtime error: invalid memory address or nil pointer dereference
+goroutine 54 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0002209a0}, 0xc00012b180)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0002209a0?}, 0xc00006db38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0000d60e0?, {0x9e6098?, 0xc0002209a0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0002209a0}, 0xc00012b180)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc000119020?}, {0x9e6098?, 0xc0002209a0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00011cf30, {0x9e67f0, 0xc00018d140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:53:01 http: panic serving [::1]:53060: runtime error: invalid memory address or nil pointer dereference
+goroutine 55 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc00012efc0}, 0xc00012b2c0)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc00012efc0?}, 0xc00006cb38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0000d60e0?, {0x9e6098?, 0xc00012efc0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc00012efc0}, 0xc00012b2c0)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001190e0?}, {0x9e6098?, 0xc00012efc0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00011cfc0, {0x9e67f0, 0xc00018d140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:53:31 http: panic serving [::1]:53066: runtime error: invalid memory address or nil pointer dereference
+goroutine 57 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0000d70a0}, 0xc00012b400)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0000d70a0?}, 0xc00006cb38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0000d60e0?, {0x9e6098?, 0xc0000d70a0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0000d70a0}, 0xc00012b400)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc000119230?}, {0x9e6098?, 0xc0000d70a0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00011d170, {0x9e67f0, 0xc00018d140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:53:31 http: panic serving [::1]:53072: runtime error: invalid memory address or nil pointer dereference
+goroutine 78 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0000d7180}, 0xc0000c7180)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0000d7180?}, 0xc000071b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0000d60e0?, {0x9e6098?, 0xc0000d7180?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0000d7180}, 0xc0000c7180)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001e7200?}, {0x9e6098?, 0xc0000d7180?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0000db0e0, {0x9e67f0, 0xc00018d140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:53:31 http: panic serving [::1]:43310: runtime error: invalid memory address or nil pointer dereference
+goroutine 81 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0000d7260}, 0xc0000c72c0)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0000d7260?}, 0xc000071b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0000d60e0?, {0x9e6098?, 0xc0000d7260?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0000d7260}, 0xc0000c72c0)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001e7410?}, {0x9e6098?, 0xc0000d7260?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0000db3b0, {0x9e67f0, 0xc00018d140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:54:07 http: panic serving [::1]:47570: runtime error: invalid memory address or nil pointer dereference
+goroutine 21 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0001721c0}, 0xc000160280)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0001721c0?}, 0xc000199b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0001721c0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0001721c0}, 0xc000160280)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001ab230?}, {0x9e6098?, 0xc0001721c0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000176090, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:54:08 http: panic serving [::1]:47584: runtime error: invalid memory address or nil pointer dereference
+goroutine 23 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0001722a0}, 0xc0001603c0)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0001722a0?}, 0xc00006cb38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0001722a0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0001722a0}, 0xc0001603c0)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001ab3e0?}, {0x9e6098?, 0xc0001722a0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000176240, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:54:08 http: panic serving [::1]:47588: runtime error: invalid memory address or nil pointer dereference
+goroutine 24 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc000172380}, 0xc000160500)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc000172380?}, 0xc00006db38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc000172380?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc000172380}, 0xc000160500)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001ab4a0?}, {0x9e6098?, 0xc000172380?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0001762d0, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:54:08 http: panic serving [::1]:47600: runtime error: invalid memory address or nil pointer dereference
+goroutine 5 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0000a4000}, 0xc00009a000)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0000a4000?}, 0xc000071b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0000a4000?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0000a4000}, 0xc00009a000)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc000096090?}, {0x9e6098?, 0xc0000a4000?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000098000, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:54:08 http: panic serving [::1]:47614: runtime error: invalid memory address or nil pointer dereference
+goroutine 7 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0000a40e0}, 0xc00009a140)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0000a40e0?}, 0xc000071b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0000a40e0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0000a40e0}, 0xc00009a140)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0000961e0?}, {0x9e6098?, 0xc0000a40e0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0000981b0, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:54:08 http: panic serving [::1]:47624: runtime error: invalid memory address or nil pointer dereference
+goroutine 27 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc000172460}, 0xc000160640)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc000172460?}, 0xc00006db38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc000172460?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc000172460}, 0xc000160640)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001ab740?}, {0x9e6098?, 0xc000172460?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0001765a0, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:54:08 http: panic serving [::1]:47626: runtime error: invalid memory address or nil pointer dereference
+goroutine 34 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc000266000}, 0xc000252000)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc000266000?}, 0xc00024ab38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc000266000?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc000266000}, 0xc000252000)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc000236090?}, {0x9e6098?, 0xc000266000?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00023a000, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:54:08 http: panic serving [::1]:47642: runtime error: invalid memory address or nil pointer dereference
+goroutine 9 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0000a41c0}, 0xc00009a280)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0000a41c0?}, 0xc000071b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0000a41c0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0000a41c0}, 0xc00009a280)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc000096330?}, {0x9e6098?, 0xc0000a41c0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000098360, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:54:08 http: panic serving [::1]:47648: runtime error: invalid memory address or nil pointer dereference
+goroutine 29 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc000172540}, 0xc000160780)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc000172540?}, 0xc00006db38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc000172540?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc000172540}, 0xc000160780)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001ab890?}, {0x9e6098?, 0xc000172540?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000176750, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:54:08 http: panic serving [::1]:47664: runtime error: invalid memory address or nil pointer dereference
+goroutine 31 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc000172620}, 0xc0001608c0)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc000172620?}, 0xc00006db38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc000172620?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc000172620}, 0xc0001608c0)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001ab9e0?}, {0x9e6098?, 0xc000172620?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000176900, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:54:08 http: panic serving [::1]:47666: runtime error: invalid memory address or nil pointer dereference
+goroutine 36 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0002660e0}, 0xc000252140)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0002660e0?}, 0xc00024ab38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0002660e0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0002660e0}, 0xc000252140)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc000236210?}, {0x9e6098?, 0xc0002660e0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00023a1b0, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:54:25 http: panic serving [::1]:47682: runtime error: invalid memory address or nil pointer dereference
+goroutine 11 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0002661c0}, 0xc000160a00)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0002661c0?}, 0xc00006db38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0002661c0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0002661c0}, 0xc000160a00)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001abad0?}, {0x9e6098?, 0xc0002661c0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000098510, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:54:25 http: panic serving [::1]:47692: runtime error: invalid memory address or nil pointer dereference
+goroutine 38 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0002662a0}, 0xc000252280)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0002662a0?}, 0xc00024ab38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0002662a0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0002662a0}, 0xc000252280)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc000236360?}, {0x9e6098?, 0xc0002662a0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00023a360, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:54:25 http: panic serving [::1]:46598: runtime error: invalid memory address or nil pointer dereference
+goroutine 41 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc000266380}, 0xc0002523c0)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc000266380?}, 0xc00024ab38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc000266380?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc000266380}, 0xc0002523c0)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0002365d0?}, {0x9e6098?, 0xc000266380?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00023a630, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:55:23 http: panic serving [::1]:59114: runtime error: invalid memory address or nil pointer dereference
+goroutine 21 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0001721c0}, 0xc000160280)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xb0
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0001721c0?}, 0xc000199b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0001721c0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0001721c0}, 0xc000160280)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001ab230?}, {0x9e6098?, 0xc0001721c0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000176090, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:55:23 http: panic serving [::1]:59124: runtime error: invalid memory address or nil pointer dereference
+goroutine 23 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0001722a0}, 0xc0001603c0)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xb0
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0001722a0?}, 0xc00006cb38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0001722a0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0001722a0}, 0xc0001603c0)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001ab3e0?}, {0x9e6098?, 0xc0001722a0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000176240, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:55:23 http: panic serving [::1]:59138: runtime error: invalid memory address or nil pointer dereference
+goroutine 24 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc000172380}, 0xc000160500)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xb0
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc000172380?}, 0xc00006db38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc000172380?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc000172380}, 0xc000160500)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001ab4a0?}, {0x9e6098?, 0xc000172380?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0001762d0, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:55:23 http: panic serving [::1]:59144: runtime error: invalid memory address or nil pointer dereference
+goroutine 27 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc000172460}, 0xc000160640)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xb0
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc000172460?}, 0xc00006db38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc000172460?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc000172460}, 0xc000160640)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001ab740?}, {0x9e6098?, 0xc000172460?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0001765a0, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:55:57 http: panic serving [::1]:56490: runtime error: invalid memory address or nil pointer dereference
+goroutine 21 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0001721c0}, 0xc000160280)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0001721c0?}, 0xc000199b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0001721c0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0001721c0}, 0xc000160280)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001ab230?}, {0x9e6098?, 0xc0001721c0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000176090, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:55:57 http: panic serving [::1]:56492: runtime error: invalid memory address or nil pointer dereference
+goroutine 23 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0001722a0}, 0xc0001603c0)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0001722a0?}, 0xc00006cb38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0001722a0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0001722a0}, 0xc0001603c0)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001ab3e0?}, {0x9e6098?, 0xc0001722a0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000176240, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:55:57 http: panic serving [::1]:56494: runtime error: invalid memory address or nil pointer dereference
+goroutine 25 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc000172380}, 0xc000160500)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc000172380?}, 0xc00006cb38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc000172380?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc000172380}, 0xc000160500)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001ab530?}, {0x9e6098?, 0xc000172380?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0001763f0, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:55:59 http: panic serving [::1]:56508: runtime error: invalid memory address or nil pointer dereference
+goroutine 27 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc000172540}, 0xc000160640)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc000172540?}, 0xc00006cb38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc000172540?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc000172540}, 0xc000160640)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001ab680?}, {0x9e6098?, 0xc000172540?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0001765a0, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:00 http: panic serving [::1]:56510: runtime error: invalid memory address or nil pointer dereference
+goroutine 34 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc00023a000}, 0xc000226000)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc00023a000?}, 0xc00021eb38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc00023a000?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc00023a000}, 0xc000226000)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00020a090?}, {0x9e6098?, 0xc00023a000?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00020e000, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:00 http: panic serving [::1]:56520: runtime error: invalid memory address or nil pointer dereference
+goroutine 35 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc00023a0e0}, 0xc000226140)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc00023a0e0?}, 0xc00021fb38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc00023a0e0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc00023a0e0}, 0xc000226140)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00020a180?}, {0x9e6098?, 0xc00023a0e0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00020e090, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:00 http: panic serving [::1]:39882: runtime error: invalid memory address or nil pointer dereference
+goroutine 38 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc00023a1c0}, 0xc000226280)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc00023a1c0?}, 0xc00021fb38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc00023a1c0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc00023a1c0}, 0xc000226280)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00020a420?}, {0x9e6098?, 0xc00023a1c0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00020e360, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:05 http: panic serving [::1]:39898: runtime error: invalid memory address or nil pointer dereference
+goroutine 40 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc000172620}, 0xc000160780)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc000172620?}, 0xc00006cb38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc000172620?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc000172620}, 0xc000160780)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001ab770?}, {0x9e6098?, 0xc000172620?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00020e510, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:05 http: panic serving [::1]:39908: runtime error: invalid memory address or nil pointer dereference
+goroutine 5 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0000a4000}, 0xc00009a000)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0000a4000?}, 0xc000071b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0000a4000?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0000a4000}, 0xc00009a000)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc000096090?}, {0x9e6098?, 0xc0000a4000?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000098000, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:05 http: panic serving [::1]:39916: runtime error: invalid memory address or nil pointer dereference
+goroutine 41 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc00023a2a0}, 0xc0002263c0)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc00023a2a0?}, 0xc00021fb38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc00023a2a0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc00023a2a0}, 0xc0002263c0)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00020a5d0?}, {0x9e6098?, 0xc00023a2a0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00020e5a0, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:35 http: panic serving [::1]:46674: runtime error: invalid memory address or nil pointer dereference
+goroutine 7 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0000a40e0}, 0xc00009a140)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0000a40e0?}, 0xc000071b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0000a40e0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0000a40e0}, 0xc00009a140)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0000961e0?}, {0x9e6098?, 0xc0000a40e0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0000981b0, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:35 http: panic serving [::1]:46684: runtime error: invalid memory address or nil pointer dereference
+goroutine 9 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0000a41c0}, 0xc00009a280)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0000a41c0?}, 0xc000071b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0000a41c0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0000a41c0}, 0xc00009a280)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc000096330?}, {0x9e6098?, 0xc0000a41c0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000098360, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:35 http: panic serving [::1]:46692: runtime error: invalid memory address or nil pointer dereference
+goroutine 11 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0000a42a0}, 0xc00009a3c0)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0000a42a0?}, 0xc000071b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0000a42a0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0000a42a0}, 0xc00009a3c0)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc000096480?}, {0x9e6098?, 0xc0000a42a0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000098510, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:46 http: panic serving [::1]:43130: runtime error: invalid memory address or nil pointer dereference
+goroutine 13 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0000a4380}, 0xc00009a500)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0000a4380?}, 0xc000071b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0000a4380?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0000a4380}, 0xc00009a500)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0000965d0?}, {0x9e6098?, 0xc0000a4380?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0000986c0, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:46 http: panic serving [::1]:43136: runtime error: invalid memory address or nil pointer dereference
+goroutine 14 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc00023a380}, 0xc00009a640)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc00023a380?}, 0xc000072b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc00023a380?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc00023a380}, 0xc00009a640)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc000096690?}, {0x9e6098?, 0xc00023a380?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000098750, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:46 http: panic serving [::1]:43138: runtime error: invalid memory address or nil pointer dereference
+goroutine 30 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc000172700}, 0xc0001608c0)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc000172700?}, 0xc00006cb38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc000172700?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc000172700}, 0xc0001608c0)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001ab8c0?}, {0x9e6098?, 0xc000172700?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000176870, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:46 http: panic serving [::1]:43148: runtime error: invalid memory address or nil pointer dereference
+goroutine 16 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0000a4460}, 0xc00009a780)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0000a4460?}, 0xc000071b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0000a4460?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0000a4460}, 0xc00009a780)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc000096810?}, {0x9e6098?, 0xc0000a4460?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000098900, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:46 http: panic serving [::1]:43160: runtime error: invalid memory address or nil pointer dereference
+goroutine 44 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc00023a460}, 0xc000226500)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc00023a460?}, 0xc000072b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc00023a460?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc00023a460}, 0xc000226500)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00020a7b0?}, {0x9e6098?, 0xc00023a460?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00020e870, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:46 http: panic serving [::1]:43174: runtime error: invalid memory address or nil pointer dereference
+goroutine 46 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc00023a540}, 0xc000226640)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc00023a540?}, 0xc000072b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc00023a540?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc00023a540}, 0xc000226640)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00020a900?}, {0x9e6098?, 0xc00023a540?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00020ea20, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:46 http: panic serving [::1]:43178: runtime error: invalid memory address or nil pointer dereference
+goroutine 48 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc00023a620}, 0xc000226780)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc00023a620?}, 0xc000072b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc00023a620?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc00023a620}, 0xc000226780)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00020aa50?}, {0x9e6098?, 0xc00023a620?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00020ebd0, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:47 http: panic serving [::1]:43182: runtime error: invalid memory address or nil pointer dereference
+goroutine 32 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0001727e0}, 0xc000160a00)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0001727e0?}, 0xc00006cb38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0001727e0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0001727e0}, 0xc000160a00)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001aba70?}, {0x9e6098?, 0xc0001727e0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000176a20, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:47 http: panic serving [::1]:43196: runtime error: invalid memory address or nil pointer dereference
+goroutine 33 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0001728c0}, 0xc000160b40)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0001728c0?}, 0xc00006db38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0001728c0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0001728c0}, 0xc000160b40)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001abb30?}, {0x9e6098?, 0xc0001728c0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000176ab0, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:47 http: panic serving [::1]:43202: runtime error: invalid memory address or nil pointer dereference
+goroutine 82 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc00023a700}, 0xc0002268c0)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc00023a700?}, 0xc000072b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc00023a700?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc00023a700}, 0xc0002268c0)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00020aba0?}, {0x9e6098?, 0xc00023a700?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00020ed80, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:52 http: panic serving [::1]:47846: runtime error: invalid memory address or nil pointer dereference
+goroutine 84 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc00023a7e0}, 0xc000226a00)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc00023a7e0?}, 0xc000072b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc00023a7e0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc00023a7e0}, 0xc000226a00)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00020acf0?}, {0x9e6098?, 0xc00023a7e0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00020ef30, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:52 http: panic serving [::1]:47858: runtime error: invalid memory address or nil pointer dereference
+goroutine 85 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc00023a8c0}, 0xc000226b40)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc00023a8c0?}, 0xc00021fb38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc00023a8c0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc00023a8c0}, 0xc000226b40)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00020adb0?}, {0x9e6098?, 0xc00023a8c0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00020efc0, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:52 http: panic serving [::1]:47872: runtime error: invalid memory address or nil pointer dereference
+goroutine 88 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc00023a9a0}, 0xc000226c80)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc00023a9a0?}, 0xc00021fb38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc00023a9a0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc00023a9a0}, 0xc000226c80)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00020af90?}, {0x9e6098?, 0xc00023a9a0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00020f290, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:55 http: panic serving [::1]:47878: runtime error: invalid memory address or nil pointer dereference
+goroutine 90 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc00023aa80}, 0xc000226dc0)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc00023aa80?}, 0xc00021fb38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc00023aa80?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc00023aa80}, 0xc000226dc0)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00020b0e0?}, {0x9e6098?, 0xc00023aa80?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00020f440, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:55 http: panic serving [::1]:47880: runtime error: invalid memory address or nil pointer dereference
+goroutine 91 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0001729a0}, 0xc000226f00)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0001729a0?}, 0xc000072b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0001729a0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0001729a0}, 0xc000226f00)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00020b1a0?}, {0x9e6098?, 0xc0001729a0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00020f4d0, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:55 http: panic serving [::1]:47896: runtime error: invalid memory address or nil pointer dereference
+goroutine 69 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc000172a80}, 0xc000160c80)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc000172a80?}, 0xc000072b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc000172a80?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc000172a80}, 0xc000160c80)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001abdd0?}, {0x9e6098?, 0xc000172a80?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000176ea0, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:55 http: panic serving [::1]:47904: runtime error: invalid memory address or nil pointer dereference
+goroutine 71 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc000172b60}, 0xc000160dc0)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc000172b60?}, 0xc000072b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc000172b60?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc000172b60}, 0xc000160dc0)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0001abf20?}, {0x9e6098?, 0xc000172b60?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000177050, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:55 http: panic serving [::1]:47920: runtime error: invalid memory address or nil pointer dereference
+goroutine 93 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc00023ab60}, 0xc000227040)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc00023ab60?}, 0xc00021fb38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc00023ab60?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc00023ab60}, 0xc000227040)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00020b2f0?}, {0x9e6098?, 0xc00023ab60?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00020f680, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:55 http: panic serving [::1]:47932: runtime error: invalid memory address or nil pointer dereference
+goroutine 51 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0000a4540}, 0xc00009a8c0)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0000a4540?}, 0xc000071b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0000a4540?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0000a4540}, 0xc00009a8c0)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0000969c0?}, {0x9e6098?, 0xc0000a4540?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000098ab0, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:55 http: panic serving [::1]:47946: runtime error: invalid memory address or nil pointer dereference
+goroutine 53 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0000a4620}, 0xc00009aa00)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0000a4620?}, 0xc000071b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0000a4620?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0000a4620}, 0xc00009aa00)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc000096b10?}, {0x9e6098?, 0xc0000a4620?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000098c60, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:55 http: panic serving [::1]:47956: runtime error: invalid memory address or nil pointer dereference
+goroutine 55 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0000a4700}, 0xc00009ab40)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0000a4700?}, 0xc000071b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0000a4700?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0000a4700}, 0xc00009ab40)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc000096c60?}, {0x9e6098?, 0xc0000a4700?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000098e10, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:55 http: panic serving [::1]:47972: runtime error: invalid memory address or nil pointer dereference
+goroutine 56 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0000a47e0}, 0xc00009ac80)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0000a47e0?}, 0xc000073b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0000a47e0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0000a47e0}, 0xc00009ac80)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc000096d20?}, {0x9e6098?, 0xc0000a47e0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000098ea0, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:55 http: panic serving [::1]:47976: runtime error: invalid memory address or nil pointer dereference
+goroutine 59 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0000a48c0}, 0xc00009adc0)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0000a48c0?}, 0xc000073b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0000a48c0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0000a48c0}, 0xc00009adc0)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc000096f30?}, {0x9e6098?, 0xc0000a48c0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000099170, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:55 http: panic serving [::1]:47990: runtime error: invalid memory address or nil pointer dereference
+goroutine 73 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0001721c0}, 0xc000160000)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0001721c0?}, 0xc00006eb38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0001721c0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0001721c0}, 0xc000160000)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00020a090?}, {0x9e6098?, 0xc0001721c0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000176090, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:55 http: panic serving [::1]:48000: runtime error: invalid memory address or nil pointer dereference
+goroutine 75 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0001722a0}, 0xc000160280)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0001722a0?}, 0xc00006eb38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0001722a0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0001722a0}, 0xc000160280)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00020a240?}, {0x9e6098?, 0xc0001722a0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000176240, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:55 http: panic serving [::1]:48014: runtime error: invalid memory address or nil pointer dereference
+goroutine 105 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0000a4000}, 0xc00009a000)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0000a4000?}, 0xc000379b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0000a4000?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0000a4000}, 0xc00009a000)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0000960f0?}, {0x9e6098?, 0xc0000a4000?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000098000, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:55 http: panic serving [::1]:48020: runtime error: invalid memory address or nil pointer dereference
+goroutine 95 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0000d8000}, 0xc0000d0000)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0000d8000?}, 0xc000375b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0000d8000?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0000d8000}, 0xc0000d0000)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00012d2f0?}, {0x9e6098?, 0xc0000d8000?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0000a2000, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:55 http: panic serving [::1]:48024: runtime error: invalid memory address or nil pointer dereference
+goroutine 77 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc000172380}, 0xc0001603c0)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc000172380?}, 0xc00006eb38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc000172380?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc000172380}, 0xc0001603c0)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00020a420?}, {0x9e6098?, 0xc000172380?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0001763f0, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:55 http: panic serving [::1]:48032: runtime error: invalid memory address or nil pointer dereference
+goroutine 78 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc000172460}, 0xc000160500)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc000172460?}, 0xc00006fb38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc000172460?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc000172460}, 0xc000160500)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00020a4e0?}, {0x9e6098?, 0xc000172460?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000176480, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:55 http: panic serving [::1]:48040: runtime error: invalid memory address or nil pointer dereference
+goroutine 81 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc000172540}, 0xc000160640)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc000172540?}, 0xc00006fb38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc000172540?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc000172540}, 0xc000160640)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00020a750?}, {0x9e6098?, 0xc000172540?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000176750, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:55 http: panic serving [::1]:48056: runtime error: invalid memory address or nil pointer dereference
+goroutine 115 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc000172620}, 0xc000160780)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc000172620?}, 0xc00006fb38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc000172620?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc000172620}, 0xc000160780)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00020a8a0?}, {0x9e6098?, 0xc000172620?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000176900, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:55 http: panic serving [::1]:48064: runtime error: invalid memory address or nil pointer dereference
+goroutine 117 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc000172700}, 0xc0001608c0)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc000172700?}, 0xc00006fb38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc000172700?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc000172700}, 0xc0001608c0)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00020a9f0?}, {0x9e6098?, 0xc000172700?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000176ab0, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:55 http: panic serving [::1]:48076: runtime error: invalid memory address or nil pointer dereference
+goroutine 107 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0000a40e0}, 0xc00009a140)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0000a40e0?}, 0xc000379b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0000a40e0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0000a40e0}, 0xc00009a140)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc000096240?}, {0x9e6098?, 0xc0000a40e0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc0000981b0, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:56:55 http: panic serving [::1]:48090: runtime error: invalid memory address or nil pointer dereference
+goroutine 109 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0000a41c0}, 0xc00009a280)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0000a41c0?}, 0xc000379b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0000a41c0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0000a41c0}, 0xc00009a280)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc000096390?}, {0x9e6098?, 0xc0000a41c0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000098360, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:57:25 http: panic serving [::1]:54082: runtime error: invalid memory address or nil pointer dereference
+goroutine 119 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0001727e0}, 0xc000160a00)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0001727e0?}, 0xc00006fb38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0001727e0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0001727e0}, 0xc000160a00)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00020ab40?}, {0x9e6098?, 0xc0001727e0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000176c60, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:57:25 http: panic serving [::1]:54098: runtime error: invalid memory address or nil pointer dereference
+goroutine 120 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0001728c0}, 0xc000160b40)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0001728c0?}, 0xc00006eb38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0001728c0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0001728c0}, 0xc000160b40)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00020ac00?}, {0x9e6098?, 0xc0001728c0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000176cf0, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:57:25 http: panic serving [::1]:54112: runtime error: invalid memory address or nil pointer dereference
+goroutine 123 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0001729a0}, 0xc000160c80)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0001729a0?}, 0xc00006eb38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0001729a0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0001729a0}, 0xc000160c80)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc00020ade0?}, {0x9e6098?, 0xc0001729a0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000176fc0, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 14:57:35 http: panic serving [::1]:52090: runtime error: invalid memory address or nil pointer dereference
+goroutine 111 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d4460?, 0xc79cd0?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.IndexHandler({0x9e6098, 0xc0000a42a0}, 0xc00009a3c0)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:85 +0xad
+RTF/back-end/Handlers.Routes.func1({0x9e6098?, 0xc0000a42a0?}, 0xc000379b38?)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/routes.go:40 +0xbc
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6098?, 0xc0000a42a0?}, 0x6d01b6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x46bfd9?, {0x9e6098, 0xc0000a42a0}, 0xc00009a3c0)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0xc0000964e0?}, {0x9e6098?, 0xc0000a42a0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000098510, {0x9e67f0, 0xc0001ab140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 15:10:39 http: panic serving [::1]:51614: interface conversion: interface {} is int64, not int
+goroutine 21 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d9580?, 0xc000188390?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.getID({0xc0001a21b8, 0x5})
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/login.go:60 +0x194
+RTF/back-end/Handlers.LoginHandler({0x9e6058, 0xc0001ba000}, 0xc0001ac140)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/login.go:32 +0x13d
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6058?, 0xc0001ba000?}, 0x3?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x413c65?, {0x9e6058, 0xc0001ba000}, 0xc0001ac140)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0x9e4818?}, {0x9e6058?, 0xc0001ba000?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc000176090, {0x9e67b0, 0xc00022b140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 15:10:39 http: panic serving [::1]:51624: interface conversion: interface {} is int64, not int
+goroutine 34 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d9580?, 0xc000188570?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.getID({0xc0001a2308, 0x5})
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/login.go:60 +0x194
+RTF/back-end/Handlers.LoginHandler({0x9e6058, 0xc0001ba0e0}, 0xc0001ac000)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/login.go:32 +0x13d
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6058?, 0xc0001ba0e0?}, 0x1?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x413c65?, {0x9e6058, 0xc0001ba0e0}, 0xc0001ac000)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0x9e4818?}, {0x9e6058?, 0xc0001ba0e0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00018c000, {0x9e67b0, 0xc00022b140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 15:10:39 http: panic serving [::1]:51632: interface conversion: interface {} is int64, not int
+goroutine 37 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:1947 +0xbe
+panic({0x8d9580?, 0xc000188840?})
+	/usr/local/go1.23.3.linux-amd64/src/runtime/panic.go:785 +0x132
+RTF/back-end/Handlers.getID({0xc0001a2458, 0x5})
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/login.go:60 +0x194
+RTF/back-end/Handlers.LoginHandler({0x9e6058, 0xc0001ba1c0}, 0xc0001ac500)
+	/home/amines/Code/zone01/JS/Realtime-forum/back-end/Handlers/login.go:32 +0x13d
+net/http.HandlerFunc.ServeHTTP(0xc0001720e0?, {0x9e6058?, 0xc0001ba1c0?}, 0x0?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2220 +0x29
+net/http.(*ServeMux).ServeHTTP(0x413c65?, {0x9e6058, 0xc0001ba1c0}, 0xc0001ac500)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2747 +0x1ca
+net/http.serverHandler.ServeHTTP({0x9e4818?}, {0x9e6058?, 0xc0001ba1c0?}, 0x6?)
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3210 +0x8e
+net/http.(*conn).serve(0xc00018c2d0, {0x9e67b0, 0xc00022b140})
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:2092 +0x5d0
+created by net/http.(*Server).Serve in goroutine 1
+	/usr/local/go1.23.3.linux-amd64/src/net/http/server.go:3360 +0x485
+2025/02/24 15:11:20 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.respondWithError (validation.go:65)
+2025/02/24 15:11:33 http: superfluous response.WriteHeader call from RTF/back-end/Handlers.respondWithError (validation.go:65)

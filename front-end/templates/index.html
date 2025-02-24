@@ -13,7 +13,7 @@
 
 <body>
 
-    {{ if .Online }}
+    {{ if . }}
 
         <!-- Main Forum Section -->
         <ul class="nav">
@@ -24,7 +24,7 @@
                 </a>
             </li>
             <li>
-                <a href="#" title="Logout">
+                <a href="/api/logout" title="Logout">
                     {{ template "svg-logout" }}
                 </a>
             </li>

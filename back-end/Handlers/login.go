@@ -11,8 +11,8 @@ import (
 // User struct to handle login and registration data
 
 type UserLogin struct {
-	NameEmail string `json:"name_or_email"`
-	Password  string `json:"password"`
+	Name_Email string `json:"name_or_email"`
+	Password   string `json:"password"`
 }
 
 // LoginHandler processes login requests
@@ -21,7 +21,6 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
 		return
 	}
-
 	var user UserLogin
 	err := json.NewDecoder(r.Body).Decode(&user)
 	if err != nil {
@@ -30,12 +29,37 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// TODO: Authenticate user (check credentials from a database)
-	/*if user.Username != "" && user.Email != "" && user.Password != "" {
+	userID, err := getID(user.Name_Email)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusUnauthorized)
+		return
+	}
+
+	if user.Name_Email != "" && CheckPassword(user.Password, userID) {
+		authorize(userID, w)
 		response := map[string]string{"message": "Login successful"}
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(response)
 	} else {
-		http.Error(w, "Invalid credentials", http.StatusUnauthorized)
-	}*/
-	fmt.Printf("Login data:\nuser: %s\npassword: %s\n", user.NameEmail, user.Password)	
+		http.Error(w, "Invalid Login info", http.StatusUnauthorized)
+	}
+	fmt.Printf("Login data:\nuser: %s\npassword: %s\n", user.Name_Email, user.Password)
+}
+
+func getID(nameOrEmail string) (int, error) {
+	var isUsername bool
+	var userID int
+	if entryExists("username", nameOrEmail, true) {
+		isUsername = true
+	} else if entryExists("email", nameOrEmail, true) {
+		isUsername = false
+	} else {
+		return -1, fmt.Errorf("Invalid Login info")
+	}
+	if isUsername {
+		userID = getElemVal("id", "users", `username = "`+nameOrEmail+`"`).(int)
+	} else {
+		userID = getElemVal("id", "users", `email = "`+nameOrEmail+`"`).(int)
+	}
+	return userID, nil
 }
