@@ -22,6 +22,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	var user UserLogin
+	var userID int
 	err := json.NewDecoder(r.Body).Decode(&user)
 	if err != nil {
 		http.Error(w, "Invalid request body", http.StatusBadRequest)
@@ -29,13 +30,14 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// TODO: Authenticate user (check credentials from a database)
-	userID, err := getID(user.Name_Email)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusUnauthorized)
-		return
-	}
-
-	if user.Name_Email != "" && CheckPassword(user.Password, userID) {
+	if user.Name_Email != "" {
+		userID, err = getID(user.Name_Email)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusUnauthorized)
+			return
+		}
+	} 
+	if CheckPassword(user.Password, userID) {
 		authorize(userID, w)
 		response := map[string]string{"message": "Login successful"}
 		w.Header().Set("Content-Type", "application/json")
@@ -57,9 +59,9 @@ func getID(nameOrEmail string) (int, error) {
 		return -1, fmt.Errorf("Invalid Login info")
 	}
 	if isUsername {
-		userID = getElemVal("id", "users", `username = "`+nameOrEmail+`"`).(int)
+		userID = int(getElemVal("id", "users", `username = "`+nameOrEmail+`"`).(int64))
 	} else {
-		userID = getElemVal("id", "users", `email = "`+nameOrEmail+`"`).(int)
+		userID = int(getElemVal("id", "users", `email = "`+nameOrEmail+`"`).(int64))
 	}
 	return userID, nil
 }

@@ -96,7 +96,6 @@ async function fetching(event, endpoint) {
         }
     } catch (error) {
         console.error("Fetch error:", error);
-        alert("Network error. Please try again.");
+       // alert("Network error. Please try again.");
     }
-    console.log(jsonData);
 }

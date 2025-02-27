@@ -161,7 +161,7 @@ func CheckPassword(password string, userID int) bool {
 	if err != nil {
 		helpers.ErrorLog.Fatalln(err.Error())
 	}
-
+	fmt.Println("login iss", bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password)) == nil)
 	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password)) == nil
 }
 
