@@ -9,8 +9,17 @@ CREATE TABLE
         age INTEGER NOT NULL,
         gender CHAR NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        token TEXT UNIQUE,
         CHECK (gender IN ("male", "female", "Attack helicopter"))
+    );
+
+CREATE TABLE
+    IF NOT EXISTS `sessions` (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL,
+        session_id  TEXT UNIQUE NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        expires_at TIMESTAMP NOT NULL,
+        FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
     );
 
 CREATE TABLE

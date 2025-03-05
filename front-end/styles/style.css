@@ -1,3 +1,15 @@
+/* Root for commonly used properties */
+:root {
+    --auth-bg-color: #494949;
+    --auth-primary-text-color: #333;
+    --nav-highlight-color: red;
+    --card-bg-color: #ccc;
+    --card-border-color: #333;
+    --card-box-shadow-color: rgba(0, 0, 0, 0.5);
+    --card-hover-box-shadow-color: rgba(255, 0, 0, 0.5);
+}
+
+/* Universal Reset */
 * {
     margin: 0;
     padding: 0;
@@ -6,55 +18,46 @@
 
 body {
     font-family: Arial, sans-serif;
-    background: #f4f4f9;
-    color: #333;
+    background: var(--auth-bg-color);
+    color: var(--auth-primary-text-color);
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background: #f4f4f9;
-    color: #333;
-}
-
+/* Navigation Styles */
 .nav {
     z-index: 1;
     position: sticky;
     top: 0;
     height: 6vh;
-    background-color: red;
+    background-color: var(--nav-highlight-color);
     display: flex;
     justify-content: space-between;
     padding-left: 1vw;
     padding-right: 1vw;
     list-style-type: none;
     align-items: center;
-
-    * {
-        font-size: 4vh;
-    }
 }
 
-.card , .post , .comment-container {
-    background-color: #ccc;
+.nav * {
+    font-size: 4vh;
+}
+
+/* Card, Post, and Comment Container Styles */
+.card, .post, .comment-container {
+    background-color: var(--card-bg-color);
     border-radius: 10px;
-    border: #333 solid 2px;
-    box-shadow: -5px 5px 10px rgba(0, 0, 0, 0.5);
+    border: 2px solid var(--card-border-color);
+    box-shadow: -5px 5px 10px var(--card-box-shadow-color);
     padding: 20px;
     margin: 20px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     mix-blend-mode: multiply;
 }
 
-.card:hover , .post:hover {
-    transform: translate(5px , -5px);
-    box-shadow: -7px 7px 10px rgba(255, 0, 0, 0.5);
+.card:hover, .post:hover {
+    transform: translate(5px, -5px);
+    box-shadow: -7px 7px 10px var(--card-hover-box-shadow-color);
 }
+
 
 /* Header styling from template */
 /* header {

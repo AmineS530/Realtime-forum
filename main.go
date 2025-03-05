@@ -7,7 +7,7 @@ import (
 
 	database "RTF/DataBase"
 	helpers "RTF/back-end"
-	handlers "RTF/back-end/Handlers"
+	handlers "RTF/back-end/goFiles"
 )
 
 func init() {

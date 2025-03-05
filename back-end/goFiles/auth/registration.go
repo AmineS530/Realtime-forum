@@ -1,15 +1,14 @@
-package handlers
+package auth
 
 import (
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"regexp"
-	"time"
 
 	helpers "RTF/back-end"
 
-	"github.com/gofrs/uuid"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -51,12 +50,10 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	// get the id of the inserted values
 
 	// use bcrypt to hash the password and store it in the database
-	fmt.Println(user.Username, "qwerqwerqwererqwer")
 	userID := int(getElemVal("id", "users", `username = "`+user.Username+`"`).(int64))
 	changePassword(user.Password, userID)
 
-	fmt.Printf("Registration data:\nusername: %s\nemail: %s\npassword: %s\npassword confirm: %s\nage: %d\ngender: %s\nfirst name: %s\nlast name: %s\n", user.Username, user.Email, user.Password, user.PasswordConfirm, user.Age, user.Gender, user.FirstName, user.LastName)
-	authorize(userID, w)
+	authorize(w, userID)
 	response := map[string]string{"message": "Registration successful"}
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(response)
@@ -68,7 +65,7 @@ func validInfo(w http.ResponseWriter, user UserReg) bool {
 		respondWithError(w, "Invalid username", http.StatusBadRequest)
 		return false
 	}
-	if entryExists("username", user.Username, true) {
+	if _, exists := helpers.EntryExists("username", user.Username, "users", true); exists {
 		respondWithError(w, "Username already exists", http.StatusBadRequest)
 		return false
 	}
@@ -90,7 +87,7 @@ func validInfo(w http.ResponseWriter, user UserReg) bool {
 		respondWithError(w, "Invalid email format", http.StatusBadRequest)
 		return false
 	}
-	if entryExists("email", user.Email, true) {
+	if _, exists := helpers.EntryExists("email", user.Email, "users", true); exists {
 		respondWithError(w, "Email already exists", http.StatusBadRequest)
 		return false
 	}
@@ -145,7 +142,7 @@ func changePassword(password string, userID int) {
 }
 
 func HashPassword(password string) string {
-	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 16)
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
 		helpers.ErrorLog.Fatalln(err.Error())
 		return ""
@@ -161,7 +158,6 @@ func CheckPassword(password string, userID int) bool {
 	if err != nil {
 		helpers.ErrorLog.Fatalln(err.Error())
 	}
-	fmt.Println("login iss", bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password)) == nil)
 	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password)) == nil
 }
 
@@ -171,48 +167,13 @@ func getElemVal(selectedElem, from, where string) any {
 	query := fmt.Sprintf("SELECT %s FROM %s WHERE %s", selectedElem, from, where)
 
 	err := helpers.DataBase.QueryRow(query).Scan(&res)
-	fmt.Println(res, query, err)
 	if err != nil {
-		helpers.ErrorLog.Fatalln("Database error:", err)
+		if err == sql.ErrNoRows {
+			res = ""
+		} else {
+			helpers.ErrorLog.Println("Database error:", err)
+		}
 	}
 
 	return res
-}
-
-func authorize(userID int, w http.ResponseWriter) {
-	token, err := uuid.NewV4()
-	if err != nil {
-		fmt.Println("Error generating token:", err)
-	}
-	query := `
-		UPDATE users
-		SET token = ?
-		WHERE id = ?
-	`
-	_, err = helpers.DataBase.Exec(query, token.String(), userID)
-	if err != nil {
-		fmt.Println("Error storing token:", err)
-	}
-
-	http.SetCookie(w, &http.Cookie{
-		Name:     "token",
-		Value:    token.String(),
-		Path:     "/",
-		Secure:   true,
-		SameSite: http.SameSiteDefaultMode,
-		HttpOnly: true,
-		Expires:  time.Now().Add(24 * 7 * time.Hour),
-	})
-}
-
-func VerifyToken(token string) bool {
-	var count int
-	query := `SELECT COUNT(*) FROM users WHERE token = ?`
-	err := helpers.DataBase.QueryRow(query, token).Scan(&count)
-	if err != nil {
-		helpers.ErrorLog.Fatalln("Database error:", err)
-		return false
-	}
-
-	return count == 1
 }

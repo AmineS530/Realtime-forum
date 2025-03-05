@@ -1,0 +1,36 @@
+2025/03/04 14:38:22 http: superfluous response.WriteHeader call from RTF/back-end/Handlers/auth.Logout (auth.go:58)
+2025/03/04 14:47:33 http: superfluous response.WriteHeader call from RTF/back-end/Handlers/auth.Logout (auth.go:58)
+2025/03/04 15:00:15 http: superfluous response.WriteHeader call from RTF/back-end/Handlers/auth.Logout (auth.go:58)
+2025/03/04 15:00:29 jwt took 7.699598ms
+2025/03/04 15:00:29 Total login process took 3.37542772s
+2025/03/04 15:18:14 http: superfluous response.WriteHeader call from RTF/back-end/Handlers/auth.Logout (auth.go:58)
+2025/03/04 15:18:15 http: superfluous response.WriteHeader call from RTF/back-end/Handlers/auth.Logout (auth.go:58)
+2025/03/04 15:18:16 http: superfluous response.WriteHeader call from RTF/back-end/Handlers/auth.Logout (auth.go:58)
+2025/03/04 15:18:25 jwt took 7.073414ms
+2025/03/04 15:18:25 Total login process took 59.881311ms
+2025/03/04 20:55:37 jwt took 6.337729ms
+2025/03/04 20:55:37 Total login process took 62.489683ms
+2025/03/04 21:07:09 http: superfluous response.WriteHeader call from RTF/back-end/goFiles/auth.Logout (auth.go:58)
+2025/03/04 21:07:10 http: superfluous response.WriteHeader call from RTF/back-end/goFiles/auth.Logout (auth.go:58)
+2025/03/04 21:07:10 http: superfluous response.WriteHeader call from RTF/back-end/goFiles/auth.Logout (auth.go:58)
+2025/03/04 21:08:12 jwt took 7.130796ms
+2025/03/04 21:08:12 Total login process took 60.816047ms
+
+2025/03/04 21:37:16 jwt took 5.921798ms
+2025/03/04 21:37:16 Total login process took 59.729632ms
+ERROR: 2025/03/04 21:37:18 helpers.go:36: Database error: no such column: session_id
+ERROR: 2025/03/04 21:41:09 helpers.go:36: Database error: near "%": syntax error
+2025/03/04 21:41:38 jwt took 6.20532ms
+2025/03/04 21:41:38 Total login process took 59.554646ms
+ERROR: 2025/03/04 21:41:41 helpers.go:36: Database error: no such column: username
+2025/03/04 21:43:35 jwt took 6.321512ms
+2025/03/04 21:43:35 Total login process took 59.695353ms
+2025/03/04 21:49:21 jwt took 5.400702ms
+2025/03/04 21:49:21 Total login process took 59.261717ms
+2025/03/04 21:49:45 jwt took 6.48136ms
+2025/03/04 21:49:45 Total login process took 59.568835ms
+ERROR: 2025/03/04 21:56:08 registration.go:170: Database error: sql: no rows in result set
+2025/03/04 21:58:22 jwt took 4.181308ms
+2025/03/04 21:58:22 Total login process took 58.844161ms
+2025/03/04 21:58:31 jwt took 7.368801ms
+2025/03/04 21:58:31 Total login process took 63.507913ms

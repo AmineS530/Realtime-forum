@@ -1,5 +1,13 @@
 /* Reset */
 
+/* Root for commonly used properties */
+:root {
+    --main-bg-color: #333;
+    --highlight-color: #f0a500;
+    --input-border-color: #ccc;
+    --container-bg-color: #505050;
+    --btn-hover-bg-color: #f0a500;
+}
 
 /* Sliding form container */
 #auth {
@@ -15,7 +23,7 @@
     position: relative;
     width: 400px;
     height: 815px;
-    background: #fff;
+    background: var(--container-bg-color);
     border-radius: 10px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
     overflow: hidden;
@@ -25,7 +33,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background: #333;
+    background: var(--main-bg-color);
     padding: 10px;
 }
 
@@ -38,15 +46,13 @@
     transition: color 0.3s;
 }
 
-
-
 #auth .slider {
     position: absolute;
     top: 50px;
     left: 0;
     width: 50%;
     height: 5px;
-    background: #f0a500;
+    background: var(--highlight-color);
     transition: left 0.5s;
 }
 
@@ -68,28 +74,28 @@
     font-weight: bold;
 }
 
-#auth input , #auth select {
+#auth input, #auth select {
     width: 100%;
     padding: 8px;
     margin-bottom: 20px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--input-border-color);
     border-radius: 5px;
 }
 
 #auth button {
     width: 100%;
     padding: 10px;
-    background: #333;
+    background: var(--main-bg-color);
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background 0.3s;
 }
-#auth button:hover {
-    background: #f0a500;
-}
 
+#auth button:hover {
+    background: var(--btn-hover-bg-color);
+}
 
 #auth p {
     margin-top: 10px;
@@ -97,7 +103,7 @@
 }
 
 #auth p a {
-    color: #333;
+    color: var(--main-bg-color);
     text-decoration: none;
     font-weight: bold;
 }

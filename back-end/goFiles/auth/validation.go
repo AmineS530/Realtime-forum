@@ -1,12 +1,13 @@
-package handlers
+package auth
 
 import (
 	"encoding/json"
-	"fmt"
+	"errors"
 	"net/http"
 	"regexp"
 
 	helpers "RTF/back-end"
+	jwt "RTF/back-end/goFiles/JWT"
 )
 
 type ErrorResponse struct {
@@ -43,25 +44,27 @@ func isValidUsername(username string) bool {
 		hasValidChars.MatchString(username)
 }
 
-func entryExists(elem, value string, checkLower bool) bool {
-	var count int
-
-	query := fmt.Sprintf("SELECT COUNT(*) FROM users WHERE %s = ?", elem)
-	if checkLower {
-		query = fmt.Sprintf("SELECT COUNT(*) FROM users WHERE LOWER(%s) = LOWER(?)", elem)
-	}
-
-	err := helpers.DataBase.QueryRow(query, value).Scan(&count)
-	if err != nil {
-		helpers.ErrorLog.Fatalln("Database error:", err)
-		return false
-	}
-
-	return count > 0
-}
-
 func respondWithError(w http.ResponseWriter, message string, code int) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(code)
 	json.NewEncoder(w).Encode(ErrorResponse{Error: message})
+}
+
+func VerifyUser(jwtToken, session_id string) (bool, error) {
+	payload, err := jwt.JWTVerify(jwtToken)
+	if err != nil {
+		helpers.ErrorLog.Println(err)
+		return false, err
+	}
+	if session_id != "" {
+		if count, _ := helpers.EntryExists("session_id", session_id, "sessions", true); count != 1 {
+			InvalidateSession(int(payload.Sub))
+			return false, errors.New("invalid session")
+		}
+	}
+
+	if count, _ := helpers.EntryExists("username", payload.Username, "users", true); count != 1 {
+		return false, errors.New("invalid username")
+	}
+	return true, nil
 }

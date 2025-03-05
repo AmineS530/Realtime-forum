@@ -5,6 +5,8 @@ import (
 	"html/template"
 	"net/http"
 	"os"
+
+	"RTF/back-end/goFiles/auth"
 )
 
 var (
@@ -27,7 +29,7 @@ func init() {
 
 func Routes() *http.ServeMux {
 	mux := http.NewServeMux()
-	for _, middleware := range Middleware {
+	for _, middleware := range auth.Middleware {
 		middleware(IndexHandler)
 	}
 
@@ -42,17 +44,10 @@ func Routes() *http.ServeMux {
 	mux.Handle("/front-end/styles/", http.StripPrefix("/front-end/styles/", http.FileServer(http.Dir("./front-end/styles"))))
 	mux.Handle("/front-end/scripts/", http.StripPrefix("/front-end/scripts/", http.FileServer(http.Dir("./front-end/scripts"))))
 	mux.HandleFunc("/api/v1/get/{type}", dumbjson)
-	mux.HandleFunc("/api/login", LoginHandler)
-	mux.HandleFunc("/api/register", RegisterHandler)
-	mux.HandleFunc("/api/logout", func(w http.ResponseWriter, r *http.Request) {
-		http.SetCookie(w, &http.Cookie{
-			Name:   "token",
-			Value:  "",
-			Path:   "/",
-			MaxAge: -1,
-		})
-		http.Redirect(w, r, "/", http.StatusSeeOther)
-	})
+	mux.HandleFunc("/api/login", auth.LoginHandler)
+	mux.HandleFunc("/api/register", auth.RegisterHandler)
+	mux.HandleFunc("/api/logout", auth.Logout)
+
 	return mux
 }
 
@@ -80,9 +75,15 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	isOnline := false
-	cookie, err := r.Cookie("token")
+	jwtCookie, err := r.Cookie("jwt")
+	sessionCookie, err := r.Cookie("session_id")
+
 	if err == nil {
-		isOnline = VerifyToken(cookie.Value)
+		isOnline, err = auth.VerifyUser(jwtCookie.Value, sessionCookie.Value)
+		if err != nil {
+			auth.Logout(w, r)
+			return
+		}
 	}
 	if r.URL.Path == "/" {
 		if err := HtmlTemplates.ExecuteTemplate(w, "index.html", isOnline); err != nil {

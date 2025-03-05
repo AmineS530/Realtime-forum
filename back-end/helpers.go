@@ -2,6 +2,7 @@ package helpers
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 )
 
@@ -13,4 +14,30 @@ var (
 
 type Placeholder struct {
 	Online bool
+}
+
+// todo: 
+//	type RefreshToken struct {
+//		ID        int       `json:"id"`
+//		UserID    int       `json:"user_id"`
+//		Token     string    `json:"token"`
+//		ExpiresAt time.Time `json:"expires_at"`
+//		CreatedAt time.Time `json:"created_at"`
+//	}
+
+func EntryExists(elem, value, from string, checkLower bool) (int, bool) {
+	var count int
+
+	query := fmt.Sprintf("SELECT COUNT(*) FROM %s WHERE %s = ?", from, elem)
+	if checkLower {
+		query = fmt.Sprintf("SELECT COUNT(*) FROM %s WHERE LOWER(%s) = LOWER(?)", from, elem)
+	}
+
+	err := DataBase.QueryRow(query, value).Scan(&count)
+	if err != nil {
+		ErrorLog.Fatalln("Database error:", err)
+		return -1, false
+	}
+
+	return count, count > 0
 }

@@ -1,11 +1,15 @@
-package handlers
+package auth
 
 // we start with the login n verifing inputs and set the cookie, and we think about sorting files later
 
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
+	"time"
+
+	helpers "RTF/back-end"
 )
 
 // User struct to handle login and registration data
@@ -23,12 +27,13 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	var user UserLogin
 	var userID int
+	start := time.Now()
+
 	err := json.NewDecoder(r.Body).Decode(&user)
 	if err != nil {
 		http.Error(w, "Invalid request body", http.StatusBadRequest)
 		return
 	}
-
 	// TODO: Authenticate user (check credentials from a database)
 	if user.Name_Email != "" {
 		userID, err = getID(user.Name_Email)
@@ -36,24 +41,29 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, err.Error(), http.StatusUnauthorized)
 			return
 		}
-	} 
+	}
 	if CheckPassword(user.Password, userID) {
-		authorize(userID, w)
+		jwtStart := time.Now()
+		authorize(w, userID)
+		log.Printf("jwt took %v", time.Since(jwtStart))
+		log.Printf("Total login process took %v", time.Since(start))
+
 		response := map[string]string{"message": "Login successful"}
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(response)
 	} else {
 		http.Error(w, "Invalid Login info", http.StatusUnauthorized)
 	}
-	fmt.Printf("Login data:\nuser: %s\npassword: %s\n", user.Name_Email, user.Password)
+	// todo: remove print
+	// fmt.Printf("Login data:\nuser: %s\npassword: %s\n", user.Name_Email, user.Password)
 }
 
 func getID(nameOrEmail string) (int, error) {
 	var isUsername bool
 	var userID int
-	if entryExists("username", nameOrEmail, true) {
+	if _, exists := helpers.EntryExists("username", nameOrEmail, "users", true); exists {
 		isUsername = true
-	} else if entryExists("email", nameOrEmail, true) {
+	} else if _, exists := helpers.EntryExists("email", nameOrEmail, "users", true); exists {
 		isUsername = false
 	} else {
 		return -1, fmt.Errorf("Invalid Login info")
