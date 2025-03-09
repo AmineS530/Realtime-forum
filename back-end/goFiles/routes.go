@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 
+	helpers "RTF/back-end"
 	"RTF/back-end/goFiles/auth"
 )
 
@@ -13,11 +14,6 @@ var (
 	HtmlTemplates *template.Template
 	Err           error
 )
-
-type ErrorPage struct {
-	Num int
-	Msg string
-}
 
 func init() {
 	HtmlTemplates, Err = template.ParseGlob("./front-end/templates/*.html")
@@ -43,10 +39,12 @@ func Routes() *http.ServeMux {
 	})
 	mux.Handle("/front-end/styles/", http.StripPrefix("/front-end/styles/", http.FileServer(http.Dir("./front-end/styles"))))
 	mux.Handle("/front-end/scripts/", http.StripPrefix("/front-end/scripts/", http.FileServer(http.Dir("./front-end/scripts"))))
+	mux.Handle("/front-end/images/", http.StripPrefix("/front-end/images/", http.FileServer(http.Dir("./front-end/images"))))
 	mux.HandleFunc("/api/v1/get/{type}", dumbjson)
 	mux.HandleFunc("/api/login", auth.LoginHandler)
 	mux.HandleFunc("/api/register", auth.RegisterHandler)
 	mux.HandleFunc("/api/logout", auth.Logout)
+	helpers.ServerRoutine()
 
 	return mux
 }
@@ -74,9 +72,10 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		ErrorPagehandler(w, http.StatusInternalServerError)
 		return
 	}
+	// todo: use func instead of this
 	isOnline := false
-	jwtCookie, err := r.Cookie("jwt")
-	sessionCookie, err := r.Cookie("session_id")
+	jwtCookie, _ := r.Cookie("jwt")
+	sessionCookie, err := r.Cookie("ssid")
 
 	if err == nil {
 		isOnline, err = auth.VerifyUser(jwtCookie.Value, sessionCookie.Value)
@@ -99,7 +98,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 
 func ErrorPagehandler(w http.ResponseWriter, statusCode int) {
 	w.WriteHeader(statusCode)
-	errorData := ErrorPage{
+	errorData := helpers.ErrorPage{
 		Num: statusCode,
 		Msg: http.StatusText(statusCode),
 	}

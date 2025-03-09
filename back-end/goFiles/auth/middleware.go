@@ -80,8 +80,8 @@ func ExtractJWT(r *http.Request) string {
 }
 
 // Extract session ID from cookie
-func extractSessionID(r *http.Request) (string, error) {
-	cookie, err := r.Cookie("session_id")
+func ExtractSSID(r *http.Request) (string, error) {
+	cookie, err := r.Cookie("ssid")
 	if err != nil {
 		return "", errors.New("session_id cookie not found")
 	}

@@ -15,7 +15,7 @@ import (
 var Time_to_Expire = time.Hour * 24
 
 type JwtPayload struct {
-	Sub      int64  `json:"sub,string"`
+	Sub      int  `json:"sub,string"`
 	Username string `json:"username"`
 	Iat      int64  `json:"iat"`
 	Exp      int64  `json:"exp"`

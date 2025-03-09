@@ -12,11 +12,16 @@ var (
 	ErrorLog *log.Logger
 )
 
+type ErrorPage struct {
+	Num int
+	Msg string
+}
+
 type Placeholder struct {
 	Online bool
 }
 
-// todo: 
+// todo:
 //	type RefreshToken struct {
 //		ID        int       `json:"id"`
 //		UserID    int       `json:"user_id"`

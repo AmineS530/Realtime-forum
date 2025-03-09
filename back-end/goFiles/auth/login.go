@@ -48,9 +48,9 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("jwt took %v", time.Since(jwtStart))
 		log.Printf("Total login process took %v", time.Since(start))
 
-		response := map[string]string{"message": "Login successful"}
+		// todo: remove alerts to replace by js notifications
 		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(response)
+		respondWithError(w, "Login successful", http.StatusOK)
 	} else {
 		http.Error(w, "Invalid Login info", http.StatusUnauthorized)
 	}

@@ -28,7 +28,7 @@ func authorize(w http.ResponseWriter, userID int) {
 
 	// Set the Session ID in a separate HttpOnly cookie
 	http.SetCookie(w, &http.Cookie{
-		Name:     "session_id",
+		Name:     "ssid",
 		Value:    sessionID,
 		Path:     "/",
 		Secure:   true,
@@ -56,7 +56,7 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 	})
 
 	http.SetCookie(w, &http.Cookie{
-		Name:    "session_id",
+		Name:    "ssid",
 		Value:   "",
 		Path:    "/",
 		MaxAge:  -1,

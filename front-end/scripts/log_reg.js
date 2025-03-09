@@ -88,10 +88,9 @@ async function fetching(event, endpoint) {
         }
 
         if (response.ok) {
-            alert("Success: " + (result.message || "Operation successful"));
-            console.log(result);
+            window.location.href = "/";
         } else {
-            alert("Error: " + (result.error || "Something went wrong"));
+            alert("Login failed: " + data.message); // Handle errors
             console.error(result);
         }
     } catch (error) {

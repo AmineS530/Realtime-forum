@@ -14,7 +14,7 @@ func CreateJwtPayload(id int, username string) JwtPayload {
 	exp := iat + int64(Time_to_Expire.Seconds())
 
 	return JwtPayload{
-		Sub:      int64(id),
+		Sub:      id,
 		Username: username,
 		Iat:      iat,
 		Exp:      exp,

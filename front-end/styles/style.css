@@ -43,6 +43,22 @@ body {
 
 /* Card, Post, and Comment Container Styles */
 .card, .post, .comment-container {
+    background-color: rgb(226, 226, 226);
+    border-radius: 10px;
+    border: 2px solid var(--card-border-color);
+    box-shadow: -5px 5px 10px var(--card-box-shadow-color);
+    padding: 20px;
+    margin: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover, .post:hover {
+    transform: translate(5px, -5px);
+    box-shadow: -7px 7px 10px var(--card-hover-box-shadow-color);
+}
+
+button#postSeeMore {
+    justify-content: center;
     background-color: var(--card-bg-color);
     border-radius: 10px;
     border: 2px solid var(--card-border-color);
@@ -50,12 +66,38 @@ body {
     padding: 20px;
     margin: 20px;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    mix-blend-mode: multiply;
 }
 
-.card:hover, .post:hover {
-    transform: translate(5px, -5px);
-    box-shadow: -7px 7px 10px var(--card-hover-box-shadow-color);
+/* Notification Styles */
+.notification {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    color: white;
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
+    z-index: 9999; /* Ensure it's on top of other content */
+}
+
+.notification.success {
+    background-color: green;
+}
+
+.notification.error {
+    background-color: red;
+}
+
+.notification.info {
+    background-color: blue;
+}
+
+/* Add padding to prevent content from sticking to the edges */
+body {
+    padding-top: 60px; /* Optional, can adjust based on your layout */
 }
 
 

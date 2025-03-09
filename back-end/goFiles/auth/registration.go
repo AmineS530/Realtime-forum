@@ -54,9 +54,8 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	changePassword(user.Password, userID)
 
 	authorize(w, userID)
-	response := map[string]string{"message": "Registration successful"}
+	respondWithError(w, "Login successful", http.StatusOK)
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(response)
 }
 
 func validInfo(w http.ResponseWriter, user UserReg) bool {
