@@ -8,9 +8,13 @@ type Post struct {
 	Categories   []string `json:"categories"`
 }
 
+type Categories struct {
+	ID   int
+	Name string
+}
+
 // get from db
 
 func GetPosts() []Post {
-	
 	return []Post{}
 }

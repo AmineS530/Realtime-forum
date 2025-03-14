@@ -30,7 +30,7 @@ if (typeof Logout != "undefined" && Logout != null) {
 function showNotification(message, type = "OK") {
     const notification = document.createElement("div");
     notification.innerText = message;
-    notification.className = `notification ${type}`; // Add styling
+    notification.className = `notification ${type}`;
     document.body.appendChild(notification);
-    setTimeout(() => notification.remove(), 3000); // Auto-remove after 3s
+    setTimeout(() => notification.remove(), 3000);
 }

@@ -5,6 +5,7 @@ import (
 	"errors"
 	"net/http"
 	"regexp"
+	"strconv"
 
 	helpers "RTF/back-end"
 	jwt "RTF/back-end/goFiles/JWT"
@@ -50,15 +51,16 @@ func respondWithError(w http.ResponseWriter, message string, code int) {
 	json.NewEncoder(w).Encode(ErrorResponse{Error: message})
 }
 
-func VerifyUser(jwtToken, session_id string) (bool, error) {
-	payload, err := jwt.JWTVerify(jwtToken)
-	if err != nil {
-		helpers.ErrorLog.Println(err)
-		return false, err
+func VerifyUser(payload *jwt.JwtPayload, session_id string) (bool, error) {
+	if payload == nil {
+		return false, errors.New("missing payload")
 	}
 	if session_id != "" {
-		if count, _ := helpers.EntryExists("session_id", session_id, "sessions", true); count != 1 {
-			InvalidateSession(int(payload.Sub))
+		if count, _ := helpers.EntryExists("user_id", strconv.Itoa(int(payload.Sub)), "sessions", true); count != 1 {
+			err := InvalidateSessions(payload.Sub)
+			if err != nil {
+				return false, err
+			}
 			return false, errors.New("invalid session")
 		}
 	}

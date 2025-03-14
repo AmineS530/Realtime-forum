@@ -6,7 +6,6 @@ import (
 	"time"
 
 	helpers "RTF/back-end"
-	jwt "RTF/back-end/goFiles/JWT"
 )
 
 func authorize(w http.ResponseWriter, userID int) {
@@ -45,8 +44,9 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
 		return
 	}
-	payload, _ := jwt.JWTVerify(ExtractJWT(r))
-	InvalidateSession(int(payload.Sub))
+	// todo check the http.errors
+	sessionCookie, _ := ExtractSSID(r)
+	invalidateSession(sessionCookie)
 	http.SetCookie(w, &http.Cookie{
 		Name:    "jwt",
 		Value:   "",

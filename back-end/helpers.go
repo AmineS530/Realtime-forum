@@ -21,14 +21,6 @@ type Placeholder struct {
 	Online bool
 }
 
-// todo:
-//	type RefreshToken struct {
-//		ID        int       `json:"id"`
-//		UserID    int       `json:"user_id"`
-//		Token     string    `json:"token"`
-//		ExpiresAt time.Time `json:"expires_at"`
-//		CreatedAt time.Time `json:"created_at"`
-//	}
 
 func EntryExists(elem, value, from string, checkLower bool) (int, bool) {
 	var count int

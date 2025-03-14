@@ -2,21 +2,16 @@ package helpers
 
 import (
 	"database/sql"
-	"log"
 	"time"
 )
 
 func ServerRoutine() {
 	go func() {
 		for {
-			time.Sleep(time.Minute)
+			time.Sleep(5 * time.Minute)
 
-			err := delExpiredSessions(DataBase)
-			if err != nil {
-				log.Printf("Error cleaning up expired tokens: %v", err)
-			} else {
-				log.Println("Expired tokens cleaned up successfully.")
-			}
+			// Run cleanup function
+			delExpiredSessions(DataBase)
 		}
 	}()
 }
@@ -24,5 +19,10 @@ func ServerRoutine() {
 func delExpiredSessions(db *sql.DB) error {
 	query := `DELETE FROM sessions WHERE expires_at < CURRENT_TIMESTAMP`
 	_, err := db.Exec(query)
+	if err != nil {
+		ErrorLog.Printf("Error cleaning up expired tokens: %v", err)
+	} else {
+		InfoLog.Println("Expired tokens cleaned up successfully.")
+	}
 	return err
 }

@@ -1,82 +1,76 @@
 package auth
 
 import (
+	"context"
 	"errors"
+	"log"
 	"net/http"
+
+	helpers "RTF/back-end"
+	jwt "RTF/back-end/goFiles/JWT"
 )
 
-// still need to put the middleware logic to retun the user to login page, idk how it works with the singlepage app
+type contextKey string
 
+const UserContextKey contextKey = "user"
+
+// todo send req to js to c lear cookies
 var Middleware = []func(http.HandlerFunc) http.HandlerFunc{
-	authMiddleware,
-	loginMiddleware,
+	// authMiddleware,
+	// loginMiddleware,
 }
 
 func authMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// Your logic here
-		next.ServeHTTP(w, r)
+		token, err := ExtractJWT(r)
+		if err != nil {
+			http.Error(w, "Unauthorized: Missing JWT", http.StatusUnauthorized)
+			return
+		}
+
+		// Verify JWT token
+		payload, err := jwt.JWTVerify(token)
+		if err != nil {
+			http.Error(w, "Unauthorized: Invalid JWT", http.StatusUnauthorized)
+			return
+		}
+		sessionID, err := ExtractSSID(r)
+		if err != nil {
+			http.Error(w, "Unauthorized: Missing session", http.StatusUnauthorized)
+			return
+		}
+
+		// Validate session ID from database
+		isValidSession := isValidSession(payload.Sub, sessionID)
+		if !isValidSession {
+			http.Error(w, "Unauthorized: Invalid session", http.StatusUnauthorized)
+			return
+		}
+		ctx := context.WithValue(r.Context(), UserContextKey, payload)
+
+		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
 
 func loginMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		// Your logic here
+		_, err := ExtractJWT(r)
+		if err != nil {
+			http.Error(w, "Unauthorized: Not logged in", http.StatusUnauthorized)
+			return
+		}
 		next.ServeHTTP(w, r)
 	})
 }
 
-// Context key for user info
-// type contextKey string
-
-// const UserContextKey contextKey = "user"
-
-// // AuthMiddleware checks JWT and Session ID
-// func AuthMiddleware(db *sql.DB) func(http.Handler) http.Handler {
-// 	return func(next http.Handler) http.Handler {
-// 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-// 			// Extract JWT from Authorization header or cookie
-// 			token := extractJWT(r)
-// 			if token == "" {
-// 				http.Error(w, "Unauthorized: Missing token", http.StatusUnauthorized)
-// 				return
-// 			}
-
-// 			// Verify JWT
-// 			payload, err := jwt.JWTVerify(token)
-// 			if err != nil {
-// 				http.Error(w, "Unauthorized: Invalid token", http.StatusUnauthorized)
-// 				return
-// 			}
-
-// 			// Check session from cookie
-// 			sessionID, err := extractSessionID(r)
-// 			if err != nil {
-// 				http.Error(w, "Unauthorized: Missing session", http.StatusUnauthorized)
-// 				return
-// 			}
-
-// 			// Validate session in DB
-// 			if !isValidSession(db, , sessionID) {
-// 				http.Error(w, "Unauthorized: Invalid session", http.StatusUnauthorized)
-// 				return
-// 			}
-
-// 			// Attach user info to request context
-// 			ctx := context.WithValue(r.Context(), UserContextKey, payload)
-// 			next.ServeHTTP(w, r.WithContext(ctx))
-// 		})
-// 	}
-// }
-
 // Extract JWT from Authorization header or cookie
-func ExtractJWT(r *http.Request) string {
+func ExtractJWT(r *http.Request) (string, error) {
 	cookie, err := r.Cookie("jwt")
-	if err == nil {
-		return cookie.Value
+	if err != nil {
+		return "", errors.New("jwt cookie not found")
 	}
 
-	return ""
+	return cookie.Value, nil
 }
 
 // Extract session ID from cookie
@@ -88,13 +82,17 @@ func ExtractSSID(r *http.Request) (string, error) {
 	return cookie.Value, nil
 }
 
-// // Validate session in database
-// func isValidSession(db *sql.DB, userID int, sessionID string) bool {
-// 	var count int
-// 	err := db.QueryRow("SELECT COUNT(*) FROM sessions WHERE user_id = ? AND session_id = ?", userID, sessionID).Scan(&count)
-// 	if err != nil {
-// 		log.Println("Error checking session:", err)
-// 		return false
-// 	}
-// 	return count == 1
-// }
+// Validate session in database
+func isValidSession(userID int, sessionID string) bool {
+	var count int
+	err := helpers.DataBase.QueryRow("SELECT COUNT(*) FROM sessions WHERE user_id = ?", userID).Scan(&count)
+	if count > 1 || err != nil {
+		return false
+	}
+	err = helpers.DataBase.QueryRow("SELECT COUNT(*) FROM sessions WHERE user_id = ? AND session_id = ?", userID, sessionID).Scan(&count)
+	if err != nil {
+		log.Println("Error checking session:", err)
+		return false
+	}
+	return count == 1
+}

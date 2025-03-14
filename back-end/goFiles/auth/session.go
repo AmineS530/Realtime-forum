@@ -1,6 +1,8 @@
 package auth
 
 import (
+	"fmt"
+	"log"
 	"time"
 
 	helpers "RTF/back-end"
@@ -13,22 +15,9 @@ import (
 // todo: check for session id
 
 func CheckSession(userID int, username string) (string, string, error) {
-	activeSessionID, _ := CheckActiveSession(userID)
-	// sessions := getElemVal("session_id", "sessions", `id = "`+strconv.Itoa(userID)+`"`)
-	// sessionList, ok := sessions.([]interface{})
-	// if ok && len(sessionList) > 0 {
-	// 	// Invalidate all previous sessions
-	// 	for _, s := range sessionList {
-	// 		if _, valid := s.(string); valid {
-	// 			InvalidateSession(userID)
-	// 		}
-	// 	}
-	// }
-	if activeSessionID != "" {
-		InvalidateSession(userID)
-	}
+	InvalidateSessions(userID)
 
-	// Create a new session
+	// Create a new session if there's no active session
 	sessionID, err := createSession(userID)
 	if err != nil {
 		return "", "", err
@@ -61,25 +50,50 @@ func createSession(userID int) (string, error) {
 	return sessionID.String(), nil
 }
 
-func CheckActiveSession(userID int) (string, error) {
-	var sessionID string
-	err := helpers.DataBase.QueryRow(`
+func CheckActiveSession(userID int) ([]string, error) {
+	var sessions []string
+	rows, err := helpers.DataBase.Query(`
         SELECT session_id 
         FROM sessions 
         WHERE user_id = ? AND expires_at > CURRENT_TIMESTAMP
-    `, userID).Scan(&sessionID)
+		ORDER BY expires_at DESC
+    `, userID)
 	if err != nil {
-		return "", err
+		return nil, err
 	}
-	return sessionID, nil
+	defer rows.Close()
+
+	for rows.Next() {
+		var SessionID string
+		if err := rows.Scan(&SessionID); err != nil {
+			return nil, err
+		}
+		sessions = append(sessions, SessionID)
+	}
+	return sessions, nil
 }
 
-// logout
-// todo merge with other logout
-func InvalidateSession(userID int) error {
+func InvalidateSessions(userID int) error {
+	// Fetch active session ID
+	activeSessions, _ := CheckActiveSession(userID)
+
+	// Get all sessions associated with the user
+	if len(activeSessions) > 0 {
+		for _, sessionID := range activeSessions[len(activeSessions)-1:] {
+			fmt.Println(sessionID)
+			err := invalidateSession(sessionID)
+			if err != nil {
+				log.Printf("Error invalidating session %s: %v", sessionID, err)
+			}
+		}
+	}
+	return nil
+}
+
+func invalidateSession(session_id string) error {
 	_, err := helpers.DataBase.Exec(`
         DELETE FROM sessions 
-        WHERE user_id = ?
-    `, userID)
+        WHERE session_id = ?
+    `, session_id)
 	return err
 }
