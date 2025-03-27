@@ -9,6 +9,7 @@ import (
 	helpers "RTF/back-end"
 	jwt "RTF/back-end/goFiles/JWT"
 	"RTF/back-end/goFiles/auth"
+	"RTF/back-end/goFiles/requests"
 )
 
 var (
@@ -25,25 +26,32 @@ func init() {
 }
 
 func Routes() *http.ServeMux {
+	// go ws.Broadcaster()
 	mux := http.NewServeMux()
-	wrappedHandler := IndexHandler
+	protectedRoutes := []string{"/api/v1/get/{type}"} // Add more as needed
 
-	for _, middleware := range auth.Middleware {
-		wrappedHandler = middleware(wrappedHandler)
+	for _, route := range protectedRoutes {
+		handler := dumbjson
+		for _, middleware := range auth.Middleware {
+			handler = middleware(handler)
+		}
+		mux.HandleFunc(route, handler)
 	}
-
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if Err != nil {
 			fmt.Println("Error parsing templates: ", Err.Error())
 			ErrorPagehandler(w, http.StatusInternalServerError)
 			return
 		}
-		wrappedHandler(w, r)
+		IndexHandler(w, r)
 	})
 	mux.Handle("/front-end/styles/", http.StripPrefix("/front-end/styles/", http.FileServer(http.Dir("./front-end/styles"))))
 	mux.Handle("/front-end/scripts/", http.StripPrefix("/front-end/scripts/", http.FileServer(http.Dir("./front-end/scripts"))))
 	mux.Handle("/front-end/images/", http.StripPrefix("/front-end/images/", http.FileServer(http.Dir("./front-end/images"))))
-	mux.HandleFunc("/api/v1/get/{type}", dumbjson)
+
+	// mux.HandleFunc("/ws", ws.HandleWebSocket)
+
+	mux.HandleFunc("/api/check-auth", auth.CheckAuthHandler)
 	mux.HandleFunc("/api/login", auth.LoginHandler)
 	mux.HandleFunc("/api/register", auth.RegisterHandler)
 	mux.HandleFunc("/api/logout", auth.Logout)
@@ -83,10 +91,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	jwt_token, _ := auth.ExtractJWT(r)
 	userPayload, _ := jwt.JWTVerify(jwt_token)
 	isOnline, _ := auth.VerifyUser(userPayload, sessionCookie)
-	// if err != nil {
-		// auth.Logout(w, r)
-		// return
-	// }
+	requests.GetPosts()
 	if r.URL.Path == "/" {
 		if err := HtmlTemplates.ExecuteTemplate(w, "index.html", isOnline); err != nil {
 			fmt.Println("Error executing template: ", err.Error())

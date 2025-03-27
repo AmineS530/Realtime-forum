@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    // Detect the current page based on URL path
     if (current === "login") {
         showLoginForm();
     } else if (current === "registration") {
@@ -33,7 +32,6 @@ function showLoginForm() {
     current = "login";
 }
 
-// Function to switch to Sign Up Form
 function showSignUpForm() {
     const auth = document.getElementById("auth");
     const formSection = document.querySelector(".form-section");
@@ -48,25 +46,32 @@ function showSignUpForm() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    // Select all input fields and textareas
     const inputs = document.querySelectorAll("input, textarea");
 
     inputs.forEach((input) => {
         if (input.type !== "password") {
             input.addEventListener("blur", function () {
-                this.value = this.value.replace(/^\s+|\s+$/g, "");
+                this.value = this.value.trim();
             });
         }
     });
 });
 
+// Notification function
+function showNotification(message, type = "OK") {
+    const notification = document.createElement("div");
+    notification.innerText = message;
+    notification.className = `notification ${type}`;
+    document.body.appendChild(notification);
+    setTimeout(() => notification.remove(), 3000);
+}
+
+// Function to handle login requests
 async function fetching(event, endpoint) {
-    event.preventDefault(); // Prevent form from refreshing the page
+    event.preventDefault();
 
     const form = event.target;
     const formData = new FormData(form);
-
-    // Convert FormData to JSON object
     const jsonData = Object.fromEntries(formData.entries());
 
     try {
@@ -76,6 +81,7 @@ async function fetching(event, endpoint) {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(jsonData),
+            credentials: "include",
         });
 
         const contentType = response.headers.get("content-type");
@@ -88,13 +94,36 @@ async function fetching(event, endpoint) {
         }
 
         if (response.ok) {
-            window.location.href = "/";
+            showNotification("Login successful!", "success");
+            setTimeout(() => {
+                window.location.href = "/";
+            }, 1000);
         } else {
-            alert("Login failed: " + data.message); // Handle errors
-            console.error(result);
+            showNotification("Login failed: " + result.error, "error");
         }
     } catch (error) {
-        console.error("Fetch error:", error);
-       // alert("Network error. Please try again.");
+        showNotification("Network error. Please try again.", "error");
     }
 }
+
+// // Function to check authentication status and show login form if needed
+// async function fetchData(endpoint) {
+//     try {
+//         const response = await fetch(endpoint, {
+//             method: "GET",
+//             credentials: "include",
+//         });
+
+//         const result = await response.json();
+
+//         if (response.status === 401 && result.login === "required") {
+//             showNotification("You are not logged in.", "warning");
+//             showLoginForm();
+//             return;
+//         }
+
+//         console.log("Fetched data:", result);
+//     } catch (error) {
+//         showNotification("Error fetching data.", "error");
+//     }
+// }

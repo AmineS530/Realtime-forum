@@ -1,7 +1,41 @@
-2025/03/14 14:45:40 jwt took 2.987193597s
-2025/03/14 14:45:40 Total login process took 3.040646878s
-2025/03/14 14:45:40 http: superfluous response.WriteHeader call from RTF/back-end/goFiles/auth.respondWithError (validation.go:50)
-2025/03/14 14:45:41 jwt took 22.822328ms
-2025/03/14 14:45:41 Total login process took 257.330662ms
-2025/03/14 14:45:41 http: superfluous response.WriteHeader call from RTF/back-end/goFiles/auth.respondWithError (validation.go:50)
-2025/03/14 14:51:54 Expired tokens cleaned up successfully.
+2025/03/22 02:03:23 jwt took 7.332564ms
+2025/03/22 02:03:23 Total login process took 60.978378ms
+2025/03/22 02:03:23 http: superfluous response.WriteHeader call from RTF/back-end/goFiles/auth.respondWithError (validation.go:50)
+2025/03/22 02:09:51 jwt took 7.123167ms
+2025/03/22 02:09:51 Total login process took 60.940393ms
+2025/03/22 02:09:51 http: superfluous response.WriteHeader call from RTF/back-end/goFiles/auth.respondWithError (validation.go:50)
+2025/03/22 02:11:38 http: superfluous response.WriteHeader call from RTF/back-end/goFiles/auth.authMiddleware.func1 (middleware.go:50)
+2025/03/22 02:11:39 http: superfluous response.WriteHeader call from RTF/back-end/goFiles/auth.authMiddleware.func1 (middleware.go:50)
+2025/03/22 02:11:52 jwt took 13.094587ms
+2025/03/22 02:11:52 Total login process took 66.984128ms
+2025/03/22 02:11:52 http: superfluous response.WriteHeader call from RTF/back-end/goFiles/auth.respondWithError (validation.go:50)
+2025/03/24 02:19:37 jwt took 7.128459ms
+2025/03/24 02:19:37 Total login process took 60.773174ms
+2025/03/24 02:19:37 http: superfluous response.WriteHeader call from RTF/back-end/goFiles/auth.respondWithError (validation.go:50)
+2025/03/24 02:21:39 jwt took 6.873141ms
+2025/03/24 02:21:39 Total login process took 60.472736ms
+2025/03/24 02:21:39 http: superfluous response.WriteHeader call from RTF/back-end/goFiles/auth.respondWithError (validation.go:50)
+2025/03/24 02:26:40 jwt took 13.028056ms
+2025/03/24 02:26:40 Total login process took 66.570501ms
+2025/03/24 02:26:40 http: superfluous response.WriteHeader call from RTF/back-end/goFiles/auth.respondWithError (validation.go:51)
+2025/03/24 02:27:58 jwt took 13.88543ms
+2025/03/24 02:27:58 Total login process took 67.749973ms
+2025/03/24 02:27:58 http: superfluous response.WriteHeader call from RTF/back-end/goFiles/auth.respondWithError (validation.go:51)
+2025/03/24 03:46:35 jwt took 61.599125ms
+2025/03/24 03:46:35 Total login process took 115.054842ms
+2025/03/24 03:46:35 http: superfluous response.WriteHeader call from RTF/back-end/goFiles/auth.respondWithError (validation.go:50)
+2025/03/24 04:52:22 jwt took 25.563353ms
+2025/03/24 04:52:22 Total login process took 79.132113ms
+2025/03/24 04:52:22 http: superfluous response.WriteHeader call from RTF/back-end/goFiles/auth.respondWithError (validation.go:50)
+2025/03/24 21:05:22 jwt took 14.231764ms
+2025/03/24 21:05:22 Total login process took 68.033464ms
+2025/03/24 21:05:22 http: superfluous response.WriteHeader call from RTF/back-end/goFiles/auth.respondWithError (validation.go:50)
+2025/03/24 21:31:49 jwt took 19.045382ms
+2025/03/24 21:31:49 Total login process took 72.578474ms
+2025/03/24 21:31:49 http: superfluous response.WriteHeader call from RTF/back-end/goFiles/auth.respondWithError (validation.go:50)
+2025/03/24 21:36:23 jwt took 23.585809ms
+2025/03/24 21:36:23 Total login process took 77.789003ms
+2025/03/24 21:36:23 http: superfluous response.WriteHeader call from RTF/back-end/goFiles/auth.respondWithError (validation.go:50)
+2025/03/27 19:04:09 jwt took 17.58174ms
+2025/03/27 19:04:09 Total login process took 70.931017ms
+2025/03/27 19:04:09 http: superfluous response.WriteHeader call from RTF/back-end/goFiles/auth.respondWithError (validation.go:50)

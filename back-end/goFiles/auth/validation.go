@@ -52,8 +52,8 @@ func respondWithError(w http.ResponseWriter, message string, code int) {
 }
 
 func VerifyUser(payload *jwt.JwtPayload, session_id string) (bool, error) {
-	if payload == nil {
-		return false, errors.New("missing payload")
+	if payload == nil || session_id == "" {
+		return false, errors.New("missing payload or session_id")
 	}
 	if session_id != "" {
 		if count, _ := helpers.EntryExists("user_id", strconv.Itoa(int(payload.Sub)), "sessions", true); count != 1 {
@@ -64,7 +64,6 @@ func VerifyUser(payload *jwt.JwtPayload, session_id string) (bool, error) {
 			return false, errors.New("invalid session")
 		}
 	}
-
 	if count, _ := helpers.EntryExists("username", payload.Username, "users", true); count != 1 {
 		return false, errors.New("invalid username")
 	}

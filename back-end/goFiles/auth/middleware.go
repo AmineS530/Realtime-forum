@@ -2,6 +2,7 @@ package auth
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
 	"log"
 	"net/http"
@@ -16,34 +17,38 @@ const UserContextKey contextKey = "user"
 
 // todo send req to js to c lear cookies
 var Middleware = []func(http.HandlerFunc) http.HandlerFunc{
-	// authMiddleware,
-	// loginMiddleware,
+	authMiddleware,
+	loginMiddleware,
 }
 
 func authMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		token, err := ExtractJWT(r)
 		if err != nil {
-			http.Error(w, "Unauthorized: Missing JWT", http.StatusUnauthorized)
+			w.WriteHeader(http.StatusUnauthorized)
+			json.NewEncoder(w).Encode(map[string]string{"error": "Missing JWT"})
 			return
 		}
 
 		// Verify JWT token
 		payload, err := jwt.JWTVerify(token)
 		if err != nil {
-			http.Error(w, "Unauthorized: Invalid JWT", http.StatusUnauthorized)
+			w.WriteHeader(http.StatusUnauthorized)
+			json.NewEncoder(w).Encode(map[string]string{"error": "Invalid JWT"})
 			return
 		}
 		sessionID, err := ExtractSSID(r)
 		if err != nil {
-			http.Error(w, "Unauthorized: Missing session", http.StatusUnauthorized)
+			w.WriteHeader(http.StatusUnauthorized)
+			json.NewEncoder(w).Encode(map[string]string{"error": "Missing session"})
 			return
 		}
 
 		// Validate session ID from database
 		isValidSession := isValidSession(payload.Sub, sessionID)
 		if !isValidSession {
-			http.Error(w, "Unauthorized: Invalid session", http.StatusUnauthorized)
+			w.WriteHeader(http.StatusUnauthorized)
+			json.NewEncoder(w).Encode(map[string]string{"error": "Invalid session"})
 			return
 		}
 		ctx := context.WithValue(r.Context(), UserContextKey, payload)

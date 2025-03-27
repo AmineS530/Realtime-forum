@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum</title>
+    <link rel="icon" type="image/x-icon" href="/front-end/images/fav.ico">
+    <link rel="stylesheet" href="/front-end/styles/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="/front-end/styles/dm.css">
+    <script defer src="/front-end/scripts/dm.js"></script>
+</head>
+
+<body>
+
+    <div id="app">
+        <!-- Content will be loaded dynamically -->
+    </div>
+
+    <script defer src="/front-end/scripts/script.js"></script>
+    <script defer src="/front-end/scripts/convenience.js"></script>
+</body>
+
+</html>

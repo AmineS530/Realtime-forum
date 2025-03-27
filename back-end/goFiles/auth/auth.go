@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"encoding/json"
 	"net/http"
 	"strconv"
 	"time"
@@ -64,4 +65,18 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 	})
 
 	http.Redirect(w, r, "/", http.StatusSeeOther)
+}
+
+func CheckAuthHandler(w http.ResponseWriter, r *http.Request) {
+	// check online from js based on the api
+	
+	_, errJwt := r.Cookie("jwt")
+	_, errSsid := r.Cookie("ssid")
+
+	if errJwt != nil || errSsid != nil {
+		json.NewEncoder(w).Encode(map[string]bool{"authenticated": false})
+		return
+	}
+
+	json.NewEncoder(w).Encode(map[string]bool{"authenticated": true})
 }
