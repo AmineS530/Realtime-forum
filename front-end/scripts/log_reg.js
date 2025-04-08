@@ -5,17 +5,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const auth = document.getElementById("auth");
     const slider = document.querySelector(".slider");
 
-    if (!auth || !formSection || !slider) {
-        console.error("Required elements not found in DOM");
-        return;
-    }
-
-    if (current === "login") {
-        showLoginForm();
-    } else if (current === "registration") {
-        showSignUpForm();
-    } else {
-        auth.style.display = "flex";
+    if (auth && formSection && slider) {
+        if (current === "login") {
+            showLoginForm();
+        } else if (current === "registration") {
+            showSignUpForm();
+        } else {
+            auth.style.display = "flex";
+        }
     }
 });
 
@@ -57,14 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-// Notification function
-function showNotification(message, type = "OK") {
-    const notification = document.createElement("div");
-    notification.innerText = message;
-    notification.className = `notification ${type}`;
-    document.body.appendChild(notification);
-    setTimeout(() => notification.remove(), 3000);
-}
+
 
 // Function to handle login requests
 async function fetching(event, endpoint) {
@@ -86,7 +76,6 @@ async function fetching(event, endpoint) {
 
         const contentType = response.headers.get("content-type");
         let result;
-
         if (contentType && contentType.includes("application/json")) {
             result = await response.json();
         } else {
@@ -105,25 +94,3 @@ async function fetching(event, endpoint) {
         showNotification("Network error. Please try again.", "error");
     }
 }
-
-// // Function to check authentication status and show login form if needed
-// async function fetchData(endpoint) {
-//     try {
-//         const response = await fetch(endpoint, {
-//             method: "GET",
-//             credentials: "include",
-//         });
-
-//         const result = await response.json();
-
-//         if (response.status === 401 && result.login === "required") {
-//             showNotification("You are not logged in.", "warning");
-//             showLoginForm();
-//             return;
-//         }
-
-//         console.log("Fetched data:", result);
-//     } catch (error) {
-//         showNotification("Error fetching data.", "error");
-//     }
-// }

@@ -49,13 +49,12 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Total login process took %v", time.Since(start))
 
 		// todo: remove alerts to replace by js notifications
+		JsRespond(w, "Login successful", http.StatusPermanentRedirect)
 		w.Header().Set("Content-Type", "application/json")
-		respondWithError(w, "Login successful", http.StatusOK)
 	} else {
 		http.Error(w, "Invalid Login info", http.StatusUnauthorized)
 	}
 	// todo: remove print
-	// fmt.Printf("Login data:\nuser: %s\npassword: %s\n", user.Name_Email, user.Password)
 }
 
 func getID(nameOrEmail string) (int, error) {
@@ -75,4 +74,3 @@ func getID(nameOrEmail string) (int, error) {
 	}
 	return userID, nil
 }
-

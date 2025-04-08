@@ -7,9 +7,8 @@ import (
 	"os"
 
 	helpers "RTF/back-end"
-	jwt "RTF/back-end/goFiles/JWT"
 	"RTF/back-end/goFiles/auth"
-	"RTF/back-end/goFiles/requests"
+	"RTF/back-end/goFiles/ws"
 )
 
 var (
@@ -26,7 +25,6 @@ func init() {
 }
 
 func Routes() *http.ServeMux {
-	// go ws.Broadcaster()
 	mux := http.NewServeMux()
 	protectedRoutes := []string{"/api/v1/get/{type}"} // Add more as needed
 
@@ -49,7 +47,7 @@ func Routes() *http.ServeMux {
 	mux.Handle("/front-end/scripts/", http.StripPrefix("/front-end/scripts/", http.FileServer(http.Dir("./front-end/scripts"))))
 	mux.Handle("/front-end/images/", http.StripPrefix("/front-end/images/", http.FileServer(http.Dir("./front-end/images"))))
 
-	// mux.HandleFunc("/ws", ws.HandleWebSocket)
+	mux.HandleFunc("/api/ws", ws.HandleWebSocket)
 
 	mux.HandleFunc("/api/check-auth", auth.CheckAuthHandler)
 	mux.HandleFunc("/api/login", auth.LoginHandler)
@@ -87,13 +85,8 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
 		return
 	}
-	sessionCookie, _ := auth.ExtractSSID(r)
-	jwt_token, _ := auth.ExtractJWT(r)
-	userPayload, _ := jwt.JWTVerify(jwt_token)
-	isOnline, _ := auth.VerifyUser(userPayload, sessionCookie)
-	requests.GetPosts()
 	if r.URL.Path == "/" {
-		if err := HtmlTemplates.ExecuteTemplate(w, "index.html", isOnline); err != nil {
+		if err := HtmlTemplates.ExecuteTemplate(w, "index.html", nil); err != nil {
 			fmt.Println("Error executing template: ", err.Error())
 			ErrorPagehandler(w, http.StatusInternalServerError)
 			return

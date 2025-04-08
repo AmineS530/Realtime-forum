@@ -80,7 +80,6 @@ func InvalidateSessions(userID int) error {
 	// Get all sessions associated with the user
 	if len(activeSessions) > 0 {
 		for _, sessionID := range activeSessions[len(activeSessions)-1:] {
-			fmt.Println(sessionID)
 			err := invalidateSession(sessionID)
 			if err != nil {
 				log.Printf("Error invalidating session %s: %v", sessionID, err)

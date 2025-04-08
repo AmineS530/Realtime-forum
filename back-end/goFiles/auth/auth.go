@@ -69,11 +69,27 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 
 func CheckAuthHandler(w http.ResponseWriter, r *http.Request) {
 	// check online from js based on the api
-	
-	_, errJwt := r.Cookie("jwt")
-	_, errSsid := r.Cookie("ssid")
-
-	if errJwt != nil || errSsid != nil {
+	jwt_token, _ := ExtractJWT(r)
+	ssid, _ := ExtractSSID(r)
+	auth, err := VerifyUser(jwt_token, ssid)
+	count, _ := helpers.EntryExists("session_id", ssid, "sessions", false)
+	if count != 1 {
+		http.SetCookie(w, &http.Cookie{
+			Name:    "jwt",
+			Value:   "",
+			Path:    "/",
+			MaxAge:  -1,
+			Expires: time.Unix(0, 0),
+		})
+		http.SetCookie(w, &http.Cookie{
+			Name:    "ssid",
+			Value:   "",
+			Path:    "/",
+			MaxAge:  -1,
+			Expires: time.Unix(0, 0),
+		})
+	}
+	if !auth || err != nil {
 		json.NewEncoder(w).Encode(map[string]bool{"authenticated": false})
 		return
 	}

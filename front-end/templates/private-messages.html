@@ -1,5 +1,5 @@
 {{ define "private-messages"}}
-<div id="backdrop" class="show" onclick="event.target.id ==='backdrop' ? dms_ToggleShowSidebar(event): event.stopPropagation();">
+<!-- <div id="backdrop" class="show" onclick="event.target.id ==='backdrop' ? dms_ToggleShowSidebar(event): event.stopPropagation();">
 
     <div class="show" id="side-menu" aria-modal="true" role="dialog">
         <div class="side-menu-head">
@@ -7,7 +7,7 @@
             <button onclick="dms_ToggleShowSidebar(event)" class="btn">{{ template "svg-two-bubble"
                 }}</button>
         </div>
-        <!-- TODO handle -->
+        TODO handle
         <select name="message" id="message-select" onchange="alert('talking to anew person '+this.value)">
             <option selected disabled hidden>users</option>
         </select>
@@ -18,5 +18,5 @@
             <button class="btn btn-primary" type="button">{{ template "svg-send"}}SEND</button>
         </form>
     </div>
-</div>
+</div> -->
 {{ end }}

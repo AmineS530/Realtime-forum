@@ -18,7 +18,6 @@ const UserContextKey contextKey = "user"
 // todo send req to js to c lear cookies
 var Middleware = []func(http.HandlerFunc) http.HandlerFunc{
 	authMiddleware,
-	loginMiddleware,
 }
 
 func authMiddleware(next http.HandlerFunc) http.HandlerFunc {
@@ -57,16 +56,6 @@ func authMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	})
 }
 
-func loginMiddleware(next http.HandlerFunc) http.HandlerFunc {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		_, err := ExtractJWT(r)
-		if err != nil {
-			http.Error(w, "Unauthorized: Not logged in", http.StatusUnauthorized)
-			return
-		}
-		next.ServeHTTP(w, r)
-	})
-}
 
 // Extract JWT from Authorization header or cookie
 func ExtractJWT(r *http.Request) (string, error) {

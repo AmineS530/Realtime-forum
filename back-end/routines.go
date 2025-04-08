@@ -3,10 +3,13 @@ package helpers
 import (
 	"database/sql"
 	"time"
+
+	"RTF/back-end/goFiles/ws"
 )
 
 func ServerRoutine() {
 	go func() {
+		ws.Broadcaster()
 		for {
 			time.Sleep(5 * time.Minute)
 

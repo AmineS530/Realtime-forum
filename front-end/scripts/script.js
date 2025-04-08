@@ -143,12 +143,14 @@ async function viewPosts(event, offset) {
     }
     event.target.insertAdjacentHTML("beforebegin", postall);
 }
+
 document.addEventListener("DOMContentLoaded", () => {
     let qsdf = document.getElementById("postSeeMore");
-    // console.log(qsdf);
-    qsdf.click();
-    setTimeout(() => {
-        document.getElementById("post_id-1").lastElementChild.click();
-        // console.log("5 seconds have passed!");
-    }, 500);
+    if (qsdf) {
+        qsdf.click();
+        setTimeout(() => {
+            document.getElementById("post_id-1").lastElementChild.click();
+            // console.log("5 seconds have passed!");
+        }, 500);
+    }
 });

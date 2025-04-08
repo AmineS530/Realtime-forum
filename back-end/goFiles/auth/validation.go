@@ -45,23 +45,26 @@ func isValidUsername(username string) bool {
 		hasValidChars.MatchString(username)
 }
 
-func respondWithError(w http.ResponseWriter, message string, code int) {
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(code)
-	json.NewEncoder(w).Encode(ErrorResponse{Error: message})
+func JsRespond(w http.ResponseWriter, message string, code int) {
+	if w.Header().Get("Content-Type") == "" {
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(ErrorResponse{Error: message})
+	}
 }
 
-func VerifyUser(payload *jwt.JwtPayload, session_id string) (bool, error) {
+func VerifyUser(jwt_token, session_id string) (bool, error) {
+	userSessionCount := 0
+	payload, _ := jwt.JWTVerify(jwt_token)
 	if payload == nil || session_id == "" {
 		return false, errors.New("missing payload or session_id")
 	}
 	if session_id != "" {
-		if count, _ := helpers.EntryExists("user_id", strconv.Itoa(int(payload.Sub)), "sessions", true); count != 1 {
+		if userSessionCount, _ = helpers.EntryExists("user_id", strconv.Itoa(int(payload.Sub)), "sessions", true); userSessionCount > 1 {
 			err := InvalidateSessions(payload.Sub)
 			if err != nil {
 				return false, err
 			}
-			return false, errors.New("invalid session")
+			return false, errors.New("invalid session_id")
 		}
 	}
 	if count, _ := helpers.EntryExists("username", payload.Username, "users", true); count != 1 {

@@ -9,36 +9,17 @@
     --card-hover-box-shadow-color: rgba(255, 0, 0, 0.5);
 }
 
-/* Universal Reset */
+/* Universal Reset
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
+} */
 
 body {
     font-family: Arial, sans-serif;
     background: var(--auth-bg-color);
     color: var(--auth-primary-text-color);
-}
-
-/* Navigation Styles */
-.nav {
-    z-index: 1;
-    position: sticky;
-    top: 0;
-    height: 6vh;
-    background-color: var(--nav-highlight-color);
-    display: flex;
-    justify-content: space-between;
-    padding-left: 1vw;
-    padding-right: 1vw;
-    list-style-type: none;
-    align-items: center;
-}
-
-.nav * {
-    font-size: 4vh;
 }
 
 /* Card, Post, and Comment Container Styles */
@@ -95,10 +76,11 @@ button#postSeeMore {
     background-color: blue;
 }
 
-/* Add padding to prevent content from sticking to the edges */
+/* Add padding to prevent content from sticking to the edges
 body {
-    padding-top: 60px; /* Optional, can adjust based on your layout */
+    padding-top: 60px; /* Optional, can adjust based on your layout 
 }
+*/
 
 
 /* Header styling from template */

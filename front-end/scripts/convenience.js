@@ -24,6 +24,8 @@ if (typeof Logout != "undefined" && Logout != null) {
             })
             .catch((error) => console.error("Logout failed:", error));
     });
+} else {
+    console.error("Logout button not found.");
 }
 
 
