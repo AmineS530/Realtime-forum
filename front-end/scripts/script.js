@@ -153,4 +153,5 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("post_id-1").lastElementChild.click();
         console.log("5 seconds have passed!");
       }, 500);
+    const discussion = document.getElementById("discussion")
 });

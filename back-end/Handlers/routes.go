@@ -44,6 +44,7 @@ func Routes() *http.ServeMux {
 	mux.Handle("/front-end/styles/", http.StripPrefix("/front-end/styles/", http.FileServer(http.Dir("./front-end/styles"))))
 	mux.Handle("/front-end/scripts/", http.StripPrefix("/front-end/scripts/", http.FileServer(http.Dir("./front-end/scripts"))))
 	mux.HandleFunc("/api/v1/get/{type}", dumbjson)
+	mux.HandleFunc("/api/v1/ws", handleConnections)
 	mux.HandleFunc("/api/login", LoginHandler)
 	mux.HandleFunc("/api/register", RegisterHandler)
 	return mux
@@ -61,6 +62,9 @@ func dumbjson(w http.ResponseWriter, r *http.Request) {
 	} else if x == "posts" {
 		w.Header().Set("Content-Type", "application/json")
 		w.Write([]byte(postjson))
+	} else if x == "history" {
+		w.Header().Set("Content-Type", "application/json")
+		w.Write([]byte(historyjson))
 	} else {
 		ErrorPagehandler(w, http.StatusNotFound)
 		return
@@ -94,7 +98,7 @@ func ErrorPagehandler(w http.ResponseWriter, statusCode int) {
 	}
 
 	if err := HtmlTemplates.ExecuteTemplate(w, "error_page.html", errorData); err != nil {
-	//	fmt.Println("Error executing template: ", err.Error())
+		//	fmt.Println("Error executing template: ", err.Error())
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	}
 }

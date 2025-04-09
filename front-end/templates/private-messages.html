@@ -8,15 +8,18 @@
                 }}</button>
         </div>
         <!-- TODO handle -->
-        <select name="message" id="message-select" onchange="alert('talking to anew person '+this.value)">
-            <option selected disabled hidden>users</option>
-        </select>
-        <ul id="discussion" class="discussion"></ul>
+        <div style="height: 100%;display: flex;flex-direction: column;">
+            <select name="message" id="message-select" onchange="changeDiscussion(this)">
+                <option selected disabled hidden>users</option>
+                <!-- TODO js to fill the users -->
+            </select>
+            <ul id="discussion" class="discussion"></ul>
 
-        <form class="input-group">
-            <input type="text" class="form-control" placeholder="New Message..." aria-label="Message">
-            <button class="btn btn-primary" type="button">{{ template "svg-send"}}SEND</button>
-        </form>
+            <form class="input-group" onsubmit="event.preventDefault();sendDm(event)">
+                <input type="text" class="form-control" placeholder="New Message..." aria-label="Message">
+                <button class="btn btn-primary" type="submit">{{ template "svg-send"}}SEND</button>
+            </form>
+        </div>
     </div>
 </div>
 {{ end }}

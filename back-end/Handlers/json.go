@@ -61,3 +61,32 @@ const commentjson = `[
   }
 ]
 `
+
+const historyjson = `[
+  {
+    "sender": "JohnDoe",
+    "message": "Great post! I really enjoyed reading it.",
+    "creation_time": "2025-02-11T08:30:00Z"
+  },
+  {
+    "sender": "JaneSmith",
+    "message": "I disagree with some points, but overall it's a good article.",
+    "creation_time": "2025-02-11T09:00:00Z"
+  },
+  {
+    "sender": "TechGuru",
+    "message": "This is exactly what I was looking for. Thanks for sharing!",
+    "creation_time": "2025-02-11T09:15:00Z"
+  },
+  {
+    "sender": "CreativeMind",
+    "message": "Interesting perspective! I would love to see more articles like this.",
+    "creation_time": "2025-02-11T09:30:00Z"
+  },
+  {
+    "sender": "FoodieExplorer",
+    "message": "Could you elaborate on the section about healthy recipes?",
+    "creation_time": "2025-02-11T10:00:00Z"
+  }
+]
+`
