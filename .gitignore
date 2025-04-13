@@ -1,3 +1,4 @@
 *.exec
 *.db
 ServerLogs/*.log
+tmp/*
