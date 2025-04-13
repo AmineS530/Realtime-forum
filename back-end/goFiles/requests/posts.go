@@ -7,11 +7,11 @@ import (
 )
 
 type Post struct {
-	Title        string   `json:"title"`
-	Content      string   `json:"content"`
-	Author       string   `json:"author"`
-	CreationTime string   `json:"creation_time"`
-	Categories   []string `json:"categories"`
+	Title      string   `json:"title"`
+	Content    string   `json:"content"`
+	Author     string   `json:"author"`
+	CreationAt string   `json:"creation_time"`
+	Categories []string `json:"categories"`
 }
 
 type Categories struct {
@@ -44,7 +44,7 @@ func GetPosts() ([]Post, error) {
 	var posts []Post
 	for rows.Next() {
 		var post Post
-		err := rows.Scan(&post.Title, &post.Content, &post.CreationTime, &post.Author)
+		err := rows.Scan(&post.Title, &post.Content, &post.CreationAt, &post.Author)
 		if err != nil {
 			fmt.Println("Error scanning posts: ", err)
 			return nil, err

@@ -11,24 +11,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-var Logout = document.getElementById("logout");
-if (typeof Logout != "undefined" && Logout != null) {
-    Logout.addEventListener("click", function (event) {
-        event.preventDefault()
-        fetch("/api/logout", {
-            method: "POST",
-            credentials: "include"
-        })
-            .then(() => {
-                window.location.href = "/";
-            })
-            .catch((error) => console.error("Logout failed:", error));
-    });
-} else {
-    console.error("Logout button not found.");
-}
-
-
 function showNotification(message, type = "OK") {
     const notification = document.createElement("div");
     notification.innerText = message;

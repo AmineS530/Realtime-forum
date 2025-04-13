@@ -2,52 +2,25 @@ package handlers
 
 import (
 	"fmt"
-	"html/template"
 	"net/http"
-	"os"
+	"strings"
 
 	helpers "RTF/back-end"
 	"RTF/back-end/goFiles/auth"
 	"RTF/back-end/goFiles/ws"
 )
 
-var (
-	HtmlTemplates *template.Template
-	Err           error
-)
-
-func init() {
-	HtmlTemplates, Err = template.ParseGlob("./front-end/templates/*.html")
-	if Err != nil {
-		fmt.Println("Error parsing templates: ", Err.Error())
-		os.Exit(1)
-	}
-}
-
 func Routes() *http.ServeMux {
 	mux := http.NewServeMux()
-	protectedRoutes := []string{"/api/v1/get/{type}"} // Add more as needed
 
-	for _, route := range protectedRoutes {
-		handler := dumbjson
-		for _, middleware := range auth.Middleware {
-			handler = middleware(handler)
-		}
-		mux.HandleFunc(route, handler)
-	}
-	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		if Err != nil {
-			fmt.Println("Error parsing templates: ", Err.Error())
-			ErrorPagehandler(w, http.StatusInternalServerError)
-			return
-		}
-		IndexHandler(w, r)
-	})
+	mux.HandleFunc("/", IndexHandler)
+	mux.HandleFunc("/api/v1/get/{type}", auth.AuthMiddleware(dumbjson))
+	mux.HandleFunc("/api/profile", auth.AuthMiddleware(ProfileHandler))
+	mux.HandleFunc("/api/ws", ws.HandleWebSocket)
 	mux.Handle("/front-end/styles/", http.StripPrefix("/front-end/styles/", http.FileServer(http.Dir("./front-end/styles"))))
 	mux.Handle("/front-end/scripts/", http.StripPrefix("/front-end/scripts/", http.FileServer(http.Dir("./front-end/scripts"))))
 	mux.Handle("/front-end/images/", http.StripPrefix("/front-end/images/", http.FileServer(http.Dir("./front-end/images"))))
-
-	mux.HandleFunc("/api/ws", ws.HandleWebSocket)
+	mux.HandleFunc("/profile", auth.AuthMiddleware(IndexHandler))
 
 	mux.HandleFunc("/api/check-auth", auth.CheckAuthHandler)
 	mux.HandleFunc("/api/login", auth.LoginHandler)
@@ -71,41 +44,32 @@ func dumbjson(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.Write([]byte(postjson))
 	} else {
-		ErrorPagehandler(w, http.StatusNotFound)
+		helpers.ErrorPagehandler(w, http.StatusNotFound)
 		return
 	}
 }
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
-	if Err != nil {
-		ErrorPagehandler(w, http.StatusInternalServerError)
+	if helpers.Err != nil {
+		helpers.ErrorPagehandler(w, http.StatusInternalServerError)
 		return
 	}
 	if r.Method != http.MethodGet {
 		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
 		return
 	}
-	if r.URL.Path == "/" {
-		if err := HtmlTemplates.ExecuteTemplate(w, "index.html", nil); err != nil {
+	if strings.HasPrefix(r.URL.Path, "/api/") {
+		helpers.ErrorPagehandler(w, http.StatusNotFound)
+		return
+	}
+	if r.URL.Path == "/" || r.URL.Path == "/profile" {
+		if err := helpers.HtmlTemplates.ExecuteTemplate(w, "index.html", nil); err != nil {
 			fmt.Println("Error executing template: ", err.Error())
-			ErrorPagehandler(w, http.StatusInternalServerError)
+			helpers.ErrorPagehandler(w, http.StatusInternalServerError)
 			return
 		}
 	} else {
-		ErrorPagehandler(w, http.StatusNotFound)
+		helpers.ErrorPagehandler(w, http.StatusNotFound)
 		return
-	}
-}
-
-func ErrorPagehandler(w http.ResponseWriter, statusCode int) {
-	w.WriteHeader(statusCode)
-	errorData := helpers.ErrorPage{
-		Num: statusCode,
-		Msg: http.StatusText(statusCode),
-	}
-
-	if err := HtmlTemplates.ExecuteTemplate(w, "error_page.html", errorData); err != nil {
-		//	fmt.Println("Error executing template: ", err.Error())
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	}
 }

@@ -3,14 +3,28 @@ package helpers
 import (
 	"database/sql"
 	"fmt"
+	"html/template"
 	"log"
+	"net/http"
+	"os"
 )
 
 var (
 	DataBase *sql.DB
 	InfoLog  *log.Logger
 	ErrorLog *log.Logger
+
+	HtmlTemplates *template.Template
+	Err           error
 )
+
+func init() {
+	HtmlTemplates, Err = template.ParseGlob("./front-end/templates/*.html")
+	if Err != nil {
+		fmt.Println("Error parsing templates: ", Err.Error())
+		os.Exit(1)
+	}
+}
 
 type ErrorPage struct {
 	Num int
@@ -20,7 +34,6 @@ type ErrorPage struct {
 type Placeholder struct {
 	Online bool
 }
-
 
 func EntryExists(elem, value, from string, checkLower bool) (int, bool) {
 	var count int
@@ -37,4 +50,17 @@ func EntryExists(elem, value, from string, checkLower bool) (int, bool) {
 	}
 
 	return count, count > 0
+}
+
+func ErrorPagehandler(w http.ResponseWriter, statusCode int) {
+	w.WriteHeader(statusCode)
+	errorData := ErrorPage{
+		Num: statusCode,
+		Msg: http.StatusText(statusCode),
+	}
+
+	if err := HtmlTemplates.ExecuteTemplate(w, "error_page.html", errorData); err != nil {
+		//	fmt.Println("Error executing template: ", err.Error())
+		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
+	}
 }

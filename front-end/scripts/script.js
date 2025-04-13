@@ -1,28 +1,28 @@
 commentLimit = undefined;
-window.addEventListener("hashchange", () => {
-    switch (window.location.hash) {
-        case "#home":
-            // TODO : home
-            //console.log("Navigating to the home section!");
-            // Load or display home content dynamically.
-            break;
-        case "#about":
-            // TODO : about
-            //console.log("Navigating to the about section!");
-            // Load or display about content dynamically.
-            break;
-        case "#login":
-            showLoginForm();
-            break;
-        case "#registration":
-            showSignUpForm();
-            break;
-        default:
-            //console.log("Unknown hash:", window.location.hash);
-            // Handle any other hash cases or fallback logic.
-            break;
-    }
-});
+// window.addEventListener("hashchange", () => {
+//     switch (window.location.hash) {
+//         case "home":
+//             // TODO : home
+//             //console.log("Navigating to the home section!");
+//             // Load or display home content dynamically.
+//             break;
+//         case "#about":
+//             // TODO : about
+//             //console.log("Navigating to the about section!");
+//             // Load or display about content dynamically.
+//             break;
+//         case "login":
+//             showLoginForm();
+//             break;
+//         case "registration":
+//             showSignUpForm();
+//             break;
+//         default:
+//             //console.log("Unknown hash:", window.location.hash);
+//             // Handle any other hash cases or fallback logic.
+//             break;
+//     }
+// });
 
 function fetching(e, target) {
     e.preventDefault();

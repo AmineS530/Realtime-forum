@@ -1,109 +1,82 @@
-import { two_bubbles, svg_logout } from "./svg.js";
-import { updateNavbar } from "./header.js";
+import  templates from "./templates.js";
 
-const nav = `
-<link rel="stylesheet" href="/front-end/styles/style.css" />
+window.loadPage = function(page) {
+    const app = document.getElementById("app");
+    switch (page) {
+        case "home":
+            app.innerHTML = templates.posts;
+            history.pushState({}, "", "/");
+            break;
+            case "profile":
+                loadProfilePage();
+                break;
+        case "create":
+            app.innerHTML = createPost;
+            break;
+        default:
+            app.innerHTML = "<h2>Page not found</h2>";
+    }
+};
 
-<ul class="nav">
-    <li>
-        <a href="#" onclick="dms_ToggleShowSidebar(event)" title="Messages">
-            ${two_bubbles}
-        </a>
-    </li>
-    <li>
-        <a id="logout" href="#" title="Logout">
-            ${svg_logout}
-        </a>
-    </li>
-</ul>
-`;
-const header =`
-    <header>
-      <!-- Logo -->
-      <div class="logo">
-        <h1><a href="/">Forum</a></h1>
-      </div>
-      <!-- Navigation -->
-      <nav>
-        <ul class="nav"></ul>
-      </nav>
-    </header>
-    <br />
-`
+// import { updateNavbar } from "./header.js";
+function loadPageFromPath() {
+    const path = window.location.pathname;
+    switch (path) {
+        case "/":
+        case "/home":
+            loadPage("home");
+            break;
+        case "/profile":
+            loadPage("profile");
+            break;
+        case "/create":
+            loadPage("create");
+            break;
+        default:
+            loadPage("notfound"); // Optional fallback
+    }
+}
+window.addEventListener("popstate", loadPageFromPath);
 
-const auth = `
-<link rel="stylesheet" href="/front-end/styles/log-reg.css" />
-<div id="auth">
-    <div class="container">
-        <!-- Buttons -->
-        <div class="btn">
-            <button id="login-btn" onclick="showLoginForm()">Login</button>
-            <button id="register-btn" onclick="showSignUpForm()">Sign Up</button>
-        </div>
+async function loadProfilePage() {
+    const app = document.getElementById("app");
+    try {
+        const res = await fetch("/api/profile", { credentials: "include" });
+        if (!res.ok) {
+            const errData = await res.json();
+            throw new Error(errData.error || "Error loading profile");
+        }
 
-        <!-- Slider -->
-        <div class="slider"></div>
-        <!-- Form Section -->
-        <div class="form-section">
-            <!-- Login Form -->
-            <div class="login-box">
-                <form onsubmit="fetching(event,'/api/login')" method="post">
-                    <label for="name_or_email">Username or Email</label>
-                    <input type="text" id="name_or_email" name="name_or_email" required />
-                    <label for="password">Password</label>
-                    <input type="password" id="logpassword" name="password" required />
-                    <button type="submit">Login</button>
-                    <p>
-                        Don't have an account?
-                        <a style="cursor: pointer;" onclick="showSignUpForm()" >Sign Up</a>
-                    </p>
-                </form>
-            </div>
-
-            <!-- Sign Up Form -->
-            <div class="register-box">
-                <form onsubmit="fetching(event,'/api/register')" method="post">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="Username" required />
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="Email" required />
-                    <label for="password">Password</label>
-                    <input type="password" id="regpassword" name="Password" required />
-                    <label for="password_confirmation">Confirm Password</label>
-                    <input type="password" id="password_confirmation" name="Password_confirmation" required />
-                    <label for="age">Age</label>
-                    <input type="number" id="age" name="Age" min="15" max="90" required />
-                    <label for="gender">Gender </label>
-                    <select id="gender" name="Gender" required>
-                        <option value="">Select Gender</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="Attack helicopter">Attack helicopter</option>
-                    </select>
-                    <label for="first-name">First Name</label>
-                    <input type="text" id="first-name" name="First_Name" required />
-                    <label for="last-name">Last Name</label>
-                    <input type="text" id="last-name" name="Last_Name" required />
-                    <button type="submit">Sign Up</button>
-                    <p>
-                        Already have an account? <a style="cursor: pointer;" onclick="showLoginForm()" >Login</a>
-                    </p>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-`
-function injectStylesheet(href) {
-    if (!document.querySelector(`link[href="${href}"]`)) {
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = href;
-        document.head.appendChild(link);
+        const data = await res.json();
+        app.innerHTML =  ` 
+        <center>
+        <h2>Welcome, ${data.username}</h2>
+        <p>First Name: ${data.first_name}</p>
+        <p>Last Name: ${data.last_name}</p>
+        <p>Age: ${data.age}</p>
+        <p>Gender: ${data.gender}</p>
+        <p>Email: ${data.email}</p>
+        <a  href="#" > changepassword </a>
+        <br />
+        <a href="/" onclick="loadPage('home'); return false;">Go Back</a>
+        </center>`
+        
+        history.pushState({}, "", "/profile");
+    } catch (err) {
+        console.error("Failed to load profile:", err);
+        app.innerHTML = "<h2>Error loading profile.</h2>";
     }
 }
 
-// on load
+let profile = document.getElementById("profile");
+if (profile) {
+    profile.addEventListener("click", function (e) {
+        e.preventDefault();
+        loadPage("profile");
+        history.pushState(null, "", "/profile");
+    });
+}
+
 
 // function to load the header and nav
 document.addEventListener("DOMContentLoaded", async () => {
@@ -113,34 +86,36 @@ document.addEventListener("DOMContentLoaded", async () => {
         const response = await fetch("/api/check-auth", {
             credentials: "include"
         });
-
         const authData = await response.json();
-        const authenticated = authData.authenticated;;
-
-        console.log("Auth data:", authData);
+        const authenticated = authData.authenticated;
 
         if (authenticated) {
-            const headerWrapper = document.createElement("div");
-            headerWrapper.innerHTML = header;
-            document.body.insertBefore(headerWrapper, app);
+            setHeader(authenticated);
 
-            injectStylesheet("/front-end/styles/header.css");
-
-            updateNavbar(authenticated);
+            loadPageFromPath(); 
         } else {
-            app.innerHTML = auth
+            app.innerHTML = templates.auth;
         }
     } catch (error) {
-        console.error("Error loading content:", error);
-        app.innerHTML = "<h2>Error loading the page. Please try again.</h2>";
+        console.error("Error loading:", error);
+        app.innerHTML = "<h2>Error loading the page.</h2>";
     }
 });
 
-// function loadPrivateMessages() {
-//     document.getElementById("private-messages-container").innerHTML = "Loading messages...";
-//     fetch("/api/messages")
-//         .then(res => res.text())
-//         .then(html => {
-//             document.getElementById("private-messages-container").innerHTML = html;
-//         });
-// }
+
+function setHeader(authStatus) {
+    const headerWrapper = document.createElement("div");
+    headerWrapper.innerHTML = templates.header;
+    document.body.insertBefore(headerWrapper, app);
+    injectStylesheet("/front-end/styles/header.css");
+    updateNavbar(authStatus); 
+}
+
+function injectStylesheet(href) {
+    if (!document.querySelector(`link[href="${href}"]`)) {
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = href;
+        document.head.appendChild(link);
+    }
+}

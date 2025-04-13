@@ -2,7 +2,6 @@ package auth
 
 import (
 	"context"
-	"encoding/json"
 	"errors"
 	"log"
 	"net/http"
@@ -15,39 +14,34 @@ type contextKey string
 
 const UserContextKey contextKey = "user"
 
-// todo send req to js to c lear cookies
-var Middleware = []func(http.HandlerFunc) http.HandlerFunc{
-	authMiddleware,
-}
-
-func authMiddleware(next http.HandlerFunc) http.HandlerFunc {
+func AuthMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		token, err := ExtractJWT(r)
 		if err != nil {
-			w.WriteHeader(http.StatusUnauthorized)
-			json.NewEncoder(w).Encode(map[string]string{"error": "Missing JWT"})
+			helpers.ErrorPagehandler(w, http.StatusUnauthorized)
+			// json.NewEncoder(w).Encode(map[string]string{"error": "Missing JWT"})
 			return
 		}
 
 		// Verify JWT token
 		payload, err := jwt.JWTVerify(token)
 		if err != nil {
-			w.WriteHeader(http.StatusUnauthorized)
-			json.NewEncoder(w).Encode(map[string]string{"error": "Invalid JWT"})
+			helpers.ErrorPagehandler(w, http.StatusUnauthorized)
+			// json.NewEncoder(w).Encode(map[string]string{"error": "Invalid JWT"})
 			return
 		}
 		sessionID, err := ExtractSSID(r)
 		if err != nil {
-			w.WriteHeader(http.StatusUnauthorized)
-			json.NewEncoder(w).Encode(map[string]string{"error": "Missing session"})
+			helpers.ErrorPagehandler(w, http.StatusUnauthorized)
+			// json.NewEncoder(w).Encode(map[string]string{"error": "Missing session"})
 			return
 		}
 
 		// Validate session ID from database
 		isValidSession := isValidSession(payload.Sub, sessionID)
 		if !isValidSession {
-			w.WriteHeader(http.StatusUnauthorized)
-			json.NewEncoder(w).Encode(map[string]string{"error": "Invalid session"})
+			helpers.ErrorPagehandler(w, http.StatusUnauthorized)
+			// json.NewEncoder(w).Encode(map[string]string{"error": "Invalid session"})
 			return
 		}
 		ctx := context.WithValue(r.Context(), UserContextKey, payload)
@@ -55,7 +49,6 @@ func authMiddleware(next http.HandlerFunc) http.HandlerFunc {
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }
-
 
 // Extract JWT from Authorization header or cookie
 func ExtractJWT(r *http.Request) (string, error) {

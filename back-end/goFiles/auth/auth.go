@@ -2,6 +2,7 @@ package auth
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 	"time"
@@ -74,6 +75,7 @@ func CheckAuthHandler(w http.ResponseWriter, r *http.Request) {
 	auth, err := VerifyUser(jwt_token, ssid)
 	count, _ := helpers.EntryExists("session_id", ssid, "sessions", false)
 	if count != 1 {
+		fmt.Println("Session ID not found in database")
 		http.SetCookie(w, &http.Cookie{
 			Name:    "jwt",
 			Value:   "",
@@ -89,7 +91,9 @@ func CheckAuthHandler(w http.ResponseWriter, r *http.Request) {
 			Expires: time.Unix(0, 0),
 		})
 	}
+
 	if !auth || err != nil {
+		fmt.Println("Error verifying user:", err)
 		json.NewEncoder(w).Encode(map[string]bool{"authenticated": false})
 		return
 	}
