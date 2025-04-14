@@ -3,7 +3,7 @@ ENV_FILE=.env
 
 all: $(ENV_FILE) $(NAME)
 
-$(NAME):
+$(NAME): $(ENV_FILE)
 # go build -o $(NAME).exec main.go
 	@go run main.go
 
