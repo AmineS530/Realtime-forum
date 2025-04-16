@@ -33,7 +33,6 @@ function showSignUpForm() {
     const auth = document.getElementById("auth");
     const formSection = document.querySelector(".form-section");
     const slider = document.querySelector(".slider");
-
     if (!auth || !formSection || !slider) return;
 
     auth.style.display = "flex";
@@ -53,8 +52,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
-
-
 
 // Function to handle login requests
 async function fetching(event, endpoint) {
@@ -94,3 +91,21 @@ async function fetching(event, endpoint) {
         showNotification("Network error. Please try again.", "error");
     }
 }
+
+document.addEventListener("click", function (event) {
+    const btn = event.target.closest(".togglePwd");
+    if (!btn) return;
+
+    const input = btn.previousElementSibling;
+    const icon = btn.querySelector(".icon");
+
+    if (input && icon) {
+        if (input.type === "password") {
+            input.type = "text";
+            icon.innerText = "visibility_off";
+        } else {
+            input.type = "password";
+            icon.innerText = "visibility";
+        }
+    }
+});

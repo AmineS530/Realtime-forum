@@ -1,4 +1,3 @@
-
 import svg from "./svg.js";
 
 const nav = `
@@ -22,7 +21,7 @@ const header = `
     <header>
       <!-- Logo -->
       <div class="logo">
-        <h1><a href="/">Forum</a></h1>
+        <h1><a href="#" onclick="loadPage('home')">Forum</a></h1>
       </div>
       <!-- Navigation -->
       <nav>
@@ -34,6 +33,7 @@ const header = `
 
 const auth = `
 <link rel="stylesheet" href="/front-end/styles/log-reg.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" /> 
 <div id="auth">
     <div class="container">
         <!-- Buttons -->
@@ -52,7 +52,10 @@ const auth = `
                     <label for="name_or_email">Username or Email</label>
                     <input type="text" id="name_or_email" name="name_or_email" maxlength="50" required/>
                     <label for="password">Password</label>
+                    <div class="input-wrapper">
                     <input type="password" id="logpassword" name="password" required />
+                    <i class="togglePwd" > <span class="icon material-symbols-outlined">visibility</span></i>
+                    </div>
                     <button type="submit">Login</button>
                     <p>
                         Don't have an account?
@@ -69,9 +72,15 @@ const auth = `
                     <label for="email">Email</label>
                     <input type="email" id="email" name="Email" maxlength="320" required />
                     <label for="password">Password</label>
-                    <input type="password" id="regpassword" name="Password" required />
+                    <div class="input-wrapper">
+                        <input type="password" id="regpassword" name="Password" required />
+                        <i class="togglePwd" > <span class="icon material-symbols-outlined">visibility</span></i>
+                    </div>
                     <label for="password_confirmation">Confirm Password</label>
-                    <input type="password" id="password_confirmation" name="Password_confirmation" required />
+                    <div class="input-wrapper">
+                        <input type="password" id="password_confirmation" name="Password_confirmation" required />
+                        <i class="togglePwd" > <span class="icon material-symbols-outlined">visibility</span></i>
+                    </div>
                     <label for="age">Age</label>
                     <input type="number" id="age" name="Age" min="15" max="90" required />
                     <label for="gender">Gender </label>
@@ -114,7 +123,23 @@ const posts = `
 </div>
 `;
 
+const dms = `<div id="backdrop" class="show" onclick="event.target.id ==='backdrop' ? dms_ToggleShowSidebar(event): event.stopPropagation();">
 
+    <div class="show" id="side-menu" aria-modal="true" role="dialog">
+        <div class="side-menu-head">
+            <h1 class="offcanvas-title" style="margin-bottom: 0;line-height: 5vh;">Messages</h1>
+            <button onclick="dms_ToggleShowSidebar(event)" class="btn">  ${svg.two_bubbles}</button>
+        </div>
+        <select name="message" id="message-select" onchange="alert('talking to anew person '+this.value)">
+            <option selected disabled hidden>users</option>
+        </select>
+        <ul id="discussion" class="discussion"></ul>
 
+        <form class="input-group">
+            <input type="text" class="form-control" placeholder="New Message..." aria-label="Message">
+            <button class="btn btn-primary" type="button"> ${svg.svg_send}SEND</button>
+        </form>
+    </div>
+</div> `;
 
-export default { nav, header, auth, posts };
+export default { nav, header, auth, posts, dms };

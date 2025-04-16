@@ -1,5 +1,3 @@
-/* Reset */
-
 /* Root for commonly used properties */
 :root {
     --main-bg-color: #333;
@@ -37,6 +35,27 @@
     padding: 10px;
 }
 
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+#auth .input-wrapper input {
+    width: 90%;
+    padding-right: 12%; 
+} 
+
+
+#auth .input-wrapper .icon {
+    cursor: pointer;
+    position: absolute;
+    right: -7px;
+    top: 35%;
+    transform: translateY(-50%);
+    font-size: 24px;
+}
+
+
 #auth .btn button {
     background: none;
     border: none;
@@ -68,13 +87,21 @@
     box-sizing: border-box;
 }
 
+#logpassword , #regpasswrd , #password_comfirmation {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.15ch;
+}
+
 #auth label {
     display: block;
     margin-bottom: 8px;
     font-weight: bold;
+    font-size: large;
 }
 
 #auth input, #auth select {
+    font-size:medium;
     width: 100%;
     padding: 8px;
     margin-bottom: 20px;

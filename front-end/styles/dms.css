@@ -44,11 +44,18 @@
 
 #backdrop.show,
 #backdrop.show #side-menu {
+
     visibility: visible;
     transform: none;
 }
+.offcanvas-title {
+    font-size: 2rem;
+    color: #fff;
+    font-weight: 600;
+}
 
 .side-menu-head {
+    background-color: #333;
     display: flex;
     align-items: center;
     padding: 1vh 2vw;

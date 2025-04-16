@@ -8,12 +8,10 @@
 /* Body styles */
 body {
     font-family: Arial, sans-serif;
-    background: #f4f4f9;
-    color: #333;
 }
 
 /* Header styles */
-header {
+header, .logo {
     background: #333;
     color: #fff;
     display: flex;
@@ -22,7 +20,6 @@ header {
     padding: 10px 20px;
     position: sticky;
     top: 0;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     z-index: 10;
 }
 

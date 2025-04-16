@@ -1,15 +1,15 @@
-import  templates from "./templates.js";
-
-window.loadPage = function(page) {
+import templates from "./templates.js";
+import { updateNavbar } from "./header.js";
+window.loadPage = function (page) {
     const app = document.getElementById("app");
     switch (page) {
         case "home":
-            app.innerHTML = templates.posts;
+            app.innerHTML = templates.posts + templates.dms;
             history.pushState({}, "", "/");
             break;
-            case "profile":
-                loadProfilePage();
-                break;
+        case "profile":
+            loadProfilePage();
+            break;
         case "create":
             app.innerHTML = createPost;
             break;
@@ -48,19 +48,21 @@ async function loadProfilePage() {
         }
 
         const data = await res.json();
-        app.innerHTML =  ` 
+        app.innerHTML = ` 
         <center>
+        <div class="profile">
         <h2>Welcome, ${data.username}</h2>
         <p>First Name: ${data.first_name}</p>
         <p>Last Name: ${data.last_name}</p>
         <p>Age: ${data.age}</p>
         <p>Gender: ${data.gender}</p>
         <p>Email: ${data.email}</p>
-        <a  href="#" > changepassword </a>
+        <a class="change-password" href="#" > Change Password </a>
         <br />
         <a href="/" onclick="loadPage('home'); return false;">Go Back</a>
-        </center>`
-        
+        </div>
+        </center>`;
+
         history.pushState({}, "", "/profile");
     } catch (err) {
         console.error("Failed to load profile:", err);
@@ -77,14 +79,13 @@ if (profile) {
     });
 }
 
-
 // function to load the header and nav
 document.addEventListener("DOMContentLoaded", async () => {
     const app = document.getElementById("app");
 
     try {
         const response = await fetch("/api/check-auth", {
-            credentials: "include"
+            credentials: "include",
         });
         const authData = await response.json();
         const authenticated = authData.authenticated;
@@ -92,7 +93,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (authenticated) {
             setHeader(authenticated);
 
-            loadPageFromPath(); 
+            loadPageFromPath();
         } else {
             app.innerHTML = templates.auth;
         }
@@ -102,13 +103,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 });
 
-
 function setHeader(authStatus) {
     const headerWrapper = document.createElement("div");
     headerWrapper.innerHTML = templates.header;
     document.body.insertBefore(headerWrapper, app);
     injectStylesheet("/front-end/styles/header.css");
-    updateNavbar(authStatus); 
+    injectStylesheet("/front-end/styles/dms.css");
+    injectStylesheet("/front-end/styles/style.css");
+    updateNavbar(authStatus);
 }
 
 function injectStylesheet(href) {

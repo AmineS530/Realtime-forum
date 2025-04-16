@@ -17,9 +17,11 @@ func Routes() *http.ServeMux {
 	mux.HandleFunc("/api/v1/get/{type}", auth.AuthMiddleware(dumbjson))
 	mux.HandleFunc("/api/profile", auth.AuthMiddleware(ProfileHandler))
 	mux.HandleFunc("/api/ws", ws.HandleWebSocket)
-	mux.Handle("/front-end/styles/", http.StripPrefix("/front-end/styles/", http.FileServer(http.Dir("./front-end/styles"))))
-	mux.Handle("/front-end/scripts/", http.StripPrefix("/front-end/scripts/", http.FileServer(http.Dir("./front-end/scripts"))))
-	mux.Handle("/front-end/images/", http.StripPrefix("/front-end/images/", http.FileServer(http.Dir("./front-end/images"))))
+	ProtectedStatic(mux, "/front-end/styles/", "./front-end/styles")
+	ProtectedStatic(mux, "/front-end/scripts/", "./front-end/scripts")
+	ProtectedStatic(mux, "/front-end/images/", "./front-end/images")
+	// mux.Handle("/front-end/scripts/", http.StripPrefix("/front-end/scripts/", http.FileServer(http.Dir("./front-end/scripts"))))
+	// mux.Handle("/front-end/images/", http.StripPrefix("/front-end/images/", http.FileServer(http.Dir("./front-end/images"))))
 	mux.HandleFunc("/profile", auth.AuthMiddleware(IndexHandler))
 
 	mux.HandleFunc("/api/check-auth", auth.CheckAuthHandler)
@@ -72,4 +74,21 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		helpers.ErrorPagehandler(w, http.StatusNotFound)
 		return
 	}
+}
+
+func ProtectedStatic(mux *http.ServeMux, routePrefix string, dirPath string) {
+	mux.HandleFunc(routePrefix, func(w http.ResponseWriter, r *http.Request) {
+		if !BlockDirectAccess(w, r) {
+			return
+		}
+		http.StripPrefix(routePrefix, http.FileServer(http.Dir(dirPath))).ServeHTTP(w, r)
+	})
+}
+
+func BlockDirectAccess(w http.ResponseWriter, r *http.Request) bool {
+	if r.Referer() == "" {
+		helpers.ErrorPagehandler(w, http.StatusForbidden)
+		return false
+	}
+	return true
 }

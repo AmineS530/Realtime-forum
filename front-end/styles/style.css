@@ -7,19 +7,17 @@
     --card-border-color: #333;
     --card-box-shadow-color: rgba(0, 0, 0, 0.5);
     --card-hover-box-shadow-color: rgba(255, 0, 0, 0.5);
+    --btn-primary-bg-color: #28a745;
+    --btn-hover-bg-color: #218838;
 }
 
-/* Universal Reset
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-} */
 
 body {
     font-family: Arial, sans-serif;
     background: var(--auth-bg-color);
     color: var(--auth-primary-text-color);
+    padding: 0;
+    box-sizing: border-box;
 }
 
 /* Card, Post, and Comment Container Styles */
@@ -75,48 +73,68 @@ button#postSeeMore {
 .notification.info {
     background-color: blue;
 }
-
-/* Add padding to prevent content from sticking to the edges
-body {
-    padding-top: 60px; /* Optional, can adjust based on your layout 
+ /* Profile Container */
+.profile {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #f3f3f3;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: Arial, sans-serif;
 }
-*/
+
+/* Heading */
+.profile h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Profile Details */
+.profile p {
+    font-size: 16px;
+    color: #666;
+    margin: 8px 0;
+}
+
+/* Link Styles */
+.profile a {
+    font-size: 16px;
+    color: #007BFF;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+/* Link Hover Effects */
+.profile a:hover {
+    color: #0056b3;
+}
+
+/* Centering and Formatting */
 
 
-/* Header styling from template */
-/* header {
-    background: #333;
-    color: #fff;
+/* Button-like Link */
+.profile a.change-password {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: var(--btn-primary-bg-color);
+    color: white;
+    border-radius: 4px;
+    font-weight: bold;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    text-decoration: none;
+}
+.profile a.change-password:hover {
+    background-color: var(--btn-hover-bg-color);
+}
+
+.center {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    padding: 10px 20px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
-header .logo a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 2rem;
-}
-
-header nav ul {
-    list-style: none;
-    display: flex;
-    gap: 20px;
-}
-
-header nav ul li a {
-    color: #fff;
-    text-decoration: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    transition: background 0.3s;
-}
-
-header nav ul li a:hover {
-    background: #444;
-} */
+    min-height: 100vh;
+    background-color: #f0f0f0;
+} 

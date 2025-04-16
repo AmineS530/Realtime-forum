@@ -5,7 +5,6 @@ package auth
 import (
 	"encoding/json"
 	"fmt"
-	"log"
 	"net/http"
 	"time"
 
@@ -45,8 +44,8 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	if CheckPassword(user.Password, userID) {
 		jwtStart := time.Now()
 		authorize(w, userID)
-		log.Printf("jwt took %v", time.Since(jwtStart))
-		log.Printf("Total login process took %v", time.Since(start))
+		helpers.InfoLog.Printf("jwt took %v", time.Since(jwtStart))
+		helpers.InfoLog.Printf("Total login process took %v", time.Since(start))
 
 		// todo: remove alerts to replace by js notifications
 		JsRespond(w, "Login successful", http.StatusPermanentRedirect)

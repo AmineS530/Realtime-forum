@@ -75,14 +75,6 @@ func CheckAuthHandler(w http.ResponseWriter, r *http.Request) {
 	auth, err := VerifyUser(jwt_token, ssid)
 	count, _ := helpers.EntryExists("session_id", ssid, "sessions", false)
 	if count != 1 {
-		fmt.Println("Session ID not found in database")
-		http.SetCookie(w, &http.Cookie{
-			Name:    "jwt",
-			Value:   "",
-			Path:    "/",
-			MaxAge:  -1,
-			Expires: time.Unix(0, 0),
-		})
 		http.SetCookie(w, &http.Cookie{
 			Name:    "ssid",
 			Value:   "",
