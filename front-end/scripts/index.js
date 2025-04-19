@@ -1,10 +1,15 @@
 import templates from "./templates.js";
 import { updateNavbar } from "./header.js";
+
 window.loadPage = function (page) {
     const app = document.getElementById("app");
     switch (page) {
         case "home":
             app.innerHTML = templates.posts + templates.dms;
+            const getPosts = document.getElementById("load-posts");
+            if (getPosts) {
+                getPosts.click();
+            }
             history.pushState({}, "", "/");
             break;
         case "profile":

@@ -106,21 +106,10 @@ const auth = `
 `;
 
 const posts = `
-<div id="forum-container">
-<div class="post" id="post{{ .PID }}">
-    <script>
-    viewPosts(event);
-    </script>
-    <h3>{{ .Title }}</h3>
-    <p>{{ .Content }}</p>
-    <span class="post-info">
-        <span class="post-author">Posted by {{ .Author }}</span>
-        <span class="post-date">{{ .CreatedAt }}</span>
-        <span class="post-category">{{ .Category }}</span>
-    </span>
-    <button onclick="viewComments(event)" class="view-comments" data-post-id="{{ .PID }}">View Comments</button>
-</div>
-</div>
+    <div id="forum-container">
+        <!-- The posts will be loaded here dynamically -->
+    </div>
+    <button id="load-posts" onclick="viewPosts(event)">Load More Posts</button>
 `;
 
 const dms = `<div id="backdrop" class="show" onclick="event.target.id ==='backdrop' ? dms_ToggleShowSidebar(event): event.stopPropagation();">
@@ -142,4 +131,4 @@ const dms = `<div id="backdrop" class="show" onclick="event.target.id ==='backdr
     </div>
 </div> `;
 
-export default { nav, header, auth, posts, dms };
+export default { nav, header, posts, auth, dms };

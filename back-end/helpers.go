@@ -31,9 +31,6 @@ type ErrorPage struct {
 	Msg string
 }
 
-type Placeholder struct {
-	Online bool
-}
 
 func EntryExists(elem, value, from string, checkLower bool) (int, bool) {
 	var count int

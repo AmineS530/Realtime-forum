@@ -1,12 +1,14 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
 
 	helpers "RTF/back-end"
 	"RTF/back-end/goFiles/auth"
+	"RTF/back-end/goFiles/requests"
 	"RTF/back-end/goFiles/ws"
 )
 
@@ -40,11 +42,15 @@ func dumbjson(w http.ResponseWriter, r *http.Request) {
 
 	// ErrorPagehandler(w, http.StatusInternalServerError, "azerqsdfwxcv")
 	if x == "comments" {
+		comments, _ := requests.GetComments()
+		jsoncomment, _ := json.Marshal(comments)
 		w.Header().Set("Content-Type", "application/json")
-		w.Write([]byte(commentjson))
+		w.Write([]byte(jsoncomment))
 	} else if x == "posts" {
+		posts, _ := requests.GetPosts()
+		jsonData, _ := json.Marshal(posts)
 		w.Header().Set("Content-Type", "application/json")
-		w.Write([]byte(postjson))
+		w.Write(jsonData)
 	} else {
 		helpers.ErrorPagehandler(w, http.StatusNotFound)
 		return

@@ -42,21 +42,9 @@ CREATE TABLE IF NOT EXISTS `posts` (
     uid INTEGER NOT NULL,
     title TEXT NOT NULL,
     content TEXT NOT NULL,
+    categories TEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (uid) REFERENCES users(id) ON DELETE CASCADE
-);
-
-CREATE TABLE IF NOT EXISTS `categories` (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT UNIQUE NOT NULL
-);
-
-CREATE TABLE IF NOT EXISTS `postCategory` (
-    post_id INTEGER NOT NULL,
-    category_id INTEGER NOT NULL,
-    PRIMARY KEY (post_id, category_id),
-    FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE,
-    FOREIGN KEY (category_id) REFERENCES categories (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS `comments` (
@@ -80,8 +68,6 @@ CREATE TABLE IF NOT EXISTS `dms` (
     CHECK (sender_id <> recipient_id)
 );
 -- Add indexes for performance optimization
-CREATE INDEX IF NOT EXISTS idx_post_category_post_id ON postCategory(post_id);
-CREATE INDEX IF NOT EXISTS idx_post_category_category_id ON postCategory(category_id);
 CREATE INDEX IF NOT EXISTS idx_comments_post_id ON comments(post_id);
 CREATE INDEX IF NOT EXISTS idx_dms_sender_id_recipient_id ON dms(sender_id, recipient_id);
 -- -- selects

@@ -1,4 +1,4 @@
-commentLimit = undefined;
+let commentLimit = undefined;
 
 function fetching(e, target) {
     e.preventDefault();
@@ -38,7 +38,7 @@ function fetching(e, target) {
     });
 }
 
-async function viewComments(event, offset) {
+window.viewComments = async function viewComments(event, offset) {
     let parent = event.target.parentElement;
     // console.log(event, parent);
     let comments = [];
@@ -64,9 +64,7 @@ async function viewComments(event, offset) {
             }" style="borderwidth: 5px;">
         <span class="comment-info">
             <span class="comment-author">published by ${comment.author}</span>
-            <span class="comment-date">published ${new Date(
-                comment.creation_time
-            )}</span>
+            <span class="comment-date">published ${new Date(comment.creation_time)}</span>
         </span>
         <p>${comment.content}<p>
         </div>`;
@@ -83,42 +81,40 @@ async function viewComments(event, offset) {
         </details>`;
         event.target.outerHTML = azer;
     }
-}
+};
 
-async function viewPosts(event, offset) {
-    // console.log(event);
-    let posts = [];
+window.viewPosts = async function viewPosts(event, offset = 0) {
     try {
-        let response = await fetch(
-            `/api/v1/get/posts?${offset ? `&offset=${offset}` : ""}`
-        );
-        // console.log(response);
-        if (!response.ok) {
-            throw new Error(`Error: ${response.status} - ${response.statusText}`);
+        const response = await fetch(`/api/v1/get/posts?offset=${offset}`);
+        if (!response.ok)
+            throw new Error(`${response.status} ${response.statusText}`);
+        const posts = await response.json();
+
+        let html = "";
+        for (const post of posts) {
+            html += `
+            <div class="post" id="post${post.pid}">
+                <h3>${post.title}</h3>
+                <p>${post.content}</p>
+                <span class="post-info">
+                    <span class="post-author">Posted by ${post.author}</span>
+                    <span class="post-date">${new Date(
+                post.creation_time
+            ).toLocaleString()}</span>
+                    <span class="post-category">${post.categories.join(
+                " | "
+            )}</span>
+                </span>
+                <button onclick="viewComments(event)" class="view-comments" data-post-id="${post.pid
+                }">View Comments</button>
+            </div>`;
         }
-        let data = await response.json();
-        // console.log(data);
-        posts = data;
-    } catch (error) {
-        console.error("Error:", error);
-        return;
+
+        event.target.insertAdjacentHTML("beforebegin", html);
+    } catch (err) {
+        console.error("Failed to load posts:", err);
     }
-    // console.log("azer", posts);
-    let postall = "";
-    for (const post of posts) {
-        postall += `<div class="post" id="post_id-${post.pid}">
-        <h3>${post.title}</h3>
-        <p>${post.content}</p>
-        <span class="post-info">
-            <span class="post-author">Posted by ${post.author}</span>
-            <span class="post-date">${new Date(post.creation_time)}</span>
-            <span class="post-category">${post.categories.join(" | ")}</span>
-        </span>
-        <button onclick="viewComments(event)" class="view-comments">View Comments</button>
-    </div>`;
-    }
-    event.target.insertAdjacentHTML("beforebegin", postall);
-}
+};
 
 document.addEventListener("DOMContentLoaded", () => {
     let qsdf = document.getElementById("postSeeMore");
@@ -130,3 +126,19 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 500);
     }
 });
+
+const postTemplate = (post) => `
+<div class="post" id="post${post.pid}">
+    <h3>${post.title}</h3>
+    <p>${post.content}</p>
+    <span class="post-info">
+        <span class="post-author">Posted by ${post.author}</span>
+        <span class="post-date">${new Date(
+    post.creation_time
+).toLocaleString()}</span>
+        <span class="post-category">${post.categories.join(" | ")}</span>
+    </span>
+    <button onclick="viewComments(event)" class="view-comments" data-post-id="${post.pid
+    }">View Comments</button>
+</div>
+`;
