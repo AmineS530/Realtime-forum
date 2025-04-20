@@ -50,6 +50,7 @@ func JsRespond(w http.ResponseWriter, message string, code int) {
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(ErrorResponse{Error: message})
 	}
+	// w.WriteHeader(code) why not ??     NOTE : when registration erors respond with 200 status
 }
 
 func VerifyUser(jwt_token, session_id string) (bool, error) {

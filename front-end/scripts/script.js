@@ -115,7 +115,7 @@ window.viewPosts = async function viewPosts(event, offset = 0) {
         console.error("Failed to load posts:", err);
     }
 };
-
+/*
 document.addEventListener("DOMContentLoaded", () => {
     let qsdf = document.getElementById("postSeeMore");
     if (qsdf) {
@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // console.log("5 seconds have passed!");
         }, 500);
     }
-});
+});*/
 
 const postTemplate = (post) => `
 <div class="post" id="post${post.pid}">
