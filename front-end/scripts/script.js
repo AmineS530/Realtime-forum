@@ -40,7 +40,6 @@ function fetching(e, target) {
 
 window.viewComments = async function viewComments(event, offset) {
     let parent = event.target.parentElement;
-    console.log(parent.id);
     let comments = [];
     try {
         let response = await fetch(
@@ -60,14 +59,7 @@ window.viewComments = async function viewComments(event, offset) {
     // console.log("azer", comments);
     let commentall = "";
     for (const comment of comments) {
-        commentall += `<div class="comment" id="${comment.id
-            }" style="borderwidth: 5px;">
-        <span class="comment-info">
-            <span class="comment-author">published by ${comment.author}</span>
-            <span class="comment-date">published ${new Date(comment.creation_time)}</span>
-        </span>
-        <p>${comment.content}<p>
-        </div>`;
+        commentall += commentTemplate(comment);
     }
     if (offset) {
         event.target.setAttribute(
@@ -77,7 +69,8 @@ window.viewComments = async function viewComments(event, offset) {
         event.target.insertAdjacentHTML("beforebegin", commentall);
     } else {
         let azer = `<details class="comment-container" open>
-        <summary>Click to see comments</summary> ${commentall}<button onclick="viewComments(event, ${comments.length})">load more comments</button>
+        <summary>Click to see comments</summary> ${commentall}
+        <button class="view-comments" onclick="viewComments(event, ${comments.length})">load more comments</button>
         </details>`;
         event.target.outerHTML = azer;
     }
@@ -93,22 +86,7 @@ window.viewPosts = async function viewPosts(event) {
 
         let html = "";
         for (const post of posts) {
-            html += `
-            <div class="post" id="${post.pid}">
-                <h3>${post.title}</h3>
-                <p>${post.content}</p>
-                <span class="post-info">
-                    <span class="post-author">Posted by ${post.author}</span>
-                    <span class="post-date">${new Date(
-                post.creation_time
-            ).toLocaleString()}</span>
-                    <span class="post-category">${post.categories.join(
-                " | "
-            )}</span>
-                </span>
-                <button onclick="viewComments(event)" class="view-comments" data-post-id="${post.pid
-                }">View Comments</button>
-            </div>`;
+            html += postTemplate(post);
         }
 
         event.target.insertAdjacentHTML("beforebegin", html);
@@ -127,19 +105,34 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 500);
     }
 });*/
-
 const postTemplate = (post) => `
-<div class="post" id="post${post.pid}">
-    <h3>${post.title}</h3>
-    <p>${post.content}</p>
-    <span class="post-info">
-        <span class="post-author">Posted by ${post.author}</span>
-        <span class="post-date">${new Date(
-    post.creation_time
-).toLocaleString()}</span>
-        <span class="post-category">${post.categories.join(" | ")}</span>
+  <div class="post" id="${post.pid}">
+    <h3 class="post-title">${post.title}</h3>
+    <span class="post-category">
+      Categor${post.categories.length > 1 ? "ies" : "y"}: ${post.categories.join(" | ")}
     </span>
-    <button onclick="viewComments(event)" class="view-comments" data-post-id="${post.pid
-    }">View Comments</button>
+    
+    <p class="post-content">${post.content}</p>
+
+    <div class="post-info">
+      <span class="post-author">Posted by <strong>${post.author}</strong></span>
+      <span class="post-date">${new Date(post.creation_time).toLocaleString()}</span>
+    </div>
+
+    <button onclick="viewComments(event)" class="view-comments" data-post-id="${post.pid}">
+      View Comments
+    </button>
+  </div>
+`;
+
+
+const commentTemplate = (comment) => `<div class="comment" id="post_id-${comment.pid}">
+  <div class="comment-header">
+    <span class="comment-author">Published by <strong>${comment.author}</strong></span>
+    <span class="comment-date">${new Date(comment.creation_time).toLocaleString()}</span>
+  </div>
+  <div class="comment-body">
+    <p>${comment.content}</p>
+  </div>
 </div>
 `;

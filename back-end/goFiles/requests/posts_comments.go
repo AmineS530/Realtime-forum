@@ -81,6 +81,8 @@ func GetComments(pid string) ([]Comment, error) {
     	users u ON c.uid = u.id
 	WHERE
 		c.post_id = ?
+	ORDER BY
+		c.created_at DESC
 	`, iPid)
 	if err != nil {
 		fmt.Println("Error getting comments: ", err)
