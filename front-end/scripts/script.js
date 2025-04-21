@@ -83,8 +83,9 @@ window.viewComments = async function viewComments(event, offset) {
     }
 };
 
-window.viewPosts = async function viewPosts(event, offset = 0) {
+window.viewPosts = async function viewPosts(event) {
     try {
+        const offset = document.querySelectorAll('#app .post').length 
         const response = await fetch(`/api/v1/get/posts?offset=${offset}`);
         if (!response.ok)
             throw new Error(`${response.status} ${response.statusText}`);

@@ -24,7 +24,12 @@ type Comment struct {
 	CreationTime string `json:"creation_time"`
 }
 
-func GetPosts() ([]Post, error) {
+func GetPosts(soffset string) ([]Post, error) {
+	offset, err := strconv.Atoi(soffset)
+	if err != nil {
+		helpers.ErrorLog.Println("Error converting pid to int: ", err)
+		return nil, err
+	}
 	rows, err := helpers.DataBase.Query(`
 	SELECT 
    		p.post_id AS pid, 
@@ -33,12 +38,12 @@ func GetPosts() ([]Post, error) {
     	p.categories, 
     	p.created_at, 
     	u.username AS author
-	FROM 
+	FROM
     	posts p
 	JOIN 
     	users u ON p.uid = u.id
-
-	`)
+	LIMIT 3 OFFSET ?
+	`, offset)
 	if err != nil {
 		fmt.Println("Error getting posts: ", err)
 		return nil, err
@@ -85,7 +90,7 @@ func GetComments(pid string) ([]Comment, error) {
 	var comments []Comment
 	for rows.Next() {
 		var comment Comment
-		err := rows.Scan( &comment.Author, &comment.Content, &comment.CreationTime)
+		err := rows.Scan(&comment.Author, &comment.Content, &comment.CreationTime)
 		if err != nil {
 			fmt.Println("Error scanning comments: ", err)
 			return nil, err

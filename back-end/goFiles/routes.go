@@ -40,13 +40,14 @@ func dumbjson(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(r.URL)
 	x := r.PathValue("type")
 	pid := r.URL.Query().Get("pid")
+	offset := r.URL.Query().Get("offset")
 	if x == "comments" {
 		comments, _ := requests.GetComments(pid)
 		jsoncomment, _ := json.Marshal(comments)
 		w.Header().Set("Content-Type", "application/json")
 		w.Write([]byte(jsoncomment))
 	} else if x == "posts" {
-		posts, _ := requests.GetPosts()
+		posts, _ := requests.GetPosts(offset)
 		jsonData, _ := json.Marshal(posts)
 		w.Header().Set("Content-Type", "application/json")
 		w.Write(jsonData)
