@@ -109,9 +109,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 function setHeader(authStatus) {
-    const headerWrapper = document.createElement("div");
-    headerWrapper.innerHTML = templates.header;
-    document.body.insertBefore(headerWrapper, app);
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = templates.header;
+    const headerNode = wrapper.firstElementChild;
+    document.documentElement.insertBefore(headerNode, document.body);
     injectStylesheet("/front-end/styles/header.css");
     injectStylesheet("/front-end/styles/dms.css");
     injectStylesheet("/front-end/styles/style.css");

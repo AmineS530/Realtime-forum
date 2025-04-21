@@ -39,10 +39,9 @@ func Routes() *http.ServeMux {
 func dumbjson(w http.ResponseWriter, r *http.Request) {
 	fmt.Println(r.URL)
 	x := r.PathValue("type")
-
-	// ErrorPagehandler(w, http.StatusInternalServerError, "azerqsdfwxcv")
+	pid := r.URL.Query().Get("pid")
 	if x == "comments" {
-		comments, _ := requests.GetComments()
+		comments, _ := requests.GetComments(pid)
 		jsoncomment, _ := json.Marshal(comments)
 		w.Header().Set("Content-Type", "application/json")
 		w.Write([]byte(jsoncomment))

@@ -2,6 +2,7 @@ package requests
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 
 	helpers "RTF/back-end"
@@ -58,10 +59,14 @@ func GetPosts() ([]Post, error) {
 	return posts, nil
 }
 
-func GetComments() ([]Comment, error) {
+func GetComments(pid string) ([]Comment, error) {
+	iPid, err := strconv.Atoi(pid)
+	if err != nil {
+		helpers.ErrorLog.Println("Error converting pid to int: ", err)
+		return nil, err
+	}
 	rows, err := helpers.DataBase.Query(`
 	SELECT 
-    	c.post_id AS pid,
     	u.username AS author,
     	c.content,
     	c.created_at
@@ -69,7 +74,9 @@ func GetComments() ([]Comment, error) {
     	comments c
 	JOIN 
     	users u ON c.uid = u.id
-	`)
+	WHERE
+		c.post_id = ?
+	`, iPid)
 	if err != nil {
 		fmt.Println("Error getting comments: ", err)
 		return nil, err
@@ -78,11 +85,12 @@ func GetComments() ([]Comment, error) {
 	var comments []Comment
 	for rows.Next() {
 		var comment Comment
-		err := rows.Scan(&comment.Pid, &comment.Author, &comment.Content, &comment.CreationTime)
+		err := rows.Scan( &comment.Author, &comment.Content, &comment.CreationTime)
 		if err != nil {
 			fmt.Println("Error scanning comments: ", err)
 			return nil, err
 		}
+		comment.Pid = iPid
 		comments = append(comments, comment)
 	}
 	return comments, nil

@@ -106,9 +106,6 @@ const auth = `
 `;
 
 const posts = `
-    <div id="forum-container">
-        <!-- The posts will be loaded here dynamically -->
-    </div>
     <button id="load-posts" onclick="viewPosts(event)">Load More Posts</button>
 `;
 

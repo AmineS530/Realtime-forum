@@ -40,7 +40,7 @@ function fetching(e, target) {
 
 window.viewComments = async function viewComments(event, offset) {
     let parent = event.target.parentElement;
-    // console.log(event, parent);
+    console.log(parent.id);
     let comments = [];
     try {
         let response = await fetch(
@@ -93,7 +93,7 @@ window.viewPosts = async function viewPosts(event, offset = 0) {
         let html = "";
         for (const post of posts) {
             html += `
-            <div class="post" id="post${post.pid}">
+            <div class="post" id="${post.pid}">
                 <h3>${post.title}</h3>
                 <p>${post.content}</p>
                 <span class="post-info">
