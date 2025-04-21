@@ -116,14 +116,13 @@ const dms = `<div id="backdrop" class="show" onclick="event.target.id ==='backdr
             <h1 class="offcanvas-title" style="margin-bottom: 0;line-height: 5vh;">Messages</h1>
             <button onclick="dms_ToggleShowSidebar(event)" class="btn">  ${svg.two_bubbles}</button>
         </div>
-        <select name="message" id="message-select" onchange="alert('talking to anew person '+this.value)">
-            <option selected disabled hidden>users</option>
+        <select name="message" id="message-select" onchange="changeDiscussion(this)">
+                <option selected disabled hidden>users</option>
         </select>
         <ul id="discussion" class="discussion"></ul>
-
-        <form class="input-group">
+        <form class="input-group" onsubmit="event.preventDefault();sendDm(event)">
             <input type="text" class="form-control" placeholder="New Message..." aria-label="Message">
-            <button class="btn btn-primary" type="button"> ${svg.svg_send}SEND</button>
+            <button class="btn btn-primary" type="submit">{{ template "svg-send"}}SEND</button>
         </form>
     </div>
 </div> `;

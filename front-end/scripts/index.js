@@ -106,6 +106,23 @@ document.addEventListener("DOMContentLoaded", async () => {
         console.error("Error loading:", error);
         app.innerHTML = "<h2>Error loading the page.</h2>";
     }
+
+    const discussion = document.getElementById("discussion")
+    fetch('/api/v1/get/users', {
+        method: 'GET',
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log("azerazerazernbfhqbfhbqfhqbsfjhbqjsbfhqbsdfhqbsdfq",data)
+        let formattedHistory = "";
+        data.forEach(user => {
+            formattedHistory += `<option>${user}</option>`
+        });
+        console.log("azerazerazerazerazer",formattedHistory)
+        document.getElementById("message-select").innerHTML += formattedHistory
+    })
+    .catch(error => console.error('Error:', error))
+    .finally(elem.disabled = false);
 });
 
 function setHeader(authStatus) {
