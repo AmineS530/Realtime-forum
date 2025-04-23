@@ -68,11 +68,24 @@ window.viewComments = async function viewComments(event, offset) {
         );
         event.target.insertAdjacentHTML("beforebegin", commentall);
     } else {
-        let azer = `<details class="comment-container" open>
-        <summary>Click to see comments</summary> ${commentall}
-        <button class="view-comments" onclick="viewComments(event, ${comments.length})">load more comments</button>
-        </details>`;
-        event.target.outerHTML = azer;
+    let comment_area = `
+    <details class="comment-container" open>
+    <summary>Click to see comments</summary> 
+    <div class="comment-input-area">
+        <textarea 
+            class="comment-textarea" 
+            placeholder="Write your comment here..."
+            rows="3"
+        ></textarea>
+        <button class="submit-comment" onclick="submitComment(event)">Post</button>
+    </div>
+    ${commentall}
+
+    <button class="view-comments" onclick="viewComments(event, ${comments.length})">Load more comments</button>
+    </details>
+`;
+
+        event.target.outerHTML = comment_area;
     }
 };
 
