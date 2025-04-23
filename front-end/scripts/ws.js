@@ -1,4 +1,3 @@
-
 let socket = new WebSocket("ws://localhost:9090/api/v1/ws");
 let uname = 'guest0'
 socket.onopen = function (event) {

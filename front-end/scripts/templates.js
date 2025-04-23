@@ -122,7 +122,7 @@ const dms = `<div id="backdrop" class="show" onclick="event.target.id ==='backdr
         <ul id="discussion" class="discussion"></ul>
         <form class="input-group" onsubmit="event.preventDefault();sendDm(event)">
             <input type="text" class="form-control" placeholder="New Message..." aria-label="Message">
-            <button class="btn btn-primary" type="submit">{{ template "svg-send"}}SEND</button>
+            <button class="btn btn-primary" type="submit">${svg.svg_send}SEND</button>
         </form>
     </div>
 </div> `;
