@@ -1,0 +1,69 @@
+package dms
+
+import (
+	"fmt"
+
+	helpers "RTF/back-end"
+)
+
+type Message struct {
+	Sender  string `json:"sender"`
+	Content string `json:"message"`
+}
+
+func GetdmHistory(uname1, uname2 string) ([]Message, error) {
+	rows, err := helpers.DataBase.Query(`
+	SELECT
+		sender.username , d.message
+	FROM
+		dms d
+	JOIN
+		users sender ON d.sender_id = sender.id
+	JOIN
+		users recipient ON d.recipient_id = recipient.id
+	WHERE
+		(sender.username = ? AND recipient.username = ?)
+   	OR
+		(sender.username = ? AND recipient.username = ?);
+	`, uname1, uname2, uname2, uname1)
+	if err != nil {
+		fmt.Println("Error getting posts: ", err)
+		return nil, err
+	}
+	defer rows.Close()
+	var messages []Message
+	for rows.Next() {
+		var message Message
+		err := rows.Scan(&message.Sender, &message.Content)
+		if err != nil {
+			fmt.Println("Error scanning posts: ", err)
+			return nil, err
+		}
+		messages = append(messages, message)
+	}
+	return messages, nil
+}
+
+func GetUserNames() ([]string, error) {
+	rows, err := helpers.DataBase.Query("SELECT username FROM users")
+	if err != nil {
+		return nil, fmt.Errorf("could not execute query: %w", err)
+	}
+	defer rows.Close()
+
+	var userNames []string
+
+	for rows.Next() {
+		var username string
+		if err := rows.Scan(&username); err != nil {
+			return userNames, fmt.Errorf("could not scan row: %w", err)
+		}
+		userNames = append(userNames, username)
+	}
+
+	if err := rows.Err(); err != nil {
+		return userNames, fmt.Errorf("row iteration error: %w", err)
+	}
+
+	return userNames, nil
+}

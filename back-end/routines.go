@@ -11,7 +11,7 @@ func ServerRoutine() {
 	go func() {
 		ws.Broadcaster()
 		for {
-			time.Sleep(5 * time.Minute)
+			time.Sleep(time.Minute)
 
 			// Run cleanup function
 			delExpiredSessions(DataBase)

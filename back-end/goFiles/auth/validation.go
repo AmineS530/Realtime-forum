@@ -5,9 +5,7 @@ import (
 	"errors"
 	"net/http"
 	"regexp"
-	"strconv"
 
-	helpers "RTF/back-end"
 	jwt "RTF/back-end/goFiles/JWT"
 )
 
@@ -54,22 +52,19 @@ func JsRespond(w http.ResponseWriter, message string, code int) {
 }
 
 func VerifyUser(jwt_token, session_id string) (bool, error) {
-	userSessionCount := 0
-	payload, _ := jwt.JWTVerify(jwt_token)
-	if payload == nil || session_id == "" {
-		return false, errors.New("missing payload or session_id")
+	if session_id == "" {
+		return false, errors.New("missing session_id")
 	}
-	if session_id != "" {
-		if userSessionCount, _ = helpers.EntryExists("user_id", strconv.Itoa(int(payload.Sub)), "sessions", true); userSessionCount > 1 {
-			err := InvalidateSessions(payload.Sub)
-			if err != nil {
-				return false, err
-			}
-			return false, errors.New("invalid session_id")
-		}
+
+	payload, err := jwt.JWTVerify(jwt_token)
+	if err != nil || payload == nil {
+		return false, errors.New("invalid or expired token")
 	}
-	if count, _ := helpers.EntryExists("username", payload.Username, "users", true); count != 1 {
-		return false, errors.New("invalid username")
+
+	valid, _ := SessionExists(payload.Sub, session_id)
+	if !valid {
+		return false, errors.New("invalid session")
 	}
+
 	return true, nil
 }

@@ -1,5 +1,12 @@
 import templates from "./templates.js";
 import { updateNavbar } from "./header.js";
+// Import functionality from other modules
+import './script.js';
+import './convenience.js';
+import './log_reg.js';
+import './header.js';
+import './ws.js';
+
 
 window.loadPage = function (page) {
     const app = document.getElementById("app");
@@ -89,23 +96,25 @@ document.addEventListener("DOMContentLoaded", async () => {
     const app = document.getElementById("app");
 
     try {
-        const response = await fetch("/api/check-auth", {
-            credentials: "include",
-        });
-        const authData = await response.json();
-        const authenticated = authData.authenticated;
-
-        if (authenticated) {
-            setHeader(authenticated);
-
-            loadPageFromPath();
-        } else {
-            app.innerHTML = templates.auth;
-        }
+        setTimeout(async () => {
+            const response = await fetch("/api/check-auth", {
+                credentials: "include",
+            });
+            const authData = await response.json();
+            const authenticated = authData.authenticated;
+    
+            if (authenticated) {
+                setHeader(authenticated);
+                loadPageFromPath();
+            } else {
+                app.innerHTML = templates.auth;
+            }
+        }, 100); 
     } catch (error) {
         console.error("Error loading:", error);
         app.innerHTML = "<h2>Error loading the page.</h2>";
     }
+    
 
     const discussion = document.getElementById("discussion")
     fetch('/api/v1/get/users', {

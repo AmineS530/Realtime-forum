@@ -82,7 +82,7 @@ async function fetching(event, endpoint) {
         if (response.ok) {
             showNotification("Login successful!", "success");
             setTimeout(() => {
-                window.location.href = "/";
+               loadPage("home");
             }, 1000);
         } else {
             showNotification("Login failed: " + result.error, "error");

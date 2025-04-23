@@ -1,11 +1,16 @@
-let socket = new WebSocket("ws://localhost:9090/api/ws");
 
+let socket = new WebSocket("ws://localhost:9090/api/v1/ws");
+let uname = 'guest0'
 socket.onopen = function (event) {
     console.log("Connected to WebSocket server");
 };
 
 socket.onmessage = function (event) {
-    console.log("Received message:", event.data);
+    const msg = JSON.parse(event.data)
+    console.log("Received message:", event.data,"Parsed message:", msg);
+    discussion.innerHTML += ['system',uname,discussion.previousElementSibling.value].includes(msg.sender)?
+                            `<li>[${msg.sender}] : ${msg.message}</li>`:
+                            `<li>[system]received a new message from ${msg.sender}.</li>`;
 };
 
 socket.onclose = function (event) {
@@ -14,6 +19,7 @@ socket.onclose = function (event) {
 
 socket.onerror = function (error) {
     console.error("WebSocket error:", error);
+    alert("connection lost reload the page for dms to work")
 };
 
 function sendMessage(message) {
@@ -27,70 +33,56 @@ let message123 = {
         receiver : "guest1",
         message : "Hello, everyone!"
     }
-  };
-azer={}
-function  sendDm(event) {
-    // azer = event.;
-    console.log(event.target[0].value);
-    let message = new transmission("direct_message", {
-        receiver : "guest1",
-        message : event.target[0].value
-    });
-    // event.preventDefault();
-    // let message = {
-    //     type: "broadcast",
-    //     content: {
-    //         receiver : "guest1",
-    //         message : messageInput.value
-    //     }
-    // };
-    // sendMessage(JSON.stringify(message));
-    // messageInput.value = "";
-    // return false;
+};
+
+function changeDiscussion(elem) {
+    elem.disabled = true;
+    fetch('/api/v1/get/dmhistory', {
+            method: 'GET',
+            headers: {
+              'target': elem.value
+            }
+        })
+        .then(response => response!== null ?response.json():data=[])
+        .then(data => {
+            console.log("azerazerazernbfhqbfhbqfhqbsfjhbqjsbfhqbsdfhqbsdfq",data)
+            let formattedHistory = "";
+            if (data) {
+                data.forEach(message => {
+                    formattedHistory += `<li>[${message.sender}] : ${message.message}</li>`
+                });
+            }
+            console.log("azerazerazerazerazer",formattedHistory)
+            elem.nextElementSibling.innerHTML = formattedHistory
+            elem.nextElementSibling.nextElementSibling.value = elem.value
+        })
+        .catch(error => console.error('Error:', error))
+        .finally(elem.disabled = false);
 }
 
-class transmission {
-    constructor(type, contents) {
-        if (typeof type !== 'string') {
+function  sendDm(event) {
+    // console.log(event.target.attributes.value.value)
+    console.log(event.target[0].value);
+    let message = new Message(event.target.value,event.target[0].value);
+    message.send()
+}
+
+class Message {
+    constructor(dest,contents) {
+        if (typeof dest!=='string') {
+            throw new Error("Type must be a string");        }
+
+        if (typeof contents!=='string') {
             throw new Error("Type must be a string");
         }
-        
-        // Ensure 'contents' is defined
-        if (contents === undefined || contents === null) {
-            throw new Error("Contents must be defined");
-        }
-
         // Initialize the body object
-        this.body = {};
-        this.body.type = type;
-        this.body.content = contents;
-
-        this.setHandler(type);
-    }
-
-    setHandler(type) {
-        // Set the appropriate handler for the given type
-        switch (type) {
-            case "direct_message":
-                this.verify = this.directMessageverify;
-                break;
-            default:
-                throw new Error("Unsupported transmission type");
-        }
-    }
-
-    directMessageverify() {
-        if (typeof this.body.content.receiver!=='string') {
-            return false
-        }
-
-        if (typeof this.body.content.message!=='string') {
-            return false
-        }
+        this.body = {receiver: dest,message: contents};
     }
 
     send() {
         socket.send(JSON.stringify(this.body));
-        console.log("Sent message:", JSON.stringify(this.body));
     }
 }
+
+
+const usename = document.cookie.match(/session-name=(\S+)==;/)

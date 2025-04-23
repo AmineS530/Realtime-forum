@@ -49,12 +49,23 @@ func createSession(userID int) (string, error) {
 	return sessionID.String(), nil
 }
 
+func SessionExists(userID int, sessionID string) (bool, error) {
+	var count int
+	query := "SELECT COUNT(*) FROM sessions WHERE session_id = ? AND user_id = ?"
+	err := helpers.DataBase.QueryRow(query, sessionID, userID).Scan(&count)
+	if err != nil {
+		helpers.ErrorLog.Println("DB error in SessionExists:", err)
+		return false, err
+	}
+	return count == 1, nil
+}
+
 func CheckActiveSession(userID int) ([]string, error) {
 	var sessions []string
 	rows, err := helpers.DataBase.Query(`
         SELECT session_id 
         FROM sessions 
-        WHERE user_id = ? AND expires_at > CURRENT_TIMESTAMP
+        WHERE user_id = ?
 		ORDER BY expires_at DESC
     `, userID)
 	if err != nil {
