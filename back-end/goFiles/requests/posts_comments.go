@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	helpers "RTF/back-end"
+	"RTF/global"
 )
 
 type Post struct {
@@ -27,10 +27,10 @@ type Comment struct {
 func GetPosts(soffset string) ([]Post, error) {
 	offset, err := strconv.Atoi(soffset)
 	if err != nil {
-		helpers.ErrorLog.Println("Error converting pid to int: ", err)
+		global.ErrorLog.Println("Error converting pid to int: ", err)
 		return nil, err
 	}
-	rows, err := helpers.DataBase.Query(`
+	rows, err := global.DataBase.Query(`
 	SELECT 
    		p.post_id AS pid, 
     	p.title, 
@@ -67,10 +67,10 @@ func GetPosts(soffset string) ([]Post, error) {
 func GetComments(pid string) ([]Comment, error) {
 	iPid, err := strconv.Atoi(pid)
 	if err != nil {
-		helpers.ErrorLog.Println("Error converting pid to int: ", err)
+		global.ErrorLog.Println("Error converting pid to int: ", err)
 		return nil, err
 	}
-	rows, err := helpers.DataBase.Query(`
+	rows, err := global.DataBase.Query(`
 	SELECT 
     	u.username AS author,
     	c.content,

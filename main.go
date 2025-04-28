@@ -6,16 +6,16 @@ import (
 	"os"
 
 	database "RTF/DataBase"
-	helpers "RTF/back-end"
 	handlers "RTF/back-end/goFiles"
+	"RTF/global"
 )
 
 func init() {
-	helpers.DataBase = database.SetTables()
+	global.DataBase = database.SetTables()
 }
 
 func main() {
-	defer helpers.DataBase.Close()
+	defer global.DataBase.Close()
 	httpPort := os.Getenv("PORT")
 
 	if httpPort == "" {

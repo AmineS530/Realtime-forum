@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	helpers "RTF/back-end"
+	helpers "RTF/global"
 
 	_ "github.com/mattn/go-sqlite3"
 )

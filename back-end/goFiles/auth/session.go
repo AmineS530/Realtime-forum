@@ -4,8 +4,8 @@ import (
 	"log"
 	"time"
 
-	helpers "RTF/back-end"
 	jwt "RTF/back-end/goFiles/JWT"
+	"RTF/global"
 
 	"github.com/gofrs/uuid"
 )
@@ -38,7 +38,7 @@ func createSession(userID int) (string, error) {
 	expiresAt := time.Now().Add(time.Duration(jwt.Time_to_Expire))
 
 	// Insert the session into the database
-	_, err = helpers.DataBase.Exec(`
+	_, err = global.DataBase.Exec(`
         INSERT INTO sessions (user_id, session_id , expires_at) 
         VALUES (?, ?, ?)
     `, userID, sessionID.String(), expiresAt)
@@ -52,9 +52,9 @@ func createSession(userID int) (string, error) {
 func SessionExists(userID int, sessionID string) (bool, error) {
 	var count int
 	query := "SELECT COUNT(*) FROM sessions WHERE session_id = ? AND user_id = ?"
-	err := helpers.DataBase.QueryRow(query, sessionID, userID).Scan(&count)
+	err := global.DataBase.QueryRow(query, sessionID, userID).Scan(&count)
 	if err != nil {
-		helpers.ErrorLog.Println("DB error in SessionExists:", err)
+		global.ErrorLog.Println("DB error in SessionExists:", err)
 		return false, err
 	}
 	return count == 1, nil
@@ -62,7 +62,7 @@ func SessionExists(userID int, sessionID string) (bool, error) {
 
 func CheckActiveSession(userID int) ([]string, error) {
 	var sessions []string
-	rows, err := helpers.DataBase.Query(`
+	rows, err := global.DataBase.Query(`
         SELECT session_id 
         FROM sessions 
         WHERE user_id = ?
@@ -100,7 +100,7 @@ func InvalidateSessions(userID int) error {
 }
 
 func invalidateSession(session_id string) error {
-	_, err := helpers.DataBase.Exec(`
+	_, err := global.DataBase.Exec(`
         DELETE FROM sessions 
         WHERE session_id = ?
     `, session_id)

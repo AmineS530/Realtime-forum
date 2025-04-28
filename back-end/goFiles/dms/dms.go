@@ -3,7 +3,7 @@ package dms
 import (
 	"fmt"
 
-	helpers "RTF/back-end"
+	"RTF/global"
 )
 
 type Message struct {
@@ -12,7 +12,7 @@ type Message struct {
 }
 
 func GetdmHistory(uname1, uname2 string) ([]Message, error) {
-	rows, err := helpers.DataBase.Query(`
+	rows, err := global.DataBase.Query(`
 	SELECT
 		sender.username , d.message
 	FROM
@@ -24,7 +24,8 @@ func GetdmHistory(uname1, uname2 string) ([]Message, error) {
 	WHERE
 		(sender.username = ? AND recipient.username = ?)
    	OR
-		(sender.username = ? AND recipient.username = ?);
+		(sender.username = ? AND recipient.username = ?)
+	ORDER BY d.message_id;
 	`, uname1, uname2, uname2, uname1)
 	if err != nil {
 		fmt.Println("Error getting posts: ", err)
@@ -44,8 +45,23 @@ func GetdmHistory(uname1, uname2 string) ([]Message, error) {
 	return messages, nil
 }
 
+func AddDm(sUname, rUname, msg string) error {
+	query := `INSERT INTO dms (sender_id, recipient_id, message)
+VALUES (
+(SELECT id FROM users WHERE username = ?),
+(SELECT id FROM users WHERE username = ?),
+?);`
+
+	_, err := global.DataBase.Exec(query, sUname, rUname, msg)
+	if err != nil {
+		global.ErrorLog.Fatalln("Database insertion error:", err)
+		return err
+	}
+	return nil
+}
+
 func GetUserNames() ([]string, error) {
-	rows, err := helpers.DataBase.Query("SELECT username FROM users")
+	rows, err := global.DataBase.Query("SELECT username FROM users")
 	if err != nil {
 		return nil, fmt.Errorf("could not execute query: %w", err)
 	}

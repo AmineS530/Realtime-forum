@@ -128,8 +128,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             console.log("azerazerazerazerazer", formattedHistory);
             document.getElementById("message-select").innerHTML += formattedHistory;
         })
-        .catch((error) => console.error("Error:", error))
-        .finally((elem.disabled = false));
+        .catch((error) => console.error("Error:", error));
     }, 100);
 
 });

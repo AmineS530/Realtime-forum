@@ -2,20 +2,25 @@ package ws
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
 	"sync"
 
+	// "RTF/back-end/goFiles/dms"
+	"RTF/back-end/goFiles/dms"
+	"RTF/structs"
+
 	"github.com/gorilla/websocket"
 )
 
 // Define a WebSocket upgrader
-// var upgrader = websocket.Upgrader{
-// 	CheckOrigin: func(r *http.Request) bool {
-// 		return true
-// 	},
-// }
+var upgrader = websocket.Upgrader{
+	CheckOrigin: func(r *http.Request) bool {
+		return true
+	},
+}
 
 type message struct {
 	Sender   string `json:"sender"`
@@ -96,18 +101,21 @@ func deleteConnFromMap(uName string) {
 
 var i rune = '0'
 
+// TODO JWT
 func getUname(r *http.Request) string {
-	uname := r.URL.Query().Get("uname")
-	if uname == "" {
-		uname = "guest" + string(i)
-		i++
+	payload := r.Context().Value("user")
+	data, ok := payload.(*structs.JwtPayload)
+	if ok {
+		return data.Username
+	} else {
+		return ""
 	}
-	return uname
 }
 
 func (m *message) send() error {
-	if m.Receiver == "guest1" {
-		m.Receiver = m.Sender
+	err := dms.AddDm(m.Sender, m.Receiver, m.Message)
+	if err != nil {
+		return errors.New("failed to store message in db with error: " + err.Error())
 	}
 	conn, exist := sockets[m.Receiver]
 	if !exist || conn == nil {
@@ -124,7 +132,7 @@ func (m *message) send() error {
 	err = conn.WriteMessage(websocket.TextMessage, responseData)
 	if err != nil {
 		log.Println(err)
-		return err
+		return errors.New("failed to send message to receiver with error: " + err.Error())
 	}
 	return nil
 }

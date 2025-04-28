@@ -12,6 +12,7 @@ import (
 	"RTF/back-end/goFiles/dms"
 	"RTF/back-end/goFiles/requests"
 	"RTF/back-end/goFiles/ws"
+	"RTF/global"
 )
 
 func Routes() *http.ServeMux {
@@ -21,7 +22,7 @@ func Routes() *http.ServeMux {
 	mux.HandleFunc("/api/v1/ws", ws.HandleConnections)
 	mux.HandleFunc("/api/v1/get/{type}", auth.AuthMiddleware(dumbjson))
 	mux.HandleFunc("/api/profile", auth.AuthMiddleware(ProfileHandler))
-	mux.HandleFunc("/api/ws", ws.HandleWebSocket)
+	// mux.HandleFunc("/api/ws", ws.HandleWebSocket)
 	ProtectedStatic(mux, "/front-end/styles/", "./front-end/styles")
 	ProtectedStatic(mux, "/front-end/scripts/", "./front-end/scripts")
 	ProtectedStatic(mux, "/front-end/images/", "./front-end/images")
@@ -63,7 +64,10 @@ func dumbjson(w http.ResponseWriter, r *http.Request) {
 		tok, _ := auth.ExtractJWT(r)
 		payload, _ := jwt.JWTVerify(tok)
 		username := payload.Username
-		dms, _ := dms.GetdmHistory(username, target)
+		dms, err := dms.GetdmHistory(username, target)
+		if err != nil {
+			global.ErrorLog.Print("routes.go 69", err)
+		}
 		jsonData, _ := json.Marshal(dms)
 		w.Header().Set("Content-Type", "application/json")
 		w.Write(jsonData)
@@ -88,7 +92,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if r.URL.Path == "/" || r.URL.Path == "/profile" {
-		if err := helpers.HtmlTemplates.ExecuteTemplate(w, "index.html", nil); err != nil {
+		if err := global.HtmlTemplates.ExecuteTemplate(w, "index.html", nil); err != nil {
 			fmt.Println("Error executing template: ", err.Error())
 			helpers.ErrorPagehandler(w, http.StatusInternalServerError)
 			return

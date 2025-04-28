@@ -4,7 +4,7 @@ function dms_ToggleShowSidebar(event) {
     console.log("dms_ShowSidebar after",document.getElementById("backdrop").classList);
 }
 
-let socket = new WebSocket("ws://localhost:9090/api/v1/ws");
+let socket = new WebSocket(`ws://${window.location.host}/api/v1/ws`);
 let uname = 'guest0'
 socket.onopen = function (event) {
     console.log("Connected to WebSocket server");
