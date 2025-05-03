@@ -22,7 +22,9 @@ header, .logo {
     top: 0;
     z-index: 10;
 }
-
+.logo {
+    cursor: pointer;
+}
 /* Logo styling */
 header .logo a {
     text-decoration: none;

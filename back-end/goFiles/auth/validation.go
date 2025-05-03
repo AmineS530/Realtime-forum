@@ -14,7 +14,7 @@ type ErrorResponse struct {
 }
 
 func isValidPassword(password string) bool {
-	if len(password) < 8 || len(password) > 16 {
+	if len(password) < 8 || len(password) > 30 {
 		return false
 	}
 

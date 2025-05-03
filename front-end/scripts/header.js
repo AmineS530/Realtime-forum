@@ -1,4 +1,5 @@
 import svg from "./svg.js";
+import templates from "./templates.js";
 
 export async function updateNavbar(auth) {
     const navList = document.querySelector(".nav");
@@ -15,24 +16,43 @@ export async function updateNavbar(auth) {
     }
 
     if (auth) {
+        // Post creation icon
+        const postCreation = document.createElement("li");
+        postCreation.innerHTML = `<a class="logo" href="#" title="Create Post">${svg.svg_post_creation}</a>`;
+        navList.appendChild(postCreation);
+        postCreation.querySelector("a").addEventListener("click", (e) => {
+            e.preventDefault();
+            // todo
+        });
+
+        await delay(150); // slow down
+
+        // DMs icon
         const showbubbles = document.createElement("li");
-        showbubbles.innerHTML = `<a class="logo" href="#"onclick="dms_ToggleShowSidebar(event)"  title="Messages">
-                ${svg.two_bubbles}`;
+        showbubbles.innerHTML = `<a class="logo" href="#" title="Messages">${svg.two_bubbles}</a>`;
         navList.appendChild(showbubbles);
+        showbubbles.querySelector("a").addEventListener("click", (e) => {
+            e.preventDefault();
+            dms_ToggleShowSidebar(e);
+        });
 
         // Create user dropdown
         const usernameItem = document.createElement("li");
         usernameItem.classList.add("dropdown");
         usernameItem.innerHTML = `
-    <a href="#" class="logo" class="dropdown-button">${Username}</a>
+    <a class="logo" class="dropdown-button">${Username}</a>
     <div class="dropdown-content">
-        <a id="profile" href="#" onclick="loadPage('profile')">Profile</a>
+        <a id="profile" href="#" >Profile</a>
         <a href="#" id="logout">Log out</a>
-    </div>
-`;
-
+    </div>`;
         navList.appendChild(usernameItem);
-
+        const profileLink = usernameItem.querySelector("#profile");
+        if (profileLink) {
+            profileLink.addEventListener("click", (e) => {
+                e.preventDefault();
+                loadPage("profile");
+            });
+        }
         const logoutButton = document.getElementById("logout");
         if (logoutButton) {
             logoutButton.addEventListener("click", function (event) {
@@ -42,14 +62,16 @@ export async function updateNavbar(auth) {
                     credentials: "include",
                 })
                     .then(() => {
+                        document.getElementById("app").innerHTML = "";
                         window.location.href = "/";
                     })
                     .catch((error) => console.error("Logout failed:", error));
             });
         }
-    } else {
-        const loginItem = document.createElement("li");
-        loginItem.innerHTML = `<a href="/login">Sign Up or Login</a>`;
-        navList.appendChild(loginItem);
     }
+    // else {
+    //     const loginItem = document.createElement("li");
+    //     loginItem.innerHTML = `<a href="/login">Sign Up or Login</a>`;
+    //     navList.appendChild(loginItem);
+    // }
 }

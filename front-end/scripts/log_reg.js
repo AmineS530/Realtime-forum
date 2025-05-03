@@ -109,3 +109,5 @@ document.addEventListener("click", function (event) {
         }
     }
 });
+
+console.log("Loaded logreg.js")

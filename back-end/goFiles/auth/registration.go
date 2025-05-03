@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"regexp"
+	"strings"
 
 	helpers "RTF/back-end"
 	"RTF/global"
@@ -65,7 +66,7 @@ func validInfo(w http.ResponseWriter, user UserReg) bool {
 		JsRespond(w, "Invalid username", http.StatusBadRequest)
 		return false
 	}
-	if _, exists := helpers.EntryExists("username", user.Username, "users", true); exists {
+	if _, exists := helpers.EntryExists("username", strings.ToLower(user.Username), "users", true); exists {
 		JsRespond(w, "Username already exists", http.StatusBadRequest)
 		return false
 	}

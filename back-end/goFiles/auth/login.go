@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strings"
 	"time"
 
 	helpers "RTF/back-end"
@@ -59,18 +60,19 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 func getID(nameOrEmail string) (int, error) {
 	var isUsername bool
+	lowCase := strings.ToLower(nameOrEmail)
 	var userID int
-	if _, exists := helpers.EntryExists("username", nameOrEmail, "users", true); exists {
+	if _, exists := helpers.EntryExists("username", lowCase, "users", true); exists {
 		isUsername = true
-	} else if _, exists := helpers.EntryExists("email", nameOrEmail, "users", true); exists {
+	} else if _, exists := helpers.EntryExists("email", lowCase, "users", true); exists {
 		isUsername = false
 	} else {
 		return -1, fmt.Errorf("nvalid Login info")
 	}
 	if isUsername {
-		userID = int(getElemVal("id", "users", `username = "`+nameOrEmail+`"`).(int64))
+		userID = int(getElemVal("id", "users", `LOWER(username) = "`+lowCase+`"`).(int64))
 	} else {
-		userID = int(getElemVal("id", "users", `email = "`+nameOrEmail+`"`).(int64))
+		userID = int(getElemVal("id", "users", `LOWER(email) = "`+lowCase+`"`).(int64))
 	}
 	return userID, nil
 }

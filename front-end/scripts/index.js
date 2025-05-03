@@ -1,12 +1,12 @@
 import templates from "./templates.js";
 import { updateNavbar } from "./header.js";
 
-// Import functionality from other modules
-
 window.loadPage = function (page) {
     const app = document.getElementById("app");
     switch (page) {
         case "home":
+            setHeader(true);
+            loadUsers();
             app.innerHTML = templates.posts + templates.dms;
             const getPosts = document.getElementById("load-posts");
             if (getPosts) {
@@ -25,7 +25,6 @@ window.loadPage = function (page) {
     }
 };
 
-// import { updateNavbar } from "./header.js";
 function loadPageFromPath() {
     const path = window.location.pathname;
     switch (path) {
@@ -68,7 +67,7 @@ async function loadProfilePage() {
         <br />
         <a href="/" onclick="loadPage('home'); return false;">Go Back</a>
         </div>
-        </center>`;
+        </center>`+ templates.dms;
 
         history.pushState({}, "", "/profile");
     } catch (err) {
@@ -89,66 +88,69 @@ if (profile) {
 // function to load the header and nav
 document.addEventListener("DOMContentLoaded", async () => {
     const app = document.getElementById("app");
-
     try {
-        setTimeout(async () => {
         const response = await fetch("/api/check-auth", {
             credentials: "include",
         });
         const authData = await response.json();
         const authenticated = authData.authenticated;
-
         if (authenticated) {
-            setHeader(authenticated);
+            await setHeader(authenticated);
             loadPageFromPath();
         } else {
             app.innerHTML = templates.auth;
+            bindInputTrimming();
         }
-    }, 100);
     } catch (error) {
         console.error("Error loading:", error);
         app.innerHTML = "<h2>Error loading the page.</h2>";
     }
 });
 
-document.addEventListener("DOMContentLoaded", async () => {
-    setTimeout(async () => {
-
+async function loadUsers() {
     const discussion = document.getElementById("discussion");
-    fetch("/api/v1/get/users", {
-        method: "GET",
-    })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log("azerazerazernbfhqbfhbqfhqbsfjhbqjsbfhqbsdfhqbsdfq", data);
-            let formattedHistory = "";
-            data.forEach((user) => {
-                formattedHistory += `<option>${user}</option>`;
-            });
-            console.log("azerazerazerazerazer", formattedHistory);
-            document.getElementById("message-select").innerHTML += formattedHistory;
-        })
-        .catch((error) => console.error("Error:", error));
-    }, 100);
 
-});
+    try {
+        const response = await fetch("/api/v1/get/users", {
+            method: "GET",
+        });
 
-function setHeader(authStatus) {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("User data:", data);
+
+        let formattedHistory = "";
+        data.forEach((user) => {
+            formattedHistory += `<option>${user}</option>`;
+        });
+
+        console.log("Formatted options:", formattedHistory);
+        document.getElementById("message-select").innerHTML += formattedHistory;
+
+    } catch (error) {
+        console.error("Error loading users:", error);
+    }
+}
+
+
+
+
+async function setHeader(authStatus) {
+    if (document.getElementById("main-header")) return;
     const wrapper = document.createElement("div");
     wrapper.innerHTML = templates.header;
+
     const headerNode = wrapper.firstElementChild;
-    document.documentElement.insertBefore(headerNode, document.body);
+    headerNode.id = "main-header";
+    document.body.insertBefore(headerNode, document.body.firstChild);
+    updateNavbar(authStatus);
+
     injectStylesheet("/front-end/styles/header.css");
     injectStylesheet("/front-end/styles/dms.css");
     injectStylesheet("/front-end/styles/style.css");
-    updateNavbar(authStatus);
 }
 
-function injectStylesheet(href) {
-    if (!document.querySelector(`link[href="${href}"]`)) {
-        const link = document.createElement("link");
-        link.rel = "stylesheet";
-        link.href = href;
-        document.head.appendChild(link);
-    }
-}
+console.log("Loaded inedex.js")

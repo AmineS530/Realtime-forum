@@ -1,14 +1,12 @@
 import svg from "./svg.js";
 
 const nav = `
-<link rel="stylesheet" href="/front-end/styles/style.css" />
 
 <ul class="nav">
     <li>
         <a href="#" onclick="dms_ToggleShowSidebar(event)" title="Messages">
             ${svg.two_bubbles}
         </a>
-    </li>
     <li>
         <a id="logout" href="#" title="Logout">
             ${svg.svg_logout}
@@ -32,6 +30,7 @@ const header = `
 `;
 
 const auth = `
+<link rel="stylesheet" href="/front-end/styles/style.css" />
 <link rel="stylesheet" href="/front-end/styles/log-reg.css" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" /> 
 <div id="auth">
@@ -53,7 +52,7 @@ const auth = `
                     <input type="text" id="name_or_email" name="name_or_email" maxlength="50" required/>
                     <label for="password">Password</label>
                     <div class="input-wrapper">
-                    <input type="password" id="logpassword" name="password" required />
+                    <input type="password" id="logpassword" name="password" maxlength="40" required />
                     <i class="togglePwd" > <span class="icon material-symbols-outlined">visibility</span></i>
                     </div>
                     <button type="submit">Login</button>
@@ -73,12 +72,12 @@ const auth = `
                     <input type="email" id="email" name="Email" maxlength="320" required />
                     <label for="password">Password</label>
                     <div class="input-wrapper">
-                        <input type="password" id="regpassword" name="Password" required />
+                        <input type="password" id="regpassword" name="Password" maxlength="30" required />
                         <i class="togglePwd" > <span class="icon material-symbols-outlined">visibility</span></i>
                     </div>
                     <label for="password_confirmation">Confirm Password</label>
                     <div class="input-wrapper">
-                        <input type="password" id="password_confirmation" name="Password_confirmation" required />
+                        <input type="password" id="password_confirmation"name="Password_confirmation" maxlength="30" required />
                         <i class="togglePwd" > <span class="icon material-symbols-outlined">visibility</span></i>
                     </div>
                     <label for="age">Age</label>
@@ -106,6 +105,8 @@ const auth = `
 `;
 
 const posts = `
+    <link rel="stylesheet" href="/front-end/styles/header.css" />
+    <link rel="stylesheet" href="/front-end/styles/style.css" />
     <button id="load-posts" onclick="viewPosts(event)">Load More Posts</button>
 `;
 

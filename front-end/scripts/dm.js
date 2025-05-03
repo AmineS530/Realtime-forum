@@ -88,6 +88,6 @@ class Message {
         socket.send(JSON.stringify(this.body));
     }
 }
-
+console.log("loaded dm.js")
 
 const usename = document.cookie.match(/session-name=(\S+)==;/)
