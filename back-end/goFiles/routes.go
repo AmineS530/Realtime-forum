@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strings"
 
 	helpers "RTF/back-end"
 	jwt "RTF/back-end/goFiles/JWT"
@@ -22,7 +21,6 @@ func Routes() *http.ServeMux {
 	mux.HandleFunc("/api/v1/ws", ws.HandleConnections)
 	mux.HandleFunc("/api/v1/get/{type}", auth.AuthMiddleware(dumbjson))
 	mux.HandleFunc("/api/profile", auth.AuthMiddleware(ProfileHandler))
-	// mux.HandleFunc("/api/ws", ws.HandleWebSocket)
 	ProtectedStatic(mux, "/front-end/styles/", "./front-end/styles")
 	ProtectedStatic(mux, "/front-end/scripts/", "./front-end/scripts")
 	ProtectedStatic(mux, "/front-end/images/", "./front-end/images")
@@ -73,31 +71,6 @@ func dumbjson(w http.ResponseWriter, r *http.Request) {
 		w.Write(jsonData)
 		fmt.Println(target, username, dms)
 	default:
-		helpers.ErrorPagehandler(w, http.StatusNotFound)
-		return
-	}
-}
-
-func IndexHandler(w http.ResponseWriter, r *http.Request) {
-	if helpers.Err != nil {
-		helpers.ErrorPagehandler(w, http.StatusInternalServerError)
-		return
-	}
-	if r.Method != http.MethodGet {
-		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
-		return
-	}
-	if strings.HasPrefix(r.URL.Path, "/api/") {
-		helpers.ErrorPagehandler(w, http.StatusNotFound)
-		return
-	}
-	if r.URL.Path == "/" || r.URL.Path == "/profile" {
-		if err := global.HtmlTemplates.ExecuteTemplate(w, "index.html", nil); err != nil {
-			fmt.Println("Error executing template: ", err.Error())
-			helpers.ErrorPagehandler(w, http.StatusInternalServerError)
-			return
-		}
-	} else {
 		helpers.ErrorPagehandler(w, http.StatusNotFound)
 		return
 	}
