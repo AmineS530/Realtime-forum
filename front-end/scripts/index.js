@@ -63,7 +63,7 @@ async function loadProfilePage() {
         <br />
         <a href="/" onclick="loadPage('home'); return false;">Go Back</a>
         </div>
-        </center>`+ templates.dms + templates.postCreation;;
+        </center>`+ templates.dms;
         history.pushState({}, "", "/profile");
     } catch (err) {
         console.error("Failed to load profile:", err);

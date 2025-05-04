@@ -27,6 +27,8 @@ export async function updateNavbar(auth) {
             if (postSection) {
                 postSection.style.display = "block";
                 document.body.classList.add("dimmed");
+            } else {
+               showNotification("You need to be at home page to create a post", "error");
             }
         }); 
 
