@@ -7,7 +7,8 @@ window.loadPage = function (page) {
         case "home":
             setHeader(true);
             loadUsers();
-            app.innerHTML = templates.posts + templates.dms;
+            app.innerHTML = templates.posts + templates.dms + templates.postCreation;
+            setupPostCreator();
             const getPosts = document.getElementById("load-posts");
             if (getPosts) {
                 getPosts.click();
@@ -16,9 +17,6 @@ window.loadPage = function (page) {
             break;
         case "profile":
             loadProfilePage();
-            break;
-        case "create":
-            app.innerHTML = createPost;
             break;
         default:
             app.innerHTML = "<h2>Page not found</h2>";
@@ -35,14 +33,11 @@ function loadPageFromPath() {
         case "/profile":
             loadPage("profile");
             break;
-        case "/create":
-            loadPage("create");
-            break;
         default:
-            loadPage("notfound"); // Optional fallback
+            loadPage("notfound");
     }
 }
-window.addEventListener("popstate", loadPageFromPath);
+
 
 async function loadProfilePage() {
     const app = document.getElementById("app");
@@ -55,6 +50,7 @@ async function loadProfilePage() {
 
         const data = await res.json();
         app.innerHTML = ` 
+        <link rel="stylesheet" href="/front-end/styles/style.css" />
         <center>
         <div class="profile">
         <h2>Welcome, ${data.username}</h2>
@@ -67,8 +63,7 @@ async function loadProfilePage() {
         <br />
         <a href="/" onclick="loadPage('home'); return false;">Go Back</a>
         </div>
-        </center>`+ templates.dms;
-
+        </center>`+ templates.dms + templates.postCreation;;
         history.pushState({}, "", "/profile");
     } catch (err) {
         console.error("Failed to load profile:", err);
@@ -153,4 +148,59 @@ async function setHeader(authStatus) {
     injectStylesheet("/front-end/styles/style.css");
 }
 
+document.addEventListener("DOMContentLoaded", async () => {
+    await setupPostCreator();
+});
+
+async function setupPostCreator() {
+    const postSection = document.getElementById("create-post-section");
+    const closeBtn = document.getElementById("close-post-creator");
+    const form = document.getElementById("post-form");
+
+    // Close modal
+    closeBtn?.addEventListener("click", () => {
+        document.body.classList.remove("dimmed");
+        postSection.style.display = "none";
+        saveDraft();
+    });
+
+    // Save draft to localStorage
+    function saveDraft() {
+        const draft = {
+            title: document.getElementById("post-title").value,
+            content: document.getElementById("post-content").value,
+            category: document.getElementById("post-category").value,
+        };
+        localStorage.setItem("postDraft", JSON.stringify(draft));
+    }
+
+    // Load draft if exists
+    const draft = JSON.parse(localStorage.getItem("postDraft"));
+    if (draft) {
+        document.getElementById("post-title").value = draft.title;
+        document.getElementById("post-content").value = draft.content;
+        document.getElementById("post-category").value = draft.category;
+    }
+
+    // Clear draft on submit
+    form?.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        await submitPost();
+        localStorage.removeItem("postDraft");
+        form.reset();
+        document.body.classList.remove("dimmed");
+        postSection.style.display = "none";
+        showNotification("Post submitted successfully!", "success");
+
+    });
+}
+
+async function submitPost() {
+
+
+
+
+
+    return new Promise((resolve) => setTimeout(resolve, 500)); // Simulates async call
+}
 console.log("Loaded inedex.js")

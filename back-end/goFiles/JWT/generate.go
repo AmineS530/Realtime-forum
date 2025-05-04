@@ -5,17 +5,15 @@ import (
 	"errors"
 	"strings"
 	"time"
-
-	"RTF/structs"
 )
 
 var secretKey = LoadSecret()
 
-func CreateJwtPayload(id int, username string) structs.JwtPayload {
+func CreateJwtPayload(id int, username string) JwtPayload {
 	iat := time.Now().Unix()
 	exp := iat + int64(Time_to_Expire.Seconds())
 
-	return structs.JwtPayload{
+	return JwtPayload{
 		Sub:      id,
 		Username: username,
 		Iat:      iat,
@@ -24,7 +22,7 @@ func CreateJwtPayload(id int, username string) structs.JwtPayload {
 }
 
 // Generate creates a JWT with a given payload
-func Generate(payload structs.JwtPayload) string {
+func Generate(payload JwtPayload) string {
 	header := map[string]string{
 		"alg": "HS256",
 		"typ": "JWT",
@@ -42,7 +40,7 @@ func Generate(payload structs.JwtPayload) string {
 }
 
 // Verify checks if the JWT signature is valid
-func JWTVerify(token string) (*structs.JwtPayload, error) {
+func JWTVerify(token string) (*JwtPayload, error) {
 	parts := strings.Split(token, ".")
 	if len(parts) != 3 {
 		return nil, errors.New("invalid token format")
@@ -57,7 +55,7 @@ func JWTVerify(token string) (*structs.JwtPayload, error) {
 		return nil, errors.New("invalid signature")
 	}
 
-	var payload structs.JwtPayload
+	var payload JwtPayload
 	err = json.Unmarshal(decodedPayload, &payload)
 	if err != nil {
 		return nil, errors.New("invalid payload JSON")

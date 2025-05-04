@@ -8,7 +8,6 @@ import (
 
 	helpers "RTF/back-end"
 	jwt "RTF/back-end/goFiles/JWT"
-	"RTF/global"
 )
 
 type contextKey string
@@ -73,11 +72,11 @@ func ExtractSSID(r *http.Request) (string, error) {
 // Validate session in database
 func isValidSession(userID int, sessionID string) bool {
 	var count int
-	err := global.DataBase.QueryRow("SELECT COUNT(*) FROM sessions WHERE user_id = ?", userID).Scan(&count)
+	err := helpers.DataBase.QueryRow("SELECT COUNT(*) FROM sessions WHERE user_id = ?", userID).Scan(&count)
 	if count > 1 || err != nil {
 		return false
 	}
-	err = global.DataBase.QueryRow("SELECT COUNT(*) FROM sessions WHERE user_id = ? AND session_id = ?", userID, sessionID).Scan(&count)
+	err = helpers.DataBase.QueryRow("SELECT COUNT(*) FROM sessions WHERE user_id = ? AND session_id = ?", userID, sessionID).Scan(&count)
 	if err != nil {
 		log.Println("Error checking session:", err)
 		return false

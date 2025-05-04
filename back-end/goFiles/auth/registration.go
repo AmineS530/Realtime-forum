@@ -9,7 +9,6 @@ import (
 	"strings"
 
 	helpers "RTF/back-end"
-	"RTF/global"
 
 	"golang.org/x/crypto/bcrypt"
 )
@@ -119,7 +118,7 @@ func insertInfo(user UserReg) bool {
 	query := `INSERT INTO users (username, email, age, gender, first_name, last_name) 
 	          VALUES (?, ?, ?, ?, ?, ?)`
 
-	_, err := global.DataBase.Exec(query,
+	_, err := helpers.DataBase.Exec(query,
 		user.Username,
 		user.Email,
 		user.Age,
@@ -128,7 +127,7 @@ func insertInfo(user UserReg) bool {
 		user.LastName,
 	)
 	if err != nil {
-		global.ErrorLog.Fatalln("Database insertion error:", err)
+		helpers.ErrorLog.Fatalln("Database insertion error:", err)
 		return false
 	}
 	return true
@@ -136,16 +135,16 @@ func insertInfo(user UserReg) bool {
 
 func changePassword(password string, userID int) {
 	query := `INSERT INTO credentials (id, hash) VALUES (?, ?)`
-	_, err := global.DataBase.Exec(query, userID, HashPassword(password))
+	_, err := helpers.DataBase.Exec(query, userID, HashPassword(password))
 	if err != nil {
-		global.ErrorLog.Fatalln(err.Error())
+		helpers.ErrorLog.Fatalln(err.Error())
 	}
 }
 
 func HashPassword(password string) string {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)
 	if err != nil {
-		global.ErrorLog.Fatalln(err.Error())
+		helpers.ErrorLog.Fatalln(err.Error())
 		return ""
 	}
 	return string(bytes)
@@ -155,9 +154,9 @@ func CheckPassword(password string, userID int) bool {
 	var hashedPassword string
 
 	query := `SELECT hash FROM credentials WHERE id = ?`
-	err := global.DataBase.QueryRow(query, userID).Scan(&hashedPassword)
+	err := helpers.DataBase.QueryRow(query, userID).Scan(&hashedPassword)
 	if err != nil {
-		global.ErrorLog.Fatalln(err.Error())
+		helpers.ErrorLog.Fatalln(err.Error())
 	}
 	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password)) == nil
 }
@@ -167,12 +166,12 @@ func getElemVal(selectedElem, from, where string) any {
 
 	query := fmt.Sprintf("SELECT %s FROM %s WHERE %s", selectedElem, from, where)
 
-	err := global.DataBase.QueryRow(query).Scan(&res)
+	err := helpers.DataBase.QueryRow(query).Scan(&res)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			res = ""
 		} else {
-			global.ErrorLog.Println("Database error:", err)
+			helpers.ErrorLog.Println("Database error:", err)
 		}
 	}
 

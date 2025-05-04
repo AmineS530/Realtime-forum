@@ -9,16 +9,23 @@ import (
 	"strings"
 	"time"
 
-	"RTF/global"
+	helpers "RTF/back-end"
 )
 
 var Time_to_Expire = time.Hour * 24
+
+type JwtPayload struct {
+	Sub      int    `json:"sub,string"`
+	Username string `json:"username"`
+	Iat      int64  `json:"iat"`
+	Exp      int64  `json:"exp"`
+}
 
 // LoadSecret manually reads the .env file and retrieves SECRET_KEY
 func LoadSecret() string {
 	file, err := os.Open(".env")
 	if err != nil {
-		global.ErrorLog.Fatal("Error loading .env file")
+		helpers.ErrorLog.Fatal("Error loading .env file")
 	}
 	defer file.Close()
 
@@ -30,7 +37,7 @@ func LoadSecret() string {
 		}
 	}
 
-	global.ErrorLog.Fatal("SECRET_KEY not found in .env file")
+	helpers.ErrorLog.Fatal("SECRET_KEY not found in .env file")
 	return ""
 }
 

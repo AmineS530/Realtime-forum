@@ -9,7 +9,7 @@
     z-index: 10;
     display: flex;
     flex-direction: column;
-    max-width: 30%;
+    max-width: 30vw;
     color: var(--bs-offcanvas-color);
     visibility: hidden; 
     background-color: #fff;
@@ -80,5 +80,38 @@
     border-collapse: collapse;
     input[type="text"] {
         flex-grow: 1;
+    }
+}
+/* Responsive Tweaks */
+@media (max-width: 768px) {
+    #side-menu {
+        width: 90vw;
+        max-width: none;
+    }
+
+    .offcanvas-title {
+        font-size: 1.3rem;
+    }
+
+    .input-group input[type="text"] {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    #side-menu {
+        padding: 0.5rem;
+    }
+
+    .side-menu-head {
+        padding: 0.5rem 1rem;
+    }
+
+    .offcanvas-title {
+        font-size: 1.1rem;
+    }
+
+    .input-group input[type="text"] {
+        font-size: 0.9rem;
     }
 }

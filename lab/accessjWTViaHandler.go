@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"net/http"
 
-	"RTF/structs"
+	jwt "RTF/back-end/goFiles/JWT"
 )
 
 func someHandler(w http.ResponseWriter, r *http.Request) {
 	// Step 1: Get user data from context
-	if user, ok := r.Context().Value("user").(*structs.JwtPayload); ok {
+	if user, ok := r.Context().Value("user").(*jwt.JwtPayload); ok {
 		// Step 2: Use user data (e.g., print username)
 		fmt.Println("Logged in user:", user.Username)
 		// You can now access other user data like user.ID, user.Email, etc.

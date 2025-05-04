@@ -128,4 +128,20 @@ const dms = `<div id="backdrop" class="show" onclick="event.target.id ==='backdr
     </div>
 </div> `;
 
-export default { nav, header, posts, auth, dms };
+const postCreation = `
+    <center>
+        <div id="create-post-section" style="display: none">
+            <h2>Create a new Post</h2>
+            <br />
+            <button id="close-post-creator">&times;</button>
+            <form id="post-form">
+                <input type="text" id="post-title" placeholder="Post Title" maxlength="30" required />
+                <textarea id="post-content" placeholder="Write your post..." maxlength="500" required></textarea>
+                <input id="post-category" placeholder="Enter categories... (max 3)" maxlength="30" />
+                <button type="submit">Submit Post</button>
+            </form>
+        </div>
+    </center>
+`;
+
+export default { nav, header, posts, auth, dms, postCreation };

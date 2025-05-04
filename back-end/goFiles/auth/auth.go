@@ -8,14 +8,13 @@ import (
 	"time"
 
 	helpers "RTF/back-end"
-	"RTF/global"
 )
 
 func authorize(w http.ResponseWriter, userID int) {
 	username := getElemVal("username", "users", `id = "`+strconv.Itoa(userID)+`"`).(string)
 	jwt, sessionID, err := CheckSession(userID, username)
 	if err != nil {
-		global.ErrorLog.Println(err)
+		helpers.ErrorLog.Println(err)
 	}
 
 	http.SetCookie(w, &http.Cookie{

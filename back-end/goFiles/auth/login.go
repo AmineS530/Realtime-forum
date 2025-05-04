@@ -10,7 +10,6 @@ import (
 	"time"
 
 	helpers "RTF/back-end"
-	"RTF/global"
 )
 
 // User struct to handle login and registration data
@@ -46,8 +45,8 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	if CheckPassword(user.Password, userID) {
 		jwtStart := time.Now()
 		authorize(w, userID)
-		global.InfoLog.Printf("jwt took %v", time.Since(jwtStart))
-		global.InfoLog.Printf("Total login process took %v", time.Since(start))
+		helpers.InfoLog.Printf("jwt took %v", time.Since(jwtStart))
+		helpers.InfoLog.Printf("Total login process took %v", time.Since(start))
 
 		// todo: remove alerts to replace by js notifications
 		JsRespond(w, "Login successful", http.StatusPermanentRedirect)

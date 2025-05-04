@@ -1,18 +1,25 @@
 package helpers
 
 import (
+	"database/sql"
 	"fmt"
 	"html/template"
+	"log"
 	"net/http"
 	"os"
-
-	"RTF/global"
 )
 
 var Err error
+var (
+	DataBase *sql.DB
+	InfoLog  *log.Logger
+	ErrorLog *log.Logger
+
+	HtmlTemplates *template.Template
+)
 
 func init() {
-	global.HtmlTemplates, Err = template.ParseGlob("./front-end/templates/*.html")
+	HtmlTemplates, Err = template.ParseGlob("./front-end/templates/*.html")
 	if Err != nil {
 		fmt.Println("Error parsing templates: ", Err.Error())
 		os.Exit(1)
@@ -32,9 +39,9 @@ func EntryExists(elem, value, from string, checkLower bool) (int, bool) {
 		query = fmt.Sprintf("SELECT COUNT(*) FROM %s WHERE LOWER(%s) = LOWER(?)", from, elem)
 	}
 
-	err := global.DataBase.QueryRow(query, value).Scan(&count)
+	err := DataBase.QueryRow(query, value).Scan(&count)
 	if err != nil {
-		global.ErrorLog.Fatalln("Database error:", err)
+		ErrorLog.Fatalln("Database error:", err)
 		return -1, false
 	}
 
@@ -48,7 +55,7 @@ func ErrorPagehandler(w http.ResponseWriter, statusCode int) {
 		Msg: http.StatusText(statusCode),
 	}
 
-	if err := global.HtmlTemplates.ExecuteTemplate(w, "error_page.html", errorData); err != nil {
+	if err := HtmlTemplates.ExecuteTemplate(w, "error_page.html", errorData); err != nil {
 		//	fmt.Println("Error executing template: ", err.Error())
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	}

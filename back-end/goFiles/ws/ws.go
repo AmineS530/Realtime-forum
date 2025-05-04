@@ -9,8 +9,8 @@ import (
 	"sync"
 
 	// "RTF/back-end/goFiles/dms"
+	jwt "RTF/back-end/goFiles/JWT"
 	"RTF/back-end/goFiles/dms"
-	"RTF/structs"
 
 	"github.com/gorilla/websocket"
 )
@@ -104,7 +104,7 @@ var i rune = '0'
 // TODO JWT
 func getUname(r *http.Request) string {
 	payload := r.Context().Value("user")
-	data, ok := payload.(*structs.JwtPayload)
+	data, ok := payload.(*jwt.JwtPayload)
 	if ok {
 		return data.Username
 	} else {

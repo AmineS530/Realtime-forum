@@ -11,7 +11,6 @@ import (
 	"RTF/back-end/goFiles/dms"
 	"RTF/back-end/goFiles/requests"
 	"RTF/back-end/goFiles/ws"
-	"RTF/global"
 )
 
 func Routes() *http.ServeMux {
@@ -64,7 +63,7 @@ func dumbjson(w http.ResponseWriter, r *http.Request) {
 		username := payload.Username
 		dms, err := dms.GetdmHistory(username, target)
 		if err != nil {
-			global.ErrorLog.Print("routes.go 69", err)
+			helpers.ErrorLog.Print("routes.go 69", err)
 		}
 		jsonData, _ := json.Marshal(dms)
 		w.Header().Set("Content-Type", "application/json")

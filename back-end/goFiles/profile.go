@@ -5,9 +5,9 @@ import (
 	"encoding/json"
 	"net/http"
 
+	helpers "RTF/back-end"
 	jwt "RTF/back-end/goFiles/JWT"
 	"RTF/back-end/goFiles/auth"
-	"RTF/global"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -33,7 +33,7 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	userInfo := user{}
 	query := `SELECT age, username, first_name, last_name, gender, email FROM users WHERE username = ?`
 
-	err := global.DataBase.QueryRow(query, username).Scan(&userInfo.Age, &userInfo.Username, &userInfo.FirstName, &userInfo.LastName, &userInfo.Gender, &userInfo.Email)
+	err := helpers.DataBase.QueryRow(query, username).Scan(&userInfo.Age, &userInfo.Username, &userInfo.FirstName, &userInfo.LastName, &userInfo.Gender, &userInfo.Email)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			http.Error(w, `{"error": "User not found"}`, http.StatusNotFound)

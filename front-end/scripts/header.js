@@ -16,16 +16,19 @@ export async function updateNavbar(auth) {
     }
 
     if (auth) {
+        await delay(150);
         // Post creation icon
         const postCreation = document.createElement("li");
         postCreation.innerHTML = `<a class="logo" href="#" title="Create Post">${svg.svg_post_creation}</a>`;
         navList.appendChild(postCreation);
         postCreation.querySelector("a").addEventListener("click", (e) => {
             e.preventDefault();
-            // todo
-        });
-
-        await delay(150); // slow down
+            const postSection = document.getElementById("create-post-section");
+            if (postSection) {
+                postSection.style.display = "block";
+                document.body.classList.add("dimmed");
+            }
+        }); 
 
         // DMs icon
         const showbubbles = document.createElement("li");

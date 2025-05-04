@@ -3,7 +3,7 @@ package dms
 import (
 	"fmt"
 
-	"RTF/global"
+	helpers "RTF/back-end"
 )
 
 type Message struct {
@@ -12,7 +12,7 @@ type Message struct {
 }
 
 func GetdmHistory(uname1, uname2 string) ([]Message, error) {
-	rows, err := global.DataBase.Query(`
+	rows, err := helpers.DataBase.Query(`
 	SELECT
 		sender.username , d.message
 	FROM
@@ -52,16 +52,16 @@ VALUES (
 (SELECT id FROM users WHERE username = ?),
 ?);`
 
-	_, err := global.DataBase.Exec(query, sUname, rUname, msg)
+	_, err := helpers.DataBase.Exec(query, sUname, rUname, msg)
 	if err != nil {
-		global.ErrorLog.Fatalln("Database insertion error:", err)
+		helpers.ErrorLog.Fatalln("Database insertion error:", err)
 		return err
 	}
 	return nil
 }
 
 func GetUserNames() ([]string, error) {
-	rows, err := global.DataBase.Query("SELECT username FROM users")
+	rows, err := helpers.DataBase.Query("SELECT username FROM users")
 	if err != nil {
 		return nil, fmt.Errorf("could not execute query: %w", err)
 	}

@@ -1,12 +1,20 @@
-NAME=Real-time-forum
+NAME=Real-Time-Forum
+
 ENV_FILE=.env
+
+PORT=$(firstword $(filter-out all build run clean,$(MAKECMDGOALS)))
+
+PORT_MSG := $(if $(PORT),port: $(PORT),default port)
 
 all: $(ENV_FILE) $(NAME)
 
-$(NAME): $(ENV_FILE)
-# go build -o $(NAME).exec main.go
-	@go run main.go
+$(PORT): $(NAME)
 
+$(NAME): $(ENV_FILE)
+	@echo "\033[1;32mRunning $(NAME) on $(PORT_MSG)\033[0m"
+	@PORT=$(PORT)
+	@go run .
+	@PORT=""
 
 $(ENV_FILE):
 	@echo "Checking for .env file..."
@@ -16,9 +24,6 @@ $(ENV_FILE):
 	else \
 		echo ".env file already exists."; \
 	fi
-
-#run: $(NAME)
-#	@./$(NAME).exec
 
 clean:
 	@echo "Deleteing the DataBase and executable"

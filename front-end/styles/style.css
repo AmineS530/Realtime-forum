@@ -278,3 +278,82 @@ button#postSeeMore {
     background-color: var(--btn-hover-bg-color);
     transform: translateY(-2px);
 }
+
+/* Post Creation Modal */
+#create-post-section {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 500px;
+    z-index: 1000;
+}
+
+/* Close button */
+#close-post-creator {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.5rem;
+    color: #333;
+    cursor: pointer;
+    background: none;
+    border: none;
+    z-index: 100;
+}
+
+/* Form styling */
+#post-form input,
+#post-form textarea,
+#post-form select {
+    width: 100%;
+    margin-bottom: 1rem;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    border: 2px solid var(--card-border-color);
+    border-radius: 8px;
+}
+
+#post-form textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 1rem;
+    font-size: 1rem;
+    background-color: #f9f9f9;
+    color: var(--auth-primary-text-color);
+    font-family: inherit;
+    resize: vertical;
+    box-shadow: inset -2px 2px 6px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s ease;
+}
+
+#post-form button {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    background: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#post-form button:hover {
+    background: #0056b3;
+}
+
+body.dimmed::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-color: rgba(58, 58, 58, 0.7); 
+    z-index: 9; 
+    pointer-events: all; 
+}

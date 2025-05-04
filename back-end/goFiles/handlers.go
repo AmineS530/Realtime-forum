@@ -7,7 +7,6 @@ import (
 
 	helpers "RTF/back-end"
 	"RTF/back-end/goFiles/auth"
-	"RTF/global"
 )
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
@@ -24,7 +23,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if r.URL.Path == "/" || r.URL.Path == "/profile" {
-		if err := global.HtmlTemplates.ExecuteTemplate(w, "index.html", nil); err != nil {
+		if err := helpers.HtmlTemplates.ExecuteTemplate(w, "index.html", nil); err != nil {
 			fmt.Println("Error executing template: ", err.Error())
 			auth.JsRespond(w, "Error executing template", http.StatusInternalServerError)
 			return
