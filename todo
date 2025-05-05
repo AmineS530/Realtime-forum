@@ -1,8 +1,12 @@
-the structure i have in mind is something similar to what facebook looks like, we'd have everything displayed at once, but the messages we can make a drop down to show the chat and sent a message, maybe if we get too deep have a message section to show u the message history with all the users etc
-
 -- redirect to mainpage when facing an error or implement 404 page
-
--- add dropdown for logout and maybe profile
 -- error page in SPA WAY*****
-------------------------------------
-    also type in here when you change something for summary to know what new | i changed the makefile to only ignore the .exec when using make and make it run instantly for now, will see if we need docker later
+-- refresh posts after creating a new one and sending a notification of new post or add a feed on the side
+-- api for comment creation, and optimizing the viewcomments js function
+-- set variable for comment lenght, spot lenght etc
+-- reducing some funcion calls and passing variables instead if possible
+-----------------------------------------
+***** fix the error 
+ERROR: 2025/05/05 15:33:07 posts_comments.go:72: Error converting pid to int:  strconv.Atoi: parsing "": invalid syntax
+-----------------------------------------
+    also type in here when you change something for summary to know what new |
+     i changed the makefile to only ignore the .exec when using make and make it run instantly for now, will see if we need docker later

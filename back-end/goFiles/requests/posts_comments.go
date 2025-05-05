@@ -42,6 +42,8 @@ func GetPosts(soffset string) ([]Post, error) {
     	posts p
 	JOIN 
     	users u ON p.uid = u.id
+	ORDER BY
+		p.created_at DESC
 	LIMIT 3 OFFSET ?
 	`, offset)
 	if err != nil {

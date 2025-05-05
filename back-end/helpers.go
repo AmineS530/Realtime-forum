@@ -60,3 +60,4 @@ func ErrorPagehandler(w http.ResponseWriter, statusCode int) {
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	}
 }
+

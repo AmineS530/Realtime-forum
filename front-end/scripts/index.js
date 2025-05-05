@@ -16,6 +16,7 @@ window.loadPage = function (page) {
             history.pushState({}, "", "/");
             break;
         case "profile":
+            loadUsers();
             loadProfilePage();
             break;
         default:
@@ -185,22 +186,56 @@ async function setupPostCreator() {
     // Clear draft on submit
     form?.addEventListener("submit", async (e) => {
         e.preventDefault();
-        await submitPost();
+        await submitPost(e);
         localStorage.removeItem("postDraft");
         form.reset();
         document.body.classList.remove("dimmed");
         postSection.style.display = "none";
+        if (typeof window.viewPosts === "function") {
+            window.viewPosts();
+        }
         showNotification("Post submitted successfully!", "success");
 
     });
 }
 
 async function submitPost() {
+    const payload = {
+        title: document.getElementById("post-title").value.trim(),
+        content: escapeHTML(document.getElementById("post-content").value.trim()),
+        category: document.getElementById("post-category").value.trim(),
+    };
 
+    try {
+        const res = await fetch("/api/v1/post/createPost", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+        });
 
+        if (!res.ok) throw new Error("Submission failed");
 
+        console.log("Post submitted successfully");
 
+        // Optionally clear inputs after submission
+        document.getElementById("post-form").reset();
 
-    return new Promise((resolve) => setTimeout(resolve, 500)); // Simulates async call
+    } catch (err) {
+        console.error("Error submitting post:", err);
+    }
+
 }
+
+function escapeHTML(str) {
+    return str.replace(/[&<>"']/g, (match) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;',
+    }[match]));
+}
+
 console.log("Loaded inedex.js")

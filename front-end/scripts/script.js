@@ -58,8 +58,11 @@ window.viewComments = async function viewComments(event, offset) {
     }
     // console.log("azer", comments);
     let commentall = "";
-    for (const comment of comments) {
-        commentall += commentTemplate(comment);
+    console.log("comments", comments);
+    if (comments != null) {
+        for (const comment of comments) {
+            commentall += commentTemplate(comment);
+        }
     }
     if (offset) {
         event.target.setAttribute(
@@ -68,7 +71,7 @@ window.viewComments = async function viewComments(event, offset) {
         );
         event.target.insertAdjacentHTML("beforebegin", commentall);
     } else {
-    let comment_area = `
+        let comment_area = `
     <details class="comment-container" open>
     <summary>Click to see comments</summary> 
     <div class="comment-input-area">
@@ -78,20 +81,23 @@ window.viewComments = async function viewComments(event, offset) {
             rows="3"
         ></textarea>
         <button class="submit-comment" onclick="submitComment(event)">Post</button>
-    </div>
-    ${commentall}
-
-    <button class="view-comments" onclick="viewComments(event, ${comments.length})">Load more comments</button>
-    </details>
-`;
-
-        event.target.outerHTML = comment_area;
+    </div>`
+        if (comments != null) {
+            let allcomments = `  
+        ${commentall}
+        <button class="view-comments" onclick="viewComments(event, ${comments.length})">Load more comments</button>
+        </details>
+        `
+            event.target.outerHTML = comment_area + allcomments;
+        } else {
+            event.target.outerHTML = comment_area;
+        }
     }
 };
 
 window.viewPosts = async function viewPosts(event) {
     try {
-        const offset = document.querySelectorAll('#app .post').length 
+        const offset = document.querySelectorAll('#app .post').length
         const response = await fetch(`/api/v1/get/posts?offset=${offset}`);
         if (!response.ok)
             throw new Error(`${response.status} ${response.statusText}`);
@@ -120,12 +126,12 @@ document.addEventListener("DOMContentLoaded", () => {
 });*/
 const postTemplate = (post) => `
   <div class="post" id="${post.pid}">
-    <h3 class="post-title">${post.title}</h3>
+    <h3 class="post-title">${escapeHTML(post.title)}</h3>
     <span class="post-category">
       Categor${post.categories.length > 1 ? "ies" : "y"}: ${post.categories.join(" | ")}
     </span>
     
-    <p class="post-content">${post.content}</p>
+    <p class="post-content">${escapeHTML(post.content)}</p>
 
     <div class="post-info">
       <span class="post-author">Posted by <strong>${post.author}</strong></span>
@@ -149,3 +155,13 @@ const commentTemplate = (comment) => `<div class="comment" id="post_id-${comment
   </div>
 </div>
 `;
+
+
+function escapeHTML(str) {
+    return String(str ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
