@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"strings"
 
 	helpers "RTF/back-end"
 	"RTF/back-end/goFiles/auth"
@@ -13,14 +14,14 @@ func Routes() *http.ServeMux {
 
 	mux.HandleFunc("/", IndexHandler)
 	mux.HandleFunc("/api/v1/ws", ws.HandleConnections)
-	mux.HandleFunc("/api/v1/get/{type}", auth.AuthMiddleware(GetHandler))
-	mux.HandleFunc("/api/v1/post/{type}", auth.AuthMiddleware(PostHandler))
-	mux.HandleFunc("/api/profile", auth.AuthMiddleware(ProfileHandler))
-	ProtectedStatic(mux, "/front-end/styles/", "./front-end/styles")
-	ProtectedStatic(mux, "/front-end/scripts/", "./front-end/scripts")
-	ProtectedStatic(mux, "/front-end/images/", "./front-end/images")
+	mux.HandleFunc("/api/v1/get/{type}", auth.AuthMiddleware(auth.ApiOnlyAccess(GetHandler)))
+	mux.HandleFunc("/api/v1/post/{type}", auth.AuthMiddleware(auth.ApiOnlyAccess(PostHandler)))
+	mux.HandleFunc("/api/profile", auth.AuthMiddleware(auth.ApiOnlyAccess(ProfileHandler)))
+	ProtectedStatic(mux, "/front-end/styles/", "./front-end/styles/")
+	ProtectedStatic(mux, "/front-end/scripts/", "./front-end/scripts/")
+	ProtectedStatic(mux, "/front-end/images/", "./front-end/images/")
 	mux.HandleFunc("/profile", auth.AuthMiddleware(IndexHandler))
-	mux.HandleFunc("/api/check-auth", auth.CheckAuthHandler)
+	mux.HandleFunc("/api/check-auth", auth.ApiOnlyAccess(auth.CheckAuthHandler))
 	mux.HandleFunc("/api/login", auth.LoginHandler)
 	mux.HandleFunc("/api/register", auth.RegisterHandler)
 	mux.HandleFunc("/api/logout", auth.Logout)
@@ -29,19 +30,16 @@ func Routes() *http.ServeMux {
 	return mux
 }
 
-func ProtectedStatic(mux *http.ServeMux, routePrefix string, dirPath string) {
+func ProtectedStatic(mux *http.ServeMux, routePrefix, dirPath string) {
+	fs := http.FileServer(http.Dir(dirPath))
+
 	mux.HandleFunc(routePrefix, func(w http.ResponseWriter, r *http.Request) {
-		if !BlockDirectAccess(w, r) {
+		ref := r.Referer()
+		if ref == "" || !strings.Contains(ref, r.Host) {
+			http.Error(w, "Direct access forbidden", http.StatusForbidden)
 			return
 		}
-		http.StripPrefix(routePrefix, http.FileServer(http.Dir(dirPath))).ServeHTTP(w, r)
+		// Strip the prefix correctly without trimming the trailing slash first
+		http.StripPrefix(routePrefix, fs).ServeHTTP(w, r)
 	})
-}
-
-func BlockDirectAccess(w http.ResponseWriter, r *http.Request) bool {
-	if r.Referer() == "" {
-		helpers.ErrorPagehandler(w, http.StatusForbidden)
-		return false
-	}
-	return true
 }

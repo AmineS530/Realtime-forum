@@ -7,7 +7,15 @@ export async function updateNavbar(auth) {
 
     let Username = "";
     try {
-        const res = await fetch("/api/profile");
+        const res = await fetch("/api/profile", {
+            method: "GET",
+            credentials: "include",
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                "Content-Type": "application/json",
+            },
+        }
+        );
         if (!res.ok) throw new Error("Failed to fetch username");
         const data = await res.json();
         Username = data.username;
@@ -65,6 +73,10 @@ export async function updateNavbar(auth) {
                 fetch("/api/logout", {
                     method: "POST",
                     credentials: "include",
+                    headers: {
+                        "X-Requested-With": "XMLHttpRequest",
+                        "Content-Type": "application/json",
+                    },
                 })
                     .then(() => {
                         document.getElementById("app").innerHTML = "";

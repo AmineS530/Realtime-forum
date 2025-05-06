@@ -45,7 +45,8 @@ function changeDiscussion(elem) {
     fetch('/api/v1/get/dmhistory', {
             method: 'GET',
             headers: {
-              'target': elem.value
+              'target': elem.value,
+              'X-Requested-With': 'XMLHttpRequest'
             }
         })
         .then(response => response!== null ?response.json():data=[])

@@ -40,7 +40,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(r.URL)
+	// fmt.Println(r.URL)
 	x := r.PathValue("type")
 	offset := r.URL.Query().Get("offset")
 	switch x {
@@ -94,6 +94,6 @@ func PostHandler(w http.ResponseWriter, r *http.Request) {
 		requests.PostCreation(w, r, payload.Sub)
 
 	case "createComment":
-		// requests.CommentCreation(w, r)
+		requests.CommentCreation(w, r, payload.Sub)
 	}
 }

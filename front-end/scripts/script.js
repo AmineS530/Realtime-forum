@@ -13,7 +13,8 @@ function fetching(e, target) {
     let a = fetch(target, {
         method: "POST",
         headers: {
-            "Content-Type": "application/json",
+            'X-Requested-With': 'XMLHttpRequest',
+            "Content-Type": "application/json"
         },
         body: JSON.stringify(data),
     })
@@ -44,7 +45,15 @@ window.viewComments = async function viewComments(event, offset) {
     try {
         let response = await fetch(
             `/api/v1/get/comments?pid=${parent.id}${commentLimit ? `&limit=${commentLimit}` : ""
-            }${offset ? `&offset=${offset}` : ""}`
+            }${offset ? `&offset=${offset}` : ""}`,
+            {
+                method: "GET",
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest",
+                    "Content-Type": "application/json",
+                },
+                credentials: "include"
+            }
         );
         // console.log(response);
         if (!response.ok) {
@@ -80,7 +89,7 @@ window.viewComments = async function viewComments(event, offset) {
             placeholder="Write your comment here..."
             rows="3"
         ></textarea>
-        <button class="submit-comment" onclick="submitComment(event)">Post</button>
+        <button id="submit-comment" type="submit">Post</button>
     </div>`
         if (comments != null) {
             let allcomments = `  
@@ -98,7 +107,14 @@ window.viewComments = async function viewComments(event, offset) {
 window.viewPosts = async function viewPosts(event) {
     try {
         const offset = document.querySelectorAll('#app .post').length
-        const response = await fetch(`/api/v1/get/posts?offset=${offset}`);
+        const response = await fetch(`/api/v1/get/posts?offset=${offset}`, {
+            method: "GET",
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                "Content-Type": "application/json"
+            },
+            credentials: "include",
+        });
         if (!response.ok)
             throw new Error(`${response.status} ${response.statusText}`);
         const posts = await response.json();
@@ -151,7 +167,7 @@ const commentTemplate = (comment) => `<div class="comment" id="post_id-${comment
     <span class="comment-date">${new Date(comment.creation_time).toLocaleString()}</span>
   </div>
   <div class="comment-body">
-    <p>${comment.content}</p>
+    <p>${escapeHTML(comment.content)}</p>
   </div>
 </div>
 `;

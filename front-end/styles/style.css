@@ -259,7 +259,7 @@ button#postSeeMore {
     border-color: var(--nav-highlight-color);
 }
 
-.submit-comment {
+#submit-comment {
     margin-top: 0.75rem;
     align-self: flex-end;
     padding: 10px 18px;
@@ -274,7 +274,7 @@ button#postSeeMore {
     transition: background-color 0.3s, transform 0.2s;
 }
 
-.submit-comment:hover {
+#submit-comment:hover {
     background-color: var(--btn-hover-bg-color);
     transform: translateY(-2px);
 }

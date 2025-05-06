@@ -46,9 +46,9 @@ func isValidUsername(username string) bool {
 func JsRespond(w http.ResponseWriter, message string, code int) {
 	if w.Header().Get("Content-Type") == "" {
 		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(code)
 		json.NewEncoder(w).Encode(ErrorResponse{Error: message})
 	}
-	// w.WriteHeader(code) why not ??     NOTE : when registration erors respond with 200 status
 }
 
 func VerifyUser(jwt_token, session_id string) (bool, error) {

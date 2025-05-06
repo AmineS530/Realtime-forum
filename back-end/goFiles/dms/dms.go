@@ -25,7 +25,8 @@ func GetdmHistory(uname1, uname2 string) ([]Message, error) {
 		(sender.username = ? AND recipient.username = ?)
    	OR
 		(sender.username = ? AND recipient.username = ?)
-	ORDER BY d.message_id;
+	ORDER BY
+		d.message_id;
 	`, uname1, uname2, uname2, uname1)
 	if err != nil {
 		fmt.Println("Error getting posts: ", err)

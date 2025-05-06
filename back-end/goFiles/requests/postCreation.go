@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	helpers "RTF/back-end"
+	"RTF/back-end/goFiles/auth"
 )
 
 type postInfo struct {
@@ -37,7 +38,12 @@ func PostCreation(w http.ResponseWriter, r *http.Request, uid int) {
 		http.Error(w, "Title and content required", http.StatusBadRequest)
 		return
 	}
-	postPost(post, categories, uid)
+	if !postPost(post, categories, uid) {
+		w.WriteHeader(http.StatusBadRequest)
+		auth.JsRespond(w, "Post creation failed", http.StatusBadRequest)
+	}
+	w.WriteHeader(http.StatusOK)
+	auth.JsRespond(w, "Post created successfully", http.StatusOK)
 }
 
 func postPost(post postInfo, categories []string, uid int) bool {
@@ -57,8 +63,4 @@ func postPost(post postInfo, categories []string, uid int) bool {
 		return false
 	}
 	return true
-}
-
-func CommentCreation(w http.ResponseWriter, r *http.Request) {
-	
 }

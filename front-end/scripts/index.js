@@ -16,8 +16,8 @@ window.loadPage = function (page) {
             history.pushState({}, "", "/");
             break;
         case "profile":
-            loadUsers();
             loadProfilePage();
+            loadUsers();
             break;
         default:
             app.innerHTML = "<h2>Page not found</h2>";
@@ -43,7 +43,14 @@ function loadPageFromPath() {
 async function loadProfilePage() {
     const app = document.getElementById("app");
     try {
-        const res = await fetch("/api/profile", { credentials: "include" });
+        const res = await fetch("/api/profile", {
+            method: "GET",
+            credentials: "include",
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                "Content-Type": "application/json",
+            },
+        });
         if (!res.ok) {
             const errData = await res.json();
             throw new Error(errData.error || "Error loading profile");
@@ -87,6 +94,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
         const response = await fetch("/api/check-auth", {
             credentials: "include",
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                "Content-Type": "application/json",
+            }
         });
         const authData = await response.json();
         const authenticated = authData.authenticated;
@@ -109,6 +120,10 @@ async function loadUsers() {
     try {
         const response = await fetch("/api/v1/get/users", {
             method: "GET",
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                "Content-Type": "application/json",
+            }
         });
 
         if (!response.ok) {
@@ -211,6 +226,7 @@ async function submitPost() {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                "X-Requested-With": "XMLHttpRequest",
             },
             body: JSON.stringify(payload),
         });
@@ -226,6 +242,47 @@ async function submitPost() {
         console.error("Error submitting post:", err);
     }
 
+}
+
+document.addEventListener("click", async (event) => {
+    if (event.target.id === "submit-comment" ) {
+        event.preventDefault();
+        await submitComment(event);
+    }
+});
+
+async function submitComment(event) {
+    const container = event.target.closest(".comment-container");
+    const textarea = container.querySelector(".comment-textarea");
+    const comment = textarea.value.trim();
+    if (!comment) return alert("Comment cannot be empty.");
+    
+    const postDiv = container.closest(".post");
+    const postId = postDiv?.id;
+
+    if (!postId) return alert("Post ID not found.");
+
+    const payload = { content: comment, post_id: postId };
+    console.log("Comment payload:", payload.content);
+    try {
+        const res = await fetch("/api/v1/post/createComment", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" ,
+                "X-Requested-With": "XMLHttpRequest"
+            },
+            body: JSON.stringify(payload),
+        });
+
+        if (!res.ok) throw new Error("Failed to post comment");
+
+        const result = await res.json();
+        console.log("Comment posted:", result);
+        textarea.value = "";
+        showNotification("Comment posted!", "success");
+    } catch (err) {
+        console.error("Comment error:", err);
+        showNotification("Error posting comment", "error");
+    }
 }
 
 function escapeHTML(str) {

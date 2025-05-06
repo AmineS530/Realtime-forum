@@ -50,6 +50,16 @@ func AuthMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	})
 }
 
+func ApiOnlyAccess(next http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		if r.Header.Get("X-Requested-With") != "XMLHttpRequest" {
+			http.Error(w, "Forbidden", http.StatusForbidden)
+			return
+		}
+		next.ServeHTTP(w, r)
+	}
+}
+
 // Extract JWT from Authorization header or cookie
 func ExtractJWT(r *http.Request) (string, error) {
 	cookie, err := r.Cookie("jwt")

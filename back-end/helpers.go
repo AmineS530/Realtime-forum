@@ -9,12 +9,11 @@ import (
 	"os"
 )
 
-var Err error
 var (
-	DataBase *sql.DB
-	InfoLog  *log.Logger
-	ErrorLog *log.Logger
-
+	DataBase      *sql.DB
+	InfoLog       *log.Logger
+	ErrorLog      *log.Logger
+	Err           error
 	HtmlTemplates *template.Template
 )
 
@@ -60,4 +59,3 @@ func ErrorPagehandler(w http.ResponseWriter, statusCode int) {
 		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
 	}
 }
-

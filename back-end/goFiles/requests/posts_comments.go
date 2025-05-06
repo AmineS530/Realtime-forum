@@ -67,6 +67,9 @@ func GetPosts(soffset string) ([]Post, error) {
 }
 
 func GetComments(pid string) ([]Comment, error) {
+	if pid == "" {
+		return nil, nil
+	}
 	iPid, err := strconv.Atoi(pid)
 	if err != nil {
 		helpers.ErrorLog.Println("Error converting pid to int: ", err)
