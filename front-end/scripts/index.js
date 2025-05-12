@@ -297,3 +297,52 @@ function escapeHTML(str) {
 }
 
 console.log("Loaded inedex.js")
+
+let isLoadingMessages = false;
+window.setupMessageScroll = function () {
+    const messagesContainer = document.querySelector('#discussion');
+
+    const scrollFunc = debounce(async () => {
+        if (isLoadingMessages) return;
+
+        // Check if scrolled near top (100px threshold)
+        if (messagesContainer.scrollTop <= 0) {
+            isLoadingMessages = true;
+
+            try {
+                const oldScrollHeight = messagesContainer.scrollHeight;
+                elem = document.querySelector('#message-select');
+                fetch('/api/v1/get/dmhistory', {
+                    method: 'GET',
+                    headers: {
+                      'target': elem.value.slice(3),
+                      'page' : elem.nextElementSibling.childElementCount-1/10,
+                      'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(response => response!== null ?response.json():data=[])
+                .then(data => {
+                    console.log("azerazerazernbfhqbfhbqfhqbsfjhbqjsbfhqbsdfhqbsdfq",data)
+                    let formattedHistory = "";
+                    if (data) {
+                        data.forEach(message => {
+                            formattedHistory += `<li>[${message.sender}] : ${message.message}</li>`
+                        });
+                    }
+                    console.log("azerazerazerazerazer",formattedHistory)
+                    messagesContainer.children[0].insertAdjacentElement('afterend',formattedHistory)
+                    elem.nextElementSibling.nextElementSibling.value = elem.value
+                })
+                .catch(error => console.error('Error:', error))
+                .finally(elem.disabled = false);
+
+                const newScrollHeight = messagesContainer.scrollHeight;
+                messagesContainer.scrollTop = newScrollHeight - oldScrollHeight;
+            } catch (error) {
+                showErrorPage(error.status, error.message);
+            } finally {
+                isLoadingMessages = false;
+            }
+        }
+    }, 800);
+};

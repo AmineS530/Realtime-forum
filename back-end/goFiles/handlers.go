@@ -69,10 +69,11 @@ func GetHandler(w http.ResponseWriter, r *http.Request) {
 		w.Write(jsonData)
 	case "dmhistory":
 		target := r.Header.Get("target")
+		page := r.Header.Get("page")
 		tok, _ := auth.ExtractJWT(r)
 		payload, _ := jwt.JWTVerify(tok)
 		username := payload.Username
-		dms, err := dms.GetdmHistory(username, target)
+		dms, err := dms.GetdmHistory(username, target, page)
 		if err != nil {
 			helpers.ErrorLog.Print("routes.go 69", err)
 		}

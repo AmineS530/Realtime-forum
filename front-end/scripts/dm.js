@@ -46,13 +46,14 @@ function changeDiscussion(elem) {
             method: 'GET',
             headers: {
               'target': elem.value.slice(3),
+              'page' : elem.nextElementSibling.childElementCount-1/10,
               'X-Requested-With': 'XMLHttpRequest'
             }
         })
         .then(response => response!== null ?response.json():data=[])
         .then(data => {
             console.log("azerazerazernbfhqbfhbqfhqbsfjhbqjsbfhqbsdfhqbsdfq",data)
-            let formattedHistory = "";
+            let formattedHistory = `<button onclick="window.setupMessageScroll()" >load more messages</button>`;
             if (data) {
                 data.forEach(message => {
                     formattedHistory += `<li>[${message.sender}] : ${message.message}</li>`

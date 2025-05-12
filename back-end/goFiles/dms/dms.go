@@ -2,6 +2,7 @@ package dms
 
 import (
 	"fmt"
+	"strconv"
 
 	helpers "RTF/back-end"
 	"RTF/global"
@@ -12,7 +13,15 @@ type Message struct {
 	Content string `json:"message"`
 }
 
-func GetdmHistory(uname1, uname2 string) ([]Message, error) {
+func GetdmHistory(uname1, uname2, page string) ([]Message, error) {
+	if page == "" {
+		return nil, nil
+	}
+	p, err := strconv.Atoi(page)
+	if err != nil {
+		helpers.ErrorLog.Println("Error converting pid to int: ", err)
+		return nil, err
+	}
 	rows, err := helpers.DataBase.Query(`
 	SELECT
 		sender.username , d.message
@@ -27,8 +36,10 @@ func GetdmHistory(uname1, uname2 string) ([]Message, error) {
    	OR
 		(sender.username = ? AND recipient.username = ?)
 	ORDER BY
-		d.message_id;
-	`, uname1, uname2, uname2, uname1)
+		d.message_id
+	LIMIT 10
+	OFFSET ? * 10;
+	`, uname1, uname2, uname2, uname1, p)
 	if err != nil {
 		fmt.Println("Error getting posts: ", err)
 		return nil, err
