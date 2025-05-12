@@ -274,7 +274,7 @@ async function submitComment(event) {
         textarea.value = "";
         const newCommentHTML = commentTemplate({
             content: comment,
-            author: result.username,
+            author: window.uname,
             creation_time: new Date().toISOString()
         });
         postDiv.querySelector(".comments")?.insertAdjacentHTML("afterbegin", newCommentHTML);
