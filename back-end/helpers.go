@@ -8,6 +8,8 @@ import (
 	"log"
 	"net/http"
 	"os"
+
+	"github.com/gorilla/websocket"
 )
 
 var (
@@ -16,6 +18,7 @@ var (
 	ErrorLog      *log.Logger
 	Err           error
 	HtmlTemplates *template.Template
+	Sockets       = make(map[string]*websocket.Conn)
 )
 
 func init() {

@@ -263,7 +263,6 @@ async function submitComment(event) {
     if (!postId) return showNotification("Post ID not found.");
 
     const payload = { content: comment, post_id: postId };
-    console.log("Comment payload:", payload.content);
     try {
         const res = await fetch("/api/v1/post/createComment", {
             method: "POST",
@@ -283,7 +282,6 @@ async function submitComment(event) {
         const newCommentHTML = commentTemplate({
             content: comment,
             author: document.getElementById("username").textContent,
-            author: window.uname,
             creation_time: new Date().toISOString()
         });
         postDiv.querySelector(".comments")?.insertAdjacentHTML("afterbegin", newCommentHTML);
@@ -304,10 +302,17 @@ function escapeHTML(str) {
         "'": '&#039;',
     }[match]));
 }
-loadPageFromPath()
-console.log("Loaded inedex.js")
 
 let isLoadingMessages = false;
+
+function debounce(func, timeout = 300){
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => { func.apply(this, args); }, timeout);
+  };
+}
+
 window.setupMessageScroll = function () {
     const messagesContainer = document.querySelector('#discussion');
 
@@ -355,3 +360,5 @@ window.setupMessageScroll = function () {
         }
     }, 800);
 };
+
+console.log("Loaded inedex.js")

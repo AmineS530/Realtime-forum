@@ -50,7 +50,6 @@ func GetHandler(w http.ResponseWriter, r *http.Request) {
 		data, ok := payload.(*jwt.JwtPayload)
 		if !ok {
 			helpers.JsRespond(w, "Invalid payload", http.StatusBadRequest)
-			fmt.Println("azer qsdf")
 			return
 		}
 		usernames, _ := dms.GetUserNames(data.Sub)
@@ -90,7 +89,6 @@ func PostHandler(w http.ResponseWriter, r *http.Request) {
 	switch x {
 	case "createPost":
 		requests.PostCreation(w, r, payload.Sub)
-
 	case "createComment":
 		requests.CommentCreation(w, r, payload.Sub)
 	}

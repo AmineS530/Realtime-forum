@@ -21,13 +21,6 @@ VALUES
 (2, 'sess-bob-xyz', DATETIME('now', '+1 day')),
 (3, 'sess-apache-xyz', DATETIME('now', '+1 day'));
 
--- REFRESH TOKENS
-INSERT INTO refresh_tokens (user_id, token, expires_at)
-VALUES
-(1, 'ref-alice-token', DATETIME('now', '+30 day')),
-(2, 'ref-bob-token', DATETIME('now', '+30 day')),
-(3, 'ref-apache-token', DATETIME('now', '+30 day'));
-
 -- POSTS
 INSERT INTO posts (post_id, uid, title, content, categories)
 VALUES

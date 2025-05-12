@@ -3,7 +3,6 @@ let commentLimit = undefined;
 window.loadComments = async function loadComments(input, offset = 0) {
     const isEvent = !(input?.mode);
     const event = isEvent ? input : null;
-    const mode = isEvent ? "default" : input.mode;
     const pid = isEvent ? event?.target?.parentElement?.id : input.pid;
     const parent = document.getElementById(pid);
 
@@ -104,8 +103,3 @@ const postTemplate = (post) => `
     </button>
   </div>
 `;
-
-
-
-
-

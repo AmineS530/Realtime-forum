@@ -11,7 +11,7 @@ socket.onopen = function (event) {
 socket.onmessage = function (event) {
     const msg = JSON.parse(event.data)
     console.log("Received message:", event.data,"Parsed message:", msg);
-    discussion.innerHTML += ['system',window.uname,discussion.previousElementSibling.value.slice(3)].includes(msg.sender)?
+    discussion.innerHTML += ['system',document.getElementById("username"),discussion.previousElementSibling.value.slice(3)].includes(msg.sender)?
                             `<li>[${msg.sender}] : ${msg.message}</li>`:
                             `<li>[system]received a new message from ${msg.sender}.</li>`;
 };
@@ -88,6 +88,7 @@ class Message {
         socket.send(JSON.stringify(this.body));
     }
 }
-console.log("loaded dm.js")
 
 const usename = document.cookie.match(/session-name=(\S+)==;/)
+
+console.log("loaded dm.js")

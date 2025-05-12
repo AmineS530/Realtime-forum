@@ -9,10 +9,10 @@ import (
 	"sync"
 
 	// "RTF/back-end/goFiles/dms"
+	helpers "RTF/back-end"
 	jwt "RTF/back-end/goFiles/JWT"
 	"RTF/back-end/goFiles/auth"
 	"RTF/back-end/goFiles/dms"
-	"RTF/global"
 
 	"github.com/gorilla/websocket"
 )
@@ -31,7 +31,7 @@ type message struct {
 }
 
 var (
-	sockets = global.Sockets
+	sockets = helpers.Sockets
 	mutex   sync.Mutex
 )
 
@@ -97,8 +97,6 @@ func deleteConnFromMap(uName string) {
 	delete(sockets, uName)
 	mutex.Unlock()
 }
-
-// var i rune = '0'
 
 // TODO JWT
 func getUname(r *http.Request) string {
