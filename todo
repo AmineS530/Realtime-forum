@@ -1,7 +1,7 @@
 -- redirect to mainpage when facing an error or implement 404 page
 -- error page in SPA WAY*****
 -- refresh posts after creating a new one and sending a notification of new post or add a feed on the side
--- api for comment creation, and optimizing the viewcomments js function
+-- api for comment creation, and optimizing the s js function
 -- set variable for comment lenght, spot lenght etc
 -- reducing some funcion calls and passing variables instead if possible
 -----------------------------------------

@@ -31,4 +31,32 @@ function showNotification(message, type = "OK") {
     setTimeout(() => notification.remove(), 3000);
 }
 
+
+async function viewPosts(event) {
+    await loadPosts({
+        offset: document.querySelectorAll("#app .post").length,
+        mode: "append",
+        target: event.target
+    });
+}
+
+async function viewComments(event) {
+    const button = event?.target;
+    const postDiv = button.closest(".post");
+
+    if (!postDiv) return console.warn("No post container found.");
+
+    const pid = postDiv.id;
+    const container = postDiv.querySelector(".comment-container");
+
+    const currentCount = container?.querySelectorAll(".comment")?.length || 0;
+
+    await loadComments({
+        // pid,
+        // offset: currentCount,
+        mode: "append",
+        target: button
+    });
+}
+
 console.log("Loaded convenience.js")

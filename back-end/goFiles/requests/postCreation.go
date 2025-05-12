@@ -18,31 +18,29 @@ type postInfo struct {
 
 func PostCreation(w http.ResponseWriter, r *http.Request, uid int) {
 	if r.Method != http.MethodPost {
-		http.Error(w, "Only POST allowed", http.StatusMethodNotAllowed)
+		auth.JsRespond(w, "Only POST allowed", http.StatusMethodNotAllowed)
 		return
 	}
 
 	var post postInfo
 	if err := json.NewDecoder(r.Body).Decode(&post); err != nil {
-		http.Error(w, "Invalid JSON", http.StatusBadRequest)
+		auth.JsRespond(w, "Invalid JSON", http.StatusBadRequest)
 		return
 	}
-	categories := strings.Split(post.Category, " ")
+	categories := strings.Split(strings.Join(strings.Fields(post.Category), " "), ",")
 	if len(categories) > 3 || len(categories) < 1 {
-		http.Error(w, "Invalid category selection", http.StatusBadRequest)
+		auth.JsRespond(w, "Invalid category selection", http.StatusBadRequest)
 		return
 	}
 
 	// Validate basic input
 	if len(post.Title) < 3 || len(post.Content) < 10 {
-		http.Error(w, "Title and content required", http.StatusBadRequest)
+		auth.JsRespond(w, "Title and content required", http.StatusBadRequest)
 		return
 	}
 	if !postPost(post, categories, uid) {
-		w.WriteHeader(http.StatusBadRequest)
 		auth.JsRespond(w, "Post creation failed", http.StatusBadRequest)
 	}
-	w.WriteHeader(http.StatusOK)
 	auth.JsRespond(w, "Post created successfully", http.StatusOK)
 }
 

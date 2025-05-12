@@ -1,45 +1,6 @@
 let commentLimit = undefined;
 
-function fetching(e, target) {
-    e.preventDefault();
-    let data = {};
-    for (const element of e.target) {
-        if (element.value != "") {
-            //(element.value, element.id, element);
-            data[element.id] = element.value;
-        }
-    }
-    //console.log(e.target, e.this, data, target);
-    let a = fetch(target, {
-        method: "POST",
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data),
-    })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error(" Network error \n\tstatus code :" + response.status);
-            }
-            return response.json();
-        })
-        .catch((error) => {
-            //console.log("Error:", error);
-            // Return error object with a message
-            return { error: error.message };
-        });
-    a.then((result) => {
-        //console.log("Response as object:", result);
-        for (let key in result) {
-            if (result.hasOwnProperty(key)) {
-                alert(`${key}: ${result[key]}`);
-            }
-        }
-    });
-}
-
-window.viewComments = async function viewComments(event, offset) {
+window.loadComments = async function loadComments(event, offset) {
     let parent = event.target.parentElement;
     let comments = [];
     try {
@@ -60,9 +21,7 @@ window.viewComments = async function viewComments(event, offset) {
             throw new Error(`Error: ${response.status} - ${response.statusText}`);
         }
         comments = await response.json();
-        // console.log(comments);
-    } catch (error) {
-        // console.error("Error:", error);
+        } catch (error) {
         return;
     }
     // console.log("azer", comments);
@@ -104,9 +63,8 @@ window.viewComments = async function viewComments(event, offset) {
     }
 };
 
-window.viewPosts = async function viewPosts(event) {
+window.loadPosts = async function ({ offset = 0, mode = "replace", target = null } = {}) {
     try {
-        const offset = document.querySelectorAll('#app .post').length
         const response = await fetch(`/api/v1/get/posts?offset=${offset}`, {
             method: "GET",
             headers: {
@@ -115,31 +73,36 @@ window.viewPosts = async function viewPosts(event) {
             },
             credentials: "include",
         });
+
         if (!response.ok)
             throw new Error(`${response.status} ${response.statusText}`);
+
         const posts = await response.json();
+        if (!Array.isArray(posts) || posts.length === 0) return;
 
-        let html = "";
-        for (const post of posts) {
-            html += postTemplate(post);
+        const app = document.getElementById("app");
+        let html = posts.map(postTemplate).join("");
+
+        switch (mode) {
+            case "replace":
+                app.insertAdjacentHTML("afterbegin", html);
+                break;
+            case "append":
+                if (target) {
+                    target.insertAdjacentHTML("beforebegin", html);
+                } else {
+                    app.insertAdjacentHTML("beforeend", html);
+                }
+                break;
+            case "prepend":
+                app.insertAdjacentHTML("afterbegin", html);
+                break;
         }
-
-        event.target.insertAdjacentHTML("beforebegin", html);
     } catch (err) {
         console.error("Failed to load posts:", err);
     }
 };
-/*
-document.addEventListener("DOMContentLoaded", () => {
-    let qsdf = document.getElementById("postSeeMore");
-    if (qsdf) {
-        qsdf.click();
-        setTimeout(() => {
-            document.getElementById("post_id-1").lastElementChild.click();
-            // console.log("5 seconds have passed!");
-        }, 500);
-    }
-});*/
+
 const postTemplate = (post) => `
   <div class="post" id="${post.pid}">
     <h3 class="post-title">${escapeHTML(post.title)}</h3>

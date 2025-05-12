@@ -9,10 +9,7 @@ window.loadPage = function (page) {
             loadUsers();
             app.innerHTML = templates.posts + templates.dms + templates.postCreation;
             setupPostCreator();
-            const getPosts = document.getElementById("load-posts");
-            if (getPosts) {
-                getPosts.click();
-            }
+            loadPosts({ mode: "replace" });
             history.pushState({}, "", "/");
             break;
         case "profile":
@@ -202,15 +199,12 @@ async function setupPostCreator() {
     form?.addEventListener("submit", async (e) => {
         e.preventDefault();
         await submitPost(e);
+        await loadPosts({ mode: "prepend" })
         localStorage.removeItem("postDraft");
         form.reset();
         document.body.classList.remove("dimmed");
         postSection.style.display = "none";
-        if (typeof window.viewPosts === "function") {
-            window.viewPosts();
-        }
         showNotification("Post submitted successfully!", "success");
-
     });
 }
 
@@ -278,6 +272,7 @@ async function submitComment(event) {
         const result = await res.json();
         console.log("Comment posted:", result);
         textarea.value = "";
+        // loadComments({  mode: "append" });
         showNotification("Comment posted!", "success");
     } catch (err) {
         console.error("Comment error:", err);

@@ -135,9 +135,9 @@ const postCreation = `
             <br />
             <button id="close-post-creator">&times;</button>
             <form id="post-form">
-                <input type="text" id="post-title" placeholder="Post Title" maxlength="30" required />
-                <textarea id="post-content" placeholder="Write your post..." maxlength="1000" required></textarea>
-                <input id="post-category" placeholder="Enter categories... (max 3)" maxlength="30" />
+                <input type="text" id="post-title" placeholder="Post Title" minlength="3" maxlength="30" required />
+                <textarea id="post-content" placeholder="Write your post..." minlength="10" maxlength="1000" required></textarea>
+                <input id="post-category" placeholder="Enter categories... (max 3)" minlength="3" maxlength="30" />
                 <button type="submit">Submit Post</button>
             </form>
         </div>
