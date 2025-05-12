@@ -32,8 +32,8 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 			auth.JsRespond(w, "Error executing template", http.StatusInternalServerError)
 			return
 		}
-	} else {
-		// helpers.ErrorPagehandler(w, http.StatusNotFound)
+	 } else {
+	// 	// helpers.ErrorPagehandler(w, http.StatusNotFound)
 		auth.JsRespond(w, "Page not found", http.StatusNotFound)
 		return
 	}

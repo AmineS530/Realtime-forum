@@ -1,66 +1,48 @@
 let commentLimit = undefined;
 
-window.loadComments = async function loadComments(event, offset) {
-    let parent = event.target.parentElement;
+window.loadComments = async function loadComments(input, offset = 0) {
+    const isEvent = !(input?.mode);
+    const event = isEvent ? input : null;
+    const mode = isEvent ? "default" : input.mode;
+    const pid = isEvent ? event?.target?.parentElement?.id : input.pid;
+    const parent = document.getElementById(pid);
+
+    if (!pid || !parent) return console.warn("Missing post ID or container");
+
     let comments = [];
     try {
-        let response = await fetch(
-            `/api/v1/get/comments?pid=${parent.id}${commentLimit ? `&limit=${commentLimit}` : ""
-            }${offset ? `&offset=${offset}` : ""}`,
-            {
-                method: "GET",
-                headers: {
-                    "X-Requested-With": "XMLHttpRequest",
-                    "Content-Type": "application/json",
-                },
-                credentials: "include"
-            }
-        );
-        // console.log(response);
-        if (!response.ok) {
-            throw new Error(`Error: ${response.status} - ${response.statusText}`);
-        }
-        comments = await response.json();
-        } catch (error) {
+        const res = await fetch(`/api/v1/get/comments?pid=${pid}${commentLimit ? `&limit=${commentLimit}` : ""}${offset ? `&offset=${offset}` : ""}`, {
+            method: "GET",
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                "Content-Type": "application/json"
+            },
+            credentials: "include"
+        });
+        if (!res.ok) throw new Error();
+        comments = await res.json();
+    } catch {
         return;
     }
-    // console.log("azer", comments);
-    let commentall = "";
-    console.log("comments", comments);
-    if (comments != null) {
-        for (const comment of comments) {
-            commentall += commentTemplate(comment);
-        }
-    }
+
+    const commentHTML = (Array.isArray(comments) ? comments : []).map(commentTemplate).join("");
+
     if (offset) {
-        event.target.setAttribute(
-            "onclick",
-            `viewComments(event, ${offset + comments.length})`
-        );
-        event.target.insertAdjacentHTML("beforebegin", commentall);
-    } else {
-        let comment_area = `
-    <details class="comment-container" open>
-    <summary>Click to see comments</summary> 
-    <div class="comment-input-area">
-        <textarea 
-            class="comment-textarea" 
-            placeholder="Write your comment here..."
-            rows="3"
-        ></textarea>
-        <button id="submit-comment" type="submit">Post</button>
-    </div>`
-        if (comments != null) {
-            let allcomments = `  
-        ${commentall}
-        <button class="view-comments" onclick="viewComments(event, ${comments.length})">Load more comments</button>
-        </details>
-        `
-            event.target.outerHTML = comment_area + allcomments;
-        } else {
-            event.target.outerHTML = comment_area;
-        }
+        event.target.setAttribute("onclick", `loadComments(event, ${offset + comments.length})`);
+        event.target.insertAdjacentHTML("beforebegin", commentHTML);
+        return;
     }
+
+    const comment_area = `
+<details class="comment-container" open>
+    <summary>Click to see comments</summary>
+    <div class="comment-input-area">
+        <textarea class="comment-textarea" placeholder="Write your comment here..." rows="3"></textarea>
+        <button id="submit-comment" type="submit">Post</button>
+    </div>
+    <div class="comments">${commentHTML}</div>
+</details>`;
+    event.target.outerHTML = comment_area;
 };
 
 window.loadPosts = async function ({ offset = 0, mode = "replace", target = null } = {}) {
@@ -117,30 +99,13 @@ const postTemplate = (post) => `
       <span class="post-date">${new Date(post.creation_time).toLocaleString()}</span>
     </div>
 
-    <button onclick="viewComments(event)" class="view-comments" data-post-id="${post.pid}">
+    <button onclick="loadComments(event)" class="view-comments" data-post-id="${post.pid}">
       View Comments
     </button>
   </div>
 `;
 
 
-const commentTemplate = (comment) => `<div class="comment" id="post_id-${comment.pid}">
-  <div class="comment-header">
-    <span class="comment-author">Published by <strong>${comment.author}</strong></span>
-    <span class="comment-date">${new Date(comment.creation_time).toLocaleString()}</span>
-  </div>
-  <div class="comment-body">
-    <p>${escapeHTML(comment.content)}</p>
-  </div>
-</div>
-`;
 
 
-function escapeHTML(str) {
-    return String(str ?? "")
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-}
+

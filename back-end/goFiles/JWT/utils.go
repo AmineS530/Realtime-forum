@@ -12,7 +12,7 @@ import (
 	helpers "RTF/back-end"
 )
 
-var Time_to_Expire = time.Hour * 24
+var Time_to_Expire = time.Hour * 6
 
 type JwtPayload struct {
 	Sub      int    `json:"sub,string"`

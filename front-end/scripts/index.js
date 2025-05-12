@@ -17,12 +17,13 @@ window.loadPage = function (page) {
             loadUsers();
             break;
         default:
-            app.innerHTML = "<h2>Page not found</h2>";
+            app.innerHTML = "<h2>Page not foundo</h2>";
     }
 };
 
 function loadPageFromPath() {
     const path = window.location.pathname;
+    const app = document.getElementById("app");
     switch (path) {
         case "/":
         case "/home":
@@ -32,7 +33,7 @@ function loadPageFromPath() {
             loadPage("profile");
             break;
         default:
-            loadPage("notfound");
+            app.innerHTML = "<h2>Page not foundp</h2>";
     }
 }
 
@@ -56,7 +57,6 @@ async function loadProfilePage() {
         const data = await res.json();
         app.innerHTML = ` 
         <link rel="stylesheet" href="/front-end/styles/style.css" />
-        <center>
         <div class="profile">
         <h2>Welcome, ${data.username}</h2>
         <p>First Name: ${data.first_name}</p>
@@ -64,11 +64,10 @@ async function loadProfilePage() {
         <p>Age: ${data.age}</p>
         <p>Gender: ${data.gender}</p>
         <p>Email: ${data.email}</p>
-        <a class="change-password" href="#" > Change Password </a>
-        <br />
+       <!-- <a class="change-password" href="#" > Change Password </a> 
+        <br /> -->
         <a href="/" onclick="loadPage('home'); return false;">Go Back</a>
-        </div>
-        </center>`+ templates.dms;
+        </div>`+ templates.dms;
         history.pushState({}, "", "/profile");
     } catch (err) {
         console.error("Failed to load profile:", err);
@@ -239,7 +238,7 @@ async function submitPost() {
 }
 
 document.addEventListener("click", async (event) => {
-    if (event.target.id === "submit-comment" ) {
+    if (event.target.id === "submit-comment") {
         event.preventDefault();
         await submitComment(event);
     }
@@ -249,8 +248,8 @@ async function submitComment(event) {
     const container = event.target.closest(".comment-container");
     const textarea = container.querySelector(".comment-textarea");
     const comment = textarea.value.trim();
-    if (!comment) return alert("Comment cannot be empty.");
-    
+    if (!comment) return showNotification("Comment cannot be empty.", "error");
+
     const postDiv = container.closest(".post");
     const postId = postDiv?.id;
 
@@ -261,7 +260,8 @@ async function submitComment(event) {
     try {
         const res = await fetch("/api/v1/post/createComment", {
             method: "POST",
-            headers: { "Content-Type": "application/json" ,
+            headers: {
+                "Content-Type": "application/json",
                 "X-Requested-With": "XMLHttpRequest"
             },
             body: JSON.stringify(payload),
@@ -272,7 +272,13 @@ async function submitComment(event) {
         const result = await res.json();
         console.log("Comment posted:", result);
         textarea.value = "";
-        // loadComments({  mode: "append" });
+        const newCommentHTML = commentTemplate({
+            content: comment,
+            author: result.username,
+            creation_time: new Date().toISOString()
+        });
+        postDiv.querySelector(".comments")?.insertAdjacentHTML("afterbegin", newCommentHTML);
+
         showNotification("Comment posted!", "success");
     } catch (err) {
         console.error("Comment error:", err);

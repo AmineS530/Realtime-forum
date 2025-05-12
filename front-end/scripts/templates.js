@@ -110,7 +110,7 @@ const posts = `
     <button id="load-posts" onclick="viewPosts(event)">Load More Posts</button>
 `;
 
-const dms = `<div id="backdrop" class="show" onclick="event.target.id ==='backdrop' ? dms_ToggleShowSidebar(event): event.stopPropagation();">
+const dms = `<div id="backdrop" class="" onclick="event.target.id ==='backdrop' ? dms_ToggleShowSidebar(event): event.stopPropagation();">
 
     <div class="show" id="side-menu" aria-modal="true" role="dialog">
         <div class="side-menu-head">

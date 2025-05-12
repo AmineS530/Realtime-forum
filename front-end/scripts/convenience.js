@@ -40,23 +40,24 @@ async function viewPosts(event) {
     });
 }
 
-async function viewComments(event) {
-    const button = event?.target;
-    const postDiv = button.closest(".post");
 
-    if (!postDiv) return console.warn("No post container found.");
-
-    const pid = postDiv.id;
-    const container = postDiv.querySelector(".comment-container");
-
-    const currentCount = container?.querySelectorAll(".comment")?.length || 0;
-
-    await loadComments({
-        // pid,
-        // offset: currentCount,
-        mode: "append",
-        target: button
-    });
+const commentTemplate = (comment) => `<div class="comment" id="post_id-${comment.pid}">
+  <div class="comment-header">
+    <span class="comment-author">Published by <strong>${comment.author}</strong></span>
+    <span class="comment-date">${new Date(comment.creation_time).toLocaleString()}</span>
+  </div>
+  <div class="comment-body">
+    <p>${escapeHTML(comment.content)}</p>
+  </div>
+</div>
+`;
+function escapeHTML(str) {
+    return String(str ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
 
 console.log("Loaded convenience.js")

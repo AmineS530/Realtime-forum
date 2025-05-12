@@ -2,7 +2,6 @@ package requests
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -45,7 +44,6 @@ func PostCreation(w http.ResponseWriter, r *http.Request, uid int) {
 }
 
 func postPost(post postInfo, categories []string, uid int) bool {
-	fmt.Println(post, categories, uid)
 	query := `
 	INSERT
 		INTO posts
