@@ -13,7 +13,7 @@ func Routes() *http.ServeMux {
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/", IndexHandler)
-	mux.HandleFunc("/api/v1/ws", ws.HandleConnections)
+	mux.HandleFunc("/api/v1/ws", auth.AuthMiddleware(ws.HandleConnections))
 	mux.HandleFunc("/api/v1/get/{type}", auth.AuthMiddleware(auth.ApiOnlyAccess(GetHandler)))
 	mux.HandleFunc("/api/v1/post/{type}", auth.AuthMiddleware(auth.ApiOnlyAccess(PostHandler)))
 	mux.HandleFunc("/api/profile", auth.AuthMiddleware(auth.ApiOnlyAccess(ProfileHandler)))

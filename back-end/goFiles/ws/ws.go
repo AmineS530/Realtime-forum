@@ -10,6 +10,7 @@ import (
 
 	// "RTF/back-end/goFiles/dms"
 	jwt "RTF/back-end/goFiles/JWT"
+	"RTF/back-end/goFiles/auth"
 	"RTF/back-end/goFiles/dms"
 
 	"github.com/gorilla/websocket"
@@ -99,11 +100,11 @@ func deleteConnFromMap(uName string) {
 	mutex.Unlock()
 }
 
-var i rune = '0'
+// var i rune = '0'
 
 // TODO JWT
 func getUname(r *http.Request) string {
-	payload := r.Context().Value("user")
+	payload := r.Context().Value(auth.UserContextKey)
 	data, ok := payload.(*jwt.JwtPayload)
 	if ok {
 		return data.Username
