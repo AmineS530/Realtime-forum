@@ -28,7 +28,7 @@ type UserReg struct {
 // RegisterHandler processes user registrations
 func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+		helpers.JsRespond(w, "Invalid request method", http.StatusMethodNotAllowed)
 		return
 	}
 
@@ -40,74 +40,72 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if !validInfo(w, user) {
-		JsRespond(w, "Registration failed", http.StatusBadRequest)
+		helpers.JsRespond(w, "Registration failed", http.StatusBadRequest)
 		return
 	}
 	// store cerdentials and infos in different tables
 	if !insertInfo(user) {
-		JsRespond(w, "Registration failed", http.StatusInternalServerError)
+		helpers.JsRespond(w, "Registration failed", http.StatusInternalServerError)
 		return
 	}
-	// get the id of the inserted values
-
 	// use bcrypt to hash the password and store it in the database
 	userID := int(getElemVal("id", "users", `username = "`+user.Username+`"`).(int64))
 	changePassword(user.Password, userID)
 
 	authorize(w, userID)
-	JsRespond(w, "Login successful", http.StatusOK)
+	helpers.JsRespond(w, "Login successful", http.StatusOK)
 	w.Header().Set("Content-Type", "application/json")
 }
 
 func validInfo(w http.ResponseWriter, user UserReg) bool {
 	// check if username is valid and exists in the db
 	if !isValidUsername(user.Username) {
-		JsRespond(w, "Invalid username", http.StatusBadRequest)
+		helpers.JsRespond(w, "Invalid username", http.StatusBadRequest)
 		return false
 	}
 	if _, exists := helpers.EntryExists("username", strings.ToLower(user.Username), "users", true); exists {
-		JsRespond(w, "Username already exists", http.StatusBadRequest)
+		helpers.JsRespond(w, "Username already exists", http.StatusBadRequest)
 		return false
 	}
 	// check if password follows policy
 	if !isValidPassword(user.Password) {
-		JsRespond(w, "Invalid password format", http.StatusBadRequest)
+		helpers.JsRespond(w, "Invalid password format", http.StatusBadRequest)
 		return false
 	}
 
 	// check if passwords match
 	if user.Password != user.PasswordConfirm {
-		JsRespond(w, "Passwords do not match", http.StatusBadRequest)
+		helpers.JsRespond(w, "Passwords do not match", http.StatusBadRequest)
 		return false
 	}
 
 	// check if email is valid and exists in the db
 	emailRegex := regexp.MustCompile(`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`)
 	if !emailRegex.MatchString(user.Email) {
-		JsRespond(w, "Invalid email format", http.StatusBadRequest)
+		helpers.JsRespond(w, "Invalid email format", http.StatusBadRequest)
 		return false
 	}
 	if _, exists := helpers.EntryExists("email", user.Email, "users", true); exists {
-		JsRespond(w, "Email already exists", http.StatusBadRequest)
+		helpers.JsRespond(w, "Email already exists", http.StatusBadRequest)
 		return false
 	}
 
 	// check if age is between 15 and 90
 	if user.Age < 15 || user.Age > 90 {
-		JsRespond(w, "Invalid age", http.StatusBadRequest)
+		helpers.JsRespond(w, "Invalid age", http.StatusBadRequest)
 		return false
 	}
 
 	// check if gender is valid
 	if user.Gender != "male" && user.Gender != "female" && user.Gender != "Attack helicopter" {
-		JsRespond(w, "Invalid option", http.StatusBadRequest)
+		helpers.JsRespond(w, "Invalid option", http.StatusBadRequest)
 		return false
 	}
 
 	// check if first name and last name are valid (no numbers and special characters)
 	nameRegex := *regexp.MustCompile(`^[a-zA-Z ]+$`)
 	if !nameRegex.MatchString(user.FirstName) || !nameRegex.MatchString(user.LastName) {
-		JsRespond(w, "Invalid name format", http.StatusBadRequest)
+		helpers.JsRespond(w, "Invalid name format", http.StatusBadRequest)
 		return false
 	}
 

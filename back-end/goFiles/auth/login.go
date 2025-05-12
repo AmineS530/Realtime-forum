@@ -22,7 +22,7 @@ type UserLogin struct {
 // LoginHandler processes login requests
 func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+		helpers.JsRespond(w, "Invalid request method", http.StatusMethodNotAllowed)
 		return
 	}
 	var user UserLogin
@@ -31,14 +31,13 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 	err := json.NewDecoder(r.Body).Decode(&user)
 	if err != nil {
-		http.Error(w, "Invalid request body", http.StatusBadRequest)
+		helpers.JsRespond(w, "Invalid request body", http.StatusBadRequest)
 		return
 	}
-	// TODO: Authenticate user (check credentials from a database)
 	if user.Name_Email != "" {
 		userID, err = getID(user.Name_Email)
 		if err != nil {
-			http.Error(w, err.Error(), http.StatusUnauthorized)
+			helpers.JsRespond(w, err.Error(), http.StatusUnauthorized)
 			return
 		}
 	}
@@ -49,12 +48,10 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		helpers.InfoLog.Printf("Total login process took %v", time.Since(start))
 
 		// todo: remove alerts to replace by js notifications
-		JsRespond(w, "Login successful", http.StatusPermanentRedirect)
-		w.Header().Set("Content-Type", "application/json")
+		helpers.JsRespond(w, "Login successful", http.StatusPermanentRedirect)
 	} else {
-		http.Error(w, "Invalid Login info", http.StatusUnauthorized)
+		helpers.JsRespond(w, "Invalid Login info", http.StatusUnauthorized)
 	}
-	// todo: remove print
 }
 
 func getID(nameOrEmail string) (int, error) {

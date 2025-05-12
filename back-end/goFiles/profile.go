@@ -23,7 +23,7 @@ type user struct {
 
 func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
-		http.Error(w, `{"error": "Method not allowed"}`, http.StatusMethodNotAllowed)
+		helpers.JsRespond(w, `{"error": "Method not allowed"}`, http.StatusMethodNotAllowed)
 		return
 	}
 	tok, _ := auth.ExtractJWT(r)
@@ -36,9 +36,9 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	err := helpers.DataBase.QueryRow(query, username).Scan(&userInfo.Age, &userInfo.Username, &userInfo.FirstName, &userInfo.LastName, &userInfo.Gender, &userInfo.Email)
 	if err != nil {
 		if err == sql.ErrNoRows {
-			http.Error(w, `{"error": "User not found"}`, http.StatusNotFound)
+			helpers.JsRespond(w, `{"error": "User not found"}`, http.StatusNotFound)
 		} else {
-			http.Error(w, `{"error": "`+err.Error()+`"}`, http.StatusInternalServerError)
+			helpers.JsRespond(w, `{"error": "`+err.Error()+`"}`, http.StatusInternalServerError)
 		}
 		return
 	}

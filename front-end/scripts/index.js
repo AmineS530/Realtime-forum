@@ -1,7 +1,11 @@
 import templates from "./templates.js";
 import { updateNavbar } from "./header.js";
 
-window.loadPage = function (page) {
+window.loadPage = function (page, event) {
+    if (event) {
+        event.preventDefault();
+    }
+
     const app = document.getElementById("app");
     switch (page) {
         case "home":
@@ -17,7 +21,7 @@ window.loadPage = function (page) {
             loadUsers();
             break;
         default:
-            app.innerHTML = "<h2>Page not foundo</h2>";
+            showErrorPage(404, "Page not found");
     }
 };
 
@@ -33,7 +37,7 @@ function loadPageFromPath() {
             loadPage("profile");
             break;
         default:
-            app.innerHTML = "<h2>Page not foundp</h2>";
+            showErrorPage(404, "Page not found");
     }
 }
 
@@ -49,6 +53,7 @@ async function loadProfilePage() {
                 "Content-Type": "application/json",
             },
         });
+
         if (!res.ok) {
             const errData = await res.json();
             throw new Error(errData.error || "Error loading profile");
@@ -64,14 +69,12 @@ async function loadProfilePage() {
         <p>Age: ${data.age}</p>
         <p>Gender: ${data.gender}</p>
         <p>Email: ${data.email}</p>
-       <!-- <a class="change-password" href="#" > Change Password </a> 
-        <br /> -->
-        <a href="/" onclick="loadPage('home'); return false;">Go Back</a>
+        <a href="/" onclick="loadPage('home', event)">Go Back</a>
         </div>`+ templates.dms;
         history.pushState({}, "", "/profile");
     } catch (err) {
         console.error("Failed to load profile:", err);
-        app.innerHTML = "<h2>Error loading profile.</h2>";
+        // showErrorPage(500, "Network error or unable to load profile");
     }
 }
 
@@ -95,6 +98,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                 "Content-Type": "application/json",
             }
         });
+        if (!response.ok) {
+            handleApiError(response.status, "Authentication failed");
+            return;
+        }
         const authData = await response.json();
         const authenticated = authData.authenticated;
         if (authenticated) {
@@ -105,8 +112,8 @@ document.addEventListener("DOMContentLoaded", async () => {
             bindInputTrimming();
         }
     } catch (error) {
-        console.error("Error loading:", error);
-        app.innerHTML = "<h2>Error loading the page.</h2>";
+        console.error("Authentication check failed:", error);
+        showErrorPage(500, "Unable to verify authentication");
     }
 });
 
@@ -123,7 +130,8 @@ async function loadUsers() {
         });
 
         if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+            showErrorPage(response.status, "Unable to load users");
+            return;
         }
 
         const data = await response.json();
@@ -139,10 +147,9 @@ async function loadUsers() {
 
     } catch (error) {
         console.error("Error loading users:", error);
+        showErrorPage(500, "Network error or unable to load users");
     }
 }
-
-
 
 
 async function setHeader(authStatus) {
@@ -253,7 +260,7 @@ async function submitComment(event) {
     const postDiv = container.closest(".post");
     const postId = postDiv?.id;
 
-    if (!postId) return alert("Post ID not found.");
+    if (!postId) return showNotification("Post ID not found.");
 
     const payload = { content: comment, post_id: postId };
     console.log("Comment payload:", payload.content);
@@ -271,9 +278,11 @@ async function submitComment(event) {
 
         const result = await res.json();
         console.log("Comment posted:", result);
+
         textarea.value = "";
         const newCommentHTML = commentTemplate({
             content: comment,
+            author: document.getElementById("username").textContent,
             author: window.uname,
             creation_time: new Date().toISOString()
         });
@@ -295,7 +304,7 @@ function escapeHTML(str) {
         "'": '&#039;',
     }[match]));
 }
-
+loadPageFromPath()
 console.log("Loaded inedex.js")
 
 let isLoadingMessages = false;

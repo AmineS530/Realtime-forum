@@ -5,7 +5,6 @@ import (
 	"net/http"
 
 	helpers "RTF/back-end"
-	"RTF/back-end/goFiles/auth"
 )
 
 type commentInfo struct {
@@ -25,10 +24,10 @@ func CommentCreation(w http.ResponseWriter, r *http.Request, uid int) {
 	}
 	if !PostComment(comment, uid) {
 		w.WriteHeader(http.StatusInternalServerError)
-		auth.JsRespond(w, "Comment creation failed", http.StatusInternalServerError)
+		helpers.JsRespond(w, "Comment creation failed", http.StatusInternalServerError)
 	}
 	w.WriteHeader(http.StatusOK)
-	auth.JsRespond(w, "Comment posted successfully", http.StatusOK)
+	helpers.JsRespond(w, "Comment posted successfully", http.StatusOK)
 }
 
 func PostComment(comment commentInfo, uid int) bool {

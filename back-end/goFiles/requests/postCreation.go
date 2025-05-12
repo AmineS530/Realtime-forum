@@ -6,7 +6,6 @@ import (
 	"strings"
 
 	helpers "RTF/back-end"
-	"RTF/back-end/goFiles/auth"
 )
 
 type postInfo struct {
@@ -17,30 +16,30 @@ type postInfo struct {
 
 func PostCreation(w http.ResponseWriter, r *http.Request, uid int) {
 	if r.Method != http.MethodPost {
-		auth.JsRespond(w, "Only POST allowed", http.StatusMethodNotAllowed)
+		helpers.JsRespond(w, "Only POST allowed", http.StatusMethodNotAllowed)
 		return
 	}
 
 	var post postInfo
 	if err := json.NewDecoder(r.Body).Decode(&post); err != nil {
-		auth.JsRespond(w, "Invalid JSON", http.StatusBadRequest)
+		helpers.JsRespond(w, "Invalid JSON", http.StatusBadRequest)
 		return
 	}
 	categories := strings.Split(strings.Join(strings.Fields(post.Category), " "), ",")
 	if len(categories) > 3 || len(categories) < 1 {
-		auth.JsRespond(w, "Invalid category selection", http.StatusBadRequest)
+		helpers.JsRespond(w, "Invalid category selection", http.StatusBadRequest)
 		return
 	}
 
 	// Validate basic input
 	if len(post.Title) < 3 || len(post.Content) < 10 {
-		auth.JsRespond(w, "Title and content required", http.StatusBadRequest)
+		helpers.JsRespond(w, "Title and content required", http.StatusBadRequest)
 		return
 	}
 	if !postPost(post, categories, uid) {
-		auth.JsRespond(w, "Post creation failed", http.StatusBadRequest)
+		helpers.JsRespond(w, "Post creation failed", http.StatusBadRequest)
 	}
-	auth.JsRespond(w, "Post created successfully", http.StatusOK)
+	helpers.JsRespond(w, "Post created successfully", http.StatusOK)
 }
 
 func postPost(post postInfo, categories []string, uid int) bool {

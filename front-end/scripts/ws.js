@@ -19,7 +19,7 @@ socket.onclose = function (event) {
 
 socket.onerror = function (error) {
     console.error("WebSocket error:", error);
-    alert("connection lost reload the page for dms to work")
+    showNotification("connection lost reload the page for dms to work", "error")
 };
 
 function sendMessage(message) {

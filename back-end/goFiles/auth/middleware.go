@@ -5,6 +5,7 @@ import (
 	"errors"
 	"log"
 	"net/http"
+	"strings"
 
 	helpers "RTF/back-end"
 	jwt "RTF/back-end/goFiles/JWT"
@@ -15,48 +16,60 @@ type contextKey string
 const UserContextKey contextKey = "user"
 
 func AuthMiddleware(next http.HandlerFunc) http.HandlerFunc {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		handleAuthError := func(w http.ResponseWriter, r *http.Request, message string) {
+			if strings.Contains(r.Header.Get("Accept"), "text/html") {
+				helpers.HtmlTemplates.ExecuteTemplate(w, "index.html", nil)
+			} else {
+				helpers.JsRespond(w, message, http.StatusUnauthorized)
+			}
+		}
+
+		// Extract and verify JWT
 		token, err := ExtractJWT(r)
 		if err != nil {
-			helpers.ErrorPagehandler(w, http.StatusUnauthorized)
-			// json.NewEncoder(w).Encode(map[string]string{"error": "Missing JWT"})
+			handleAuthError(w, r, "Missing authentication token")
 			return
 		}
 
-		// Verify JWT token
 		payload, err := jwt.JWTVerify(token)
 		if err != nil {
-			helpers.ErrorPagehandler(w, http.StatusUnauthorized)
-			// json.NewEncoder(w).Encode(map[string]string{"error": "Invalid JWT"})
+			handleAuthError(w, r, "Invalid or expired token")
 			return
 		}
+		// Verify session
 		sessionID, err := ExtractSSID(r)
 		if err != nil {
-			helpers.ErrorPagehandler(w, http.StatusUnauthorized)
-			// json.NewEncoder(w).Encode(map[string]string{"error": "Missing session"})
+			handleAuthError(w, r, "Missing session")
 			return
 		}
 
-		// Validate session ID from database
-		isValidSession := isValidSession(payload.Sub, sessionID)
-		if !isValidSession {
-			helpers.ErrorPagehandler(w, http.StatusUnauthorized)
-			// json.NewEncoder(w).Encode(map[string]string{"error": "Invalid session"})
+		if !isValidSession(payload.Sub, sessionID) {
+			handleAuthError(w, r, "Invalid session")
 			return
 		}
+
+		// Set user in context and proceed
 		ctx := context.WithValue(r.Context(), UserContextKey, payload)
-
-		next.ServeHTTP(w, r.WithContext(ctx))
-	})
+		w.Header().Set("Content-Type", "application/json")
+		next(w, r.WithContext(ctx))
+	}
 }
 
 func ApiOnlyAccess(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		if r.Header.Get("X-Requested-With") != "XMLHttpRequest" {
-			http.Error(w, "Forbidden", http.StatusForbidden)
+		isAPIRequest := r.Header.Get("X-Requested-With") == "XMLHttpRequest" ||
+			strings.Contains(r.Header.Get("Accept"), "application/json")
+
+		if !isAPIRequest {
+			if strings.Contains(r.Header.Get("Accept"), "text/html") {
+				helpers.HtmlTemplates.ExecuteTemplate(w, "index.html", nil)
+			}
 			return
 		}
-		next.ServeHTTP(w, r)
+
+		w.Header().Set("Content-Type", "application/json")
+		next(w, r)
 	}
 }
 

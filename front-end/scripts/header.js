@@ -54,10 +54,10 @@ export async function updateNavbar(auth) {
         const usernameItem = document.createElement("li");
         usernameItem.classList.add("dropdown");
         usernameItem.innerHTML = `
-    <a class="logo" class="dropdown-button">${Username}</a>
+    <a class="logo" id="username" class="dropdown-button">${Username}</a>
     <div class="dropdown-content">
-        <a id="profile" href="#" >Profile</a>
-        <a href="#" id="logout">Log out</a>
+        <a id="profile" href="/" >Profile</a>
+        <a href="/" id="logout">Log out</a>
     </div>`;
         navList.appendChild(usernameItem);
         const profileLink = usernameItem.querySelector("#profile");
@@ -87,9 +87,4 @@ export async function updateNavbar(auth) {
             });
         }
     }
-    // else {
-    //     const loginItem = document.createElement("li");
-    //     loginItem.innerHTML = `<a href="/login">Sign Up or Login</a>`;
-    //     navList.appendChild(loginItem);
-    // }
 }

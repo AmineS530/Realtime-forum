@@ -43,7 +43,7 @@ func authorize(w http.ResponseWriter, userID int) {
 
 func Logout(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		http.Error(w, "Invalid request method", http.StatusMethodNotAllowed)
+		helpers.JsRespond(w, "Invalid request method", http.StatusMethodNotAllowed)
 		return
 	}
 	// todo check the http.errors

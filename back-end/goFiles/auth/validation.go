@@ -1,16 +1,20 @@
 package auth
 
 import (
-	"encoding/json"
 	"errors"
-	"net/http"
 	"regexp"
+	"unicode"
 
 	jwt "RTF/back-end/goFiles/JWT"
 )
 
-type ErrorResponse struct {
-	Error string `json:"error"`
+func hasSpecial(s string) bool {
+	for _, ch := range s {
+		if unicode.IsPunct(ch) || unicode.IsSymbol(ch) {
+			return true
+		}
+	}
+	return false
 }
 
 func isValidPassword(password string) bool {
@@ -21,12 +25,11 @@ func isValidPassword(password string) bool {
 	hasDigit := regexp.MustCompile(`[0-9]`)
 	hasLower := regexp.MustCompile(`[a-z]`)
 	hasUpper := regexp.MustCompile(`[A-Z]`)
-	hasSpecial := regexp.MustCompile(`[-#$.%&*]`)
 
 	return hasDigit.MatchString(password) &&
 		hasLower.MatchString(password) &&
 		hasUpper.MatchString(password) &&
-		hasSpecial.MatchString(password)
+		hasSpecial(password)
 }
 
 func isValidUsername(username string) bool {
@@ -41,14 +44,6 @@ func isValidUsername(username string) bool {
 	return hasAlpha.MatchString(username) &&
 		hasNoSpaces.MatchString(username) &&
 		hasValidChars.MatchString(username)
-}
-
-func JsRespond(w http.ResponseWriter, message string, code int) {
-	if w.Header().Get("Content-Type") == "" {
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(code)
-		json.NewEncoder(w).Encode(ErrorResponse{Error: message})
-	}
 }
 
 func VerifyUser(jwt_token, session_id string) (bool, error) {

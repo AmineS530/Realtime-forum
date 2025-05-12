@@ -60,10 +60,11 @@ func GetdmHistory(uname1, uname2, page string) ([]Message, error) {
 
 func AddDm(sUname, rUname, msg string) error {
 	query := `INSERT INTO dms (sender_id, recipient_id, message)
-VALUES (
-(SELECT id FROM users WHERE username = ?),
-(SELECT id FROM users WHERE username = ?),
-?);`
+		VALUES (
+			(SELECT id FROM users WHERE username = ?),
+			(SELECT id FROM users WHERE username = ?),
+			?
+		);`
 
 	_, err := helpers.DataBase.Exec(query, sUname, rUname, msg)
 	if err != nil {

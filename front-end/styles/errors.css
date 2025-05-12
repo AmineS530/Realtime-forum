@@ -1,54 +1,81 @@
-.footer-body {
-    display: flex;
+:root {
+    --auth-bg-color: #494949;
+    --auth-primary-text-color: #333;
+    --nav-highlight-color: red;
+    --card-bg-color: #ccc;
+    --card-border-color: #333;
+    --card-box-shadow-color: rgba(0, 0, 0, 0.5);
+    --card-hover-box-shadow-color: rgba(255, 0, 0, 0.5);
+    --btn-primary-bg-color: #28a745;
+    --btn-hover-bg-color: #218838;
 }
 
-.error-page {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    color: #333;
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Container Styles */
-.error-container {
-    text-align: center;
+.error-page-container {
+    background-color: rgb(226, 226, 226); /* matches .card/.post */
+    border-radius: 10px;
+    border: 2px solid var(--card-border-color);
+    box-shadow: -5px 5px 10px var(--card-box-shadow-color);
     padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
-/* Error Number Styles */
-.error-number {
-    font-size: 100px;
-    font-weight: bold;
-    color: #d9534f;
-    /* Bootstrap Red */
-    margin: 0;
+.error-page-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    color: var(--nav-highlight-color);
 }
 
-/* Error Message Styles */
-.error-message {
-    font-size: 24px;
+.error-page-title {
+    font-size: 1.5rem;
+    color: var(--auth-primary-text-color);
+    margin-bottom: 1rem;
+}
+
+.error-page-description {
     color: #555;
-    margin: 10px 0;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
 }
 
-/* Go Back Link Styles */
-.error-link {
-    font-size: 16px;
-    color: #0275d8;
-    /* Bootstrap Blue */
-    text-decoration: none;
+.error-page-actions {
+    display: flex;
+    justify-content: center;
+}
+
+.error-page-home-btn {
+    padding: 10px 18px;
+    font-size: 1rem;
     font-weight: bold;
-    margin-top: 20px;
-    display: inline-block;
+    color: white;
+    background-color: var(--btn-primary-bg-color);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: -3px 3px 6px var(--card-box-shadow-color);
+    transition: background-color 0.3s, transform 0.2s;
 }
 
-.error-link:hover {
-    text-decoration: underline;
+.error-page-home-btn:hover {
+    background-color: var(--btn-hover-bg-color);
+    transform: translateY(-2px);
+}
+
+.error-page-details {
+    margin-top: 1.5rem;
+    background-color: #f9f9f9;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 1rem;
+    text-align: left;
+    overflow-x: auto;
+    font-size: 0.9rem;
+    color: var(--auth-primary-text-color);
+    box-shadow: inset -2px 2px 6px rgba(0, 0, 0, 0.1);
 }

@@ -1,7 +1,5 @@
 function dms_ToggleShowSidebar(event) {
-    console.log("dms_ShowSidebar",document.getElementById("backdrop").classList, event);
     document.getElementById("backdrop").classList.toggle("show");
-    console.log("dms_ShowSidebar after",document.getElementById("backdrop").classList);
 }
 
 let socket = new WebSocket(`ws://${window.location.host}/api/v1/ws`);
@@ -24,7 +22,7 @@ socket.onclose = function (event) {
 
 socket.onerror = function (error) {
     console.error("WebSocket error:", error);
-    alert("connection lost reload the page for dms to work")
+    // showNotification("connection lost reload the page for dms to work", "error")
 };
 
 function sendMessage(message) {

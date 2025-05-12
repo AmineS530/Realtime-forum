@@ -4,11 +4,11 @@ const nav = `
 
 <ul class="nav">
     <li>
-        <a href="#" onclick="dms_ToggleShowSidebar(event)" title="Messages">
+        <a href="/" onclick="dms_ToggleShowSidebar(event)" title="Messages">
             ${svg.two_bubbles}
         </a>
     <li>
-        <a id="logout" href="#" title="Logout">
+        <a id="logout" href="/" title="Logout">
             ${svg.svg_logout}
         </a>
     </li>
@@ -19,7 +19,7 @@ const header = `
     <header>
       <!-- Logo -->
       <div class="logo">
-        <h1><a href="#" onclick="loadPage('home')">Forum</a></h1>
+        <h1><a href="/" onclick="loadPage('home', event)">Forum</a></h1>
       </div>
       <!-- Navigation -->
       <nav>

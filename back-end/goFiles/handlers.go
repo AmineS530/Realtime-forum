@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strings"
 
 	helpers "RTF/back-end"
 	jwt "RTF/back-end/goFiles/JWT"
@@ -15,26 +14,17 @@ import (
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	if helpers.Err != nil {
-		auth.JsRespond(w, "Error connecting to database", http.StatusInternalServerError)
+		helpers.JsRespond(w, "Error connecting to database", http.StatusInternalServerError)
 		return
 	}
 	if r.Method != http.MethodGet {
-		auth.JsRespond(w, "Invalid request method", http.StatusMethodNotAllowed)
+		helpers.JsRespond(w, "Invalid request method", http.StatusMethodNotAllowed)
 		return
 	}
-	if strings.HasPrefix(r.URL.Path, "/api/") {
-		auth.JsRespond(w, "API endpoint not found", http.StatusNotFound)
-		return
-	}
-	if r.URL.Path == "/" || r.URL.Path == "/profile" {
-		if err := helpers.HtmlTemplates.ExecuteTemplate(w, "index.html", nil); err != nil {
-			fmt.Println("Error executing template: ", err.Error())
-			auth.JsRespond(w, "Error executing template", http.StatusInternalServerError)
-			return
-		}
-	} else {
-		// 	// helpers.ErrorPagehandler(w, http.StatusNotFound)
-		auth.JsRespond(w, "Page not found", http.StatusNotFound)
+
+	if err := helpers.HtmlTemplates.ExecuteTemplate(w, "index.html", nil); err != nil {
+		fmt.Println("Error executing template: ", err.Error())
+		helpers.JsRespond(w, "Error executing template", http.StatusInternalServerError)
 		return
 	}
 }
@@ -59,7 +49,7 @@ func GetHandler(w http.ResponseWriter, r *http.Request) {
 		payload := r.Context().Value(auth.UserContextKey)
 		data, ok := payload.(*jwt.JwtPayload)
 		if !ok {
-			helpers.ErrorPagehandler(w, http.StatusBadRequest)
+			helpers.JsRespond(w, "Invalid payload", http.StatusBadRequest)
 			fmt.Println("azer qsdf")
 			return
 		}
@@ -82,14 +72,14 @@ func GetHandler(w http.ResponseWriter, r *http.Request) {
 		w.Write(jsonData)
 		fmt.Println(target, username, dms)
 	default:
-		helpers.ErrorPagehandler(w, http.StatusNotFound)
+		helpers.JsRespond(w, "Invalid request type", http.StatusBadRequest)
 		return
 	}
 }
 
 func PostHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		auth.JsRespond(w, "Invalid request method", http.StatusMethodNotAllowed)
+		helpers.JsRespond(w, "Invalid request method", http.StatusMethodNotAllowed)
 		return
 	}
 	fmt.Println(r.URL)

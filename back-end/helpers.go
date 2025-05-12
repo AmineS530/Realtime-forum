@@ -26,6 +26,10 @@ func init() {
 	}
 }
 
+type ErrorResponse struct {
+	Error string `json:"error"`
+	Code  int    `json:"code"`
+}
 type ErrorPage struct {
 	Num int
 	Msg string
@@ -48,22 +52,11 @@ func EntryExists(elem, value, from string, checkLower bool) (int, bool) {
 	return count, count > 0
 }
 
-func ErrorPagehandler(w http.ResponseWriter, statusCode int) {
-	// w.WriteHeader(statusCode)
-	// errorData := ErrorPage{
-	// 	Num: statusCode,
-	// 	Msg: http.StatusText(statusCode),
-	// }
-	if w.Header().Get("Content-Type") == "" {
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(statusCode)
-		json.NewEncoder(w).Encode(ErrorPage{
-			Num: statusCode,
-			Msg: http.StatusText(statusCode),
-		})
-	}
-	// if err := HtmlTemplates.ExecuteTemplate(w, "error_page.html", errorData); err != nil {
-	// 	//	fmt.Println("Error executing template: ", err.Error())
-	// 	http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-	// }
+func JsRespond(w http.ResponseWriter, message string, code int) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(code)
+	json.NewEncoder(w).Encode(ErrorResponse{
+		Error: message,
+		Code:  code,
+	})
 }
