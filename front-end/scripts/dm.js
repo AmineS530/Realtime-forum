@@ -5,7 +5,7 @@ function dms_ToggleShowSidebar(event) {
 }
 
 let socket = new WebSocket(`ws://${window.location.host}/api/v1/ws`);
-let uname = 'guest0'
+
 socket.onopen = function (event) {
     console.log("Connected to WebSocket server");
 };
@@ -13,7 +13,7 @@ socket.onopen = function (event) {
 socket.onmessage = function (event) {
     const msg = JSON.parse(event.data)
     console.log("Received message:", event.data,"Parsed message:", msg);
-    discussion.innerHTML += ['system',uname,discussion.previousElementSibling.value].includes(msg.sender)?
+    discussion.innerHTML += ['system',window.uname,discussion.previousElementSibling.value.slice(3)].includes(msg.sender)?
                             `<li>[${msg.sender}] : ${msg.message}</li>`:
                             `<li>[system]received a new message from ${msg.sender}.</li>`;
 };
@@ -45,7 +45,7 @@ function changeDiscussion(elem) {
     fetch('/api/v1/get/dmhistory', {
             method: 'GET',
             headers: {
-              'target': elem.value,
+              'target': elem.value.slice(3),
               'X-Requested-With': 'XMLHttpRequest'
             }
         })
@@ -68,8 +68,8 @@ function changeDiscussion(elem) {
 
 function  sendDm(event) {
     // console.log(event.target.attributes.value.value)
-    console.log(event.target[0].value);
-    let message = new Message(event.target.value,event.target[0].value);
+    console.log("azer",event.target.value,event.target[0].value,event);
+    let message = new Message(event.target.value.slice(3),event.target[0].value);
     message.send()
 }
 

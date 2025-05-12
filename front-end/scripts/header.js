@@ -19,6 +19,7 @@ export async function updateNavbar(auth) {
         if (!res.ok) throw new Error("Failed to fetch username");
         const data = await res.json();
         Username = data.username;
+        window.uname = data.username;
     } catch (err) {
         console.error("Could not fetch username:", err);
     }

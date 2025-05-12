@@ -66,7 +66,6 @@ func HandleConnections(w http.ResponseWriter, r *http.Request) {
 			continue
 		}
 		request.Sender = uName
-
 		// Respond back with a JSON message
 		err = request.send()
 		var status_response string
@@ -74,8 +73,6 @@ func HandleConnections(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			log.Println("Error handling request:", err)
 			status_response = `{"sender":"system","content":"failed to send message"}`
-		} else {
-			fmt.Printf("Sending response: %+v\n", status_response)
 			err = conn.WriteMessage(websocket.TextMessage, []byte(status_response))
 			if err != nil {
 				log.Println(err)
@@ -119,16 +116,27 @@ func (m *message) send() error {
 	if err != nil {
 		return errors.New("failed to store message in db with error: " + err.Error())
 	}
-	conn, exist := sockets[m.Receiver]
+	responseData, err := json.Marshal(m)
+	if err != nil {
+		log.Println("Error marshaling response:", err)
+		return err
+	}
+	conn, exist := sockets[m.Sender]
 	if !exist || conn == nil {
 		log.Printf("User %s not found or not connected\n", m.Receiver)
 		return fmt.Errorf("user not found or not connected")
 	}
 
-	responseData, err := json.Marshal(m)
+	err = conn.WriteMessage(websocket.TextMessage, responseData)
 	if err != nil {
-		log.Println("Error marshaling response:", err)
-		return err
+		log.Println(err)
+		return errors.New("failed to send message to receiver with error: " + err.Error())
+	}
+
+	conn, exist = sockets[m.Receiver]
+	if !exist || conn == nil {
+		log.Printf("User %s not found or not connected\n", m.Receiver)
+		return fmt.Errorf("user not found or not connected")
 	}
 
 	err = conn.WriteMessage(websocket.TextMessage, responseData)

@@ -131,7 +131,7 @@ async function loadUsers() {
 
         let formattedHistory = "";
         data.forEach((user) => {
-            formattedHistory += `<option>${user}</option>`;
+            formattedHistory += `<option>${user.online?'🟢':'🔴'} ${user.username}</option>`;
         });
 
         console.log("Formatted options:", formattedHistory);
