@@ -12,6 +12,7 @@ import (
 	jwt "RTF/back-end/goFiles/JWT"
 	"RTF/back-end/goFiles/auth"
 	"RTF/back-end/goFiles/dms"
+	"RTF/global"
 
 	"github.com/gorilla/websocket"
 )
@@ -30,7 +31,7 @@ type message struct {
 }
 
 var (
-	sockets = make(map[string]*websocket.Conn)
+	sockets = global.Sockets
 	mutex   sync.Mutex
 )
 
