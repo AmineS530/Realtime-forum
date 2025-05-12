@@ -32,8 +32,8 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 			auth.JsRespond(w, "Error executing template", http.StatusInternalServerError)
 			return
 		}
-	 } else {
-	// 	// helpers.ErrorPagehandler(w, http.StatusNotFound)
+	} else {
+		// 	// helpers.ErrorPagehandler(w, http.StatusNotFound)
 		auth.JsRespond(w, "Page not found", http.StatusNotFound)
 		return
 	}
@@ -56,7 +56,14 @@ func GetHandler(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 		w.Write(jsonData)
 	case "users":
-		usernames, _ := dms.GetUserNames()
+		payload := r.Context().Value(auth.UserContextKey)
+		data, ok := payload.(*jwt.JwtPayload)
+		if !ok {
+			helpers.ErrorPagehandler(w, http.StatusBadRequest)
+			fmt.Println("azer qsdf")
+			return
+		}
+		usernames, _ := dms.GetUserNames(data.Sub)
 		jsonData, _ := json.Marshal(usernames)
 		w.Header().Set("Content-Type", "application/json")
 		w.Write(jsonData)

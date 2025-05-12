@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	helpers "RTF/back-end"
+	"RTF/global"
 )
 
 type Message struct {
@@ -61,19 +62,47 @@ VALUES (
 	return nil
 }
 
-func GetUserNames() ([]string, error) {
-	rows, err := helpers.DataBase.Query("SELECT username FROM users")
+type User struct {
+	Online   bool   `json:"online"`
+	Username string `json:"username"` // Exported field
+}
+
+func GetUserNames(uid int) ([]User, error) {
+	rows, err := helpers.DataBase.Query(`SELECT 
+    u.username
+FROM 
+    users u
+LEFT JOIN 
+    dms m 
+ON 
+    (u.id = m.sender_id OR u.id = m.recipient_id)
+    AND (m.sender_id = ? OR m.recipient_id = ? )
+
+WHERE 
+    u.id != ?
+GROUP BY 
+    u.id, u.username
+ORDER BY 
+    CASE 
+        WHEN MAX(m.created_at) IS NOT NULL THEN 1 
+        ELSE 2 
+    END,
+    MAX(m.created_at) DESC,
+    u.username ASC;`, uid, uid, uid)
 	if err != nil {
 		return nil, fmt.Errorf("could not execute query: %w", err)
 	}
 	defer rows.Close()
 
-	var userNames []string
+	var userNames []User
 
 	for rows.Next() {
-		var username string
-		if err := rows.Scan(&username); err != nil {
+		var username User
+		if err := rows.Scan(&username.Username); err != nil {
 			return userNames, fmt.Errorf("could not scan row: %w", err)
+		}
+		if _, e := global.Sockets[username.Username]; e {
+			username.Online = true
 		}
 		userNames = append(userNames, username)
 	}
