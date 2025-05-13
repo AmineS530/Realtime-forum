@@ -299,6 +299,16 @@ function escapeHTML(str) {
 console.log("Loaded inedex.js")
 
 let isLoadingMessages = false;
+
+
+const debounce = (func, delay) => {
+    let timer
+    return function (...args) {
+        clearTimeout(timer)
+        timer = setTimeout(() => func(...args), delay)
+    }
+}
+
 window.setupMessageScroll = function () {
     const messagesContainer = document.querySelector('#discussion');
 
@@ -306,7 +316,7 @@ window.setupMessageScroll = function () {
         if (isLoadingMessages) return;
 
         // Check if scrolled near top (100px threshold)
-        if (messagesContainer.scrollTop <= 0) {
+
             isLoadingMessages = true;
 
             try {
@@ -316,7 +326,7 @@ window.setupMessageScroll = function () {
                     method: 'GET',
                     headers: {
                       'target': elem.value.slice(3),
-                      'page' : elem.nextElementSibling.childElementCount-1/10,
+                      'page' : elem.nextElementSibling.childElementCount-1/10 | 0,
                       'X-Requested-With': 'XMLHttpRequest'
                     }
                 })
@@ -345,4 +355,5 @@ window.setupMessageScroll = function () {
             }
         }
     }, 800);
+    messagesContainer.addEventListener('scroll', scrollFunc);
 };

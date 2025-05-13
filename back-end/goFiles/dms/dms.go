@@ -15,13 +15,19 @@ type Message struct {
 
 func GetdmHistory(uname1, uname2, page string) ([]Message, error) {
 	if page == "" {
-		return nil, nil
+		page = "0"
 	}
 	p, err := strconv.Atoi(page)
 	if err != nil {
 		helpers.ErrorLog.Println("Error converting pid to int: ", err)
 		return nil, err
 	}
+	if p < 1 {
+		p = 0
+	} else {
+		p *= 10
+	}
+	fmt.Println(uname1, uname2, page, p)
 	rows, err := helpers.DataBase.Query(`
 	SELECT
 		sender.username , d.message
@@ -38,7 +44,7 @@ func GetdmHistory(uname1, uname2, page string) ([]Message, error) {
 	ORDER BY
 		d.message_id
 	LIMIT 10
-	OFFSET ? * 10;
+	OFFSET ?;
 	`, uname1, uname2, uname2, uname1, p)
 	if err != nil {
 		fmt.Println("Error getting posts: ", err)

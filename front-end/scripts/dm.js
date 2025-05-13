@@ -42,11 +42,12 @@ let message123 = {
 
 function changeDiscussion(elem) {
     elem.disabled = true;
+
     fetch('/api/v1/get/dmhistory', {
             method: 'GET',
             headers: {
               'target': elem.value.slice(3),
-              'page' : elem.nextElementSibling.childElementCount-1/10,
+              'page' : elem.nextElementSibling.childElementCount-1/10 | 0,
               'X-Requested-With': 'XMLHttpRequest'
             }
         })
