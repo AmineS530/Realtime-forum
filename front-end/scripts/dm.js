@@ -1,29 +1,37 @@
 function dms_ToggleShowSidebar(event) {
     document.getElementById("backdrop").classList.toggle("show");
 }
+let socket;
+window.retrysocket = function () {
+    socket = new WebSocket(`ws://${window.location.host}/api/v1/ws`);
+    
+    socket.onopen = function (event) {
+        console.log("Connected to WebSocket server");
+    };
+    
+    socket.onmessage = function (event) {
+        const msg = JSON.parse(event.data)
+        console.log("Received message:", event.data,"Parsed message:", msg);
+        if (msg.sender !== "internal") {
+                discussion.innerHTML += ['system',document.getElementById("username").text,discussion.previousElementSibling.value].includes(msg.sender)?
+            `<li>[${msg.sender}] : ${msg.message}</li>`:
+            `<li>[system]received a new message from ${msg.sender}.</li>`;
+        } else {
+            if (msg.type == "toggle") {
+                discussion.previousElementSibling.querySelector(`[value="${msg.username}"]`).text = (msg.online?'🟢 ':'🔴 ') + msg.username;
+            }
+        }
+    };
 
-let socket = new WebSocket(`ws://${window.location.host}/api/v1/ws`);
+    socket.onclose = function (event) {
+        console.log("Disconnected from WebSocket server");
+    };
 
-socket.onopen = function (event) {
-    console.log("Connected to WebSocket server");
-};
-
-socket.onmessage = function (event) {
-    const msg = JSON.parse(event.data)
-    console.log("Received message:", event.data,"Parsed message:", msg);
-    discussion.innerHTML += ['system',document.getElementById("username"),discussion.previousElementSibling.value.slice(3)].includes(msg.sender)?
-                            `<li>[${msg.sender}] : ${msg.message}</li>`:
-                            `<li>[system]received a new message from ${msg.sender}.</li>`;
-};
-
-socket.onclose = function (event) {
-    console.log("Disconnected from WebSocket server");
-};
-
-socket.onerror = function (error) {
-    console.error("WebSocket error:", error);
-    // showNotification("connection lost reload the page for dms to work", "error")
-};
+    socket.onerror = function (error) {
+        console.error("WebSocket error:", error);
+        // showNotification("connection lost reload the page for dms to work", "error")
+    };
+}
 
 function sendMessage(message) {
     socket.send(message);
@@ -43,32 +51,32 @@ function changeDiscussion(elem) {
     fetch('/api/v1/get/dmhistory', {
             method: 'GET',
             headers: {
-              'target': elem.value.slice(3),
-              'page' : elem.nextElementSibling.childElementCount-1/10,
+              'target': elem.value,
+              'page' : 0,
               'X-Requested-With': 'XMLHttpRequest'
             }
         })
         .then(response => response!== null ?response.json():data=[])
         .then(data => {
             console.log("azerazerazernbfhqbfhbqfhqbsfjhbqjsbfhqbsdfhqbsdfq",data)
-            let formattedHistory = `<button onclick="window.setupMessageScroll()" >load more messages</button>`;
+            let formattedHistory = data && data.length===10 ?`<button onclick="window.MessageScroll()" >load more messages</button>`:"";
             if (data) {
                 data.forEach(message => {
-                    formattedHistory += `<li>[${message.sender}] : ${message.message}</li>`
+                    formattedHistory += `<li title="${new Date(message.time).toLocaleString()}">[${message.sender}] : ${message.message}</li>`
                 });
             }
             console.log("azerazerazerazerazer",formattedHistory)
             elem.nextElementSibling.innerHTML = formattedHistory
             elem.nextElementSibling.nextElementSibling.value = elem.value
         })
-        .catch(error => console.error('Error:', error))
+        .catch(error => console.log('Error:', error))
         .finally(elem.disabled = false);
 }
 
 function  sendDm(event) {
     // console.log(event.target.attributes.value.value)
-    console.log("azer",event.target.value,event.target[0].value,event);
-    let message = new Message(event.target.value.slice(3),event.target[0].value);
+    console.log("azer",event.target.previousElementSibling.previousElementSibling.value,event.target[0].value,event);
+    let message = new Message(event.target.previousElementSibling.previousElementSibling.value,event.target[0].value);
     message.send()
 }
 
@@ -90,5 +98,55 @@ class Message {
 }
 
 const usename = document.cookie.match(/session-name=(\S+)==;/)
+
+
+let isLoadingMessages = false;
+
+window.MessageScroll = function () {
+    const messagesContainer = document.querySelector('#discussion');
+
+        console.log('scrolling')
+        if (isLoadingMessages) return;
+        
+        isLoadingMessages = true;
+        try {
+            const oldScrollHeight = messagesContainer.scrollHeight;
+            elem = document.querySelector('#message-select');
+            fetch('/api/v1/get/dmhistory', {
+                method: 'GET',
+                headers: {
+                  'target': elem.value,
+                  'page' : (elem.nextElementSibling.childElementCount-1)/10 | 0,
+                  'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response!== null ?response.json():data=[])
+            .then(data => {
+                let formattedHistory = "";
+                if (data) {
+                    data.forEach(message => {
+                        formattedHistory += `<li title="${new Date(message.time).toLocaleString()}">[${message.sender}] : ${message.message}</li>`
+                    });
+                }
+                messagesContainer.children[0].insertAdjacentHTML('afterend',formattedHistory)
+                if (data.length!==10) {
+                    messagesContainer.children[0].remove()
+                }
+                
+                elem.nextElementSibling.nextElementSibling.value = elem.value
+            })
+            .catch(error => console.error('Error:', error))
+            .finally(elem.disabled = false);
+
+            const newScrollHeight = messagesContainer.scrollHeight;
+            messagesContainer.scrollTop = newScrollHeight - oldScrollHeight;
+        } catch (error) {
+            showErrorPage(error.status, error.message);
+        } finally {
+            isLoadingMessages = false;
+        }
+        
+};
+
 
 console.log("loaded dm.js")

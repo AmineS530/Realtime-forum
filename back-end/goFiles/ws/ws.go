@@ -24,6 +24,13 @@ var upgrader = websocket.Upgrader{
 	},
 }
 
+type update struct {
+	Sender string `json:"sender"`
+	Type   string `json:"type"`
+	Uname  string `json:"username"`
+	Online bool   `json:"online"`
+}
+
 type message struct {
 	Sender   string `json:"sender"`
 	Receiver string `json:"receiver"`
@@ -87,6 +94,12 @@ func addConnToMap(uName string, conn *websocket.Conn) {
 	if conn, exists := sockets[uName]; exists {
 		log.Printf("User %s already connected\n", uName)
 		conn.Close()
+	} else {
+		for _, v := range sockets {
+			if err := v.WriteJSON(update{"internal", "toggle", uName, true}); err != nil {
+				log.Println("azer azer azer azer", err)
+			}
+		}
 	}
 	sockets[uName] = conn
 	mutex.Unlock()
@@ -95,6 +108,11 @@ func addConnToMap(uName string, conn *websocket.Conn) {
 func deleteConnFromMap(uName string) {
 	mutex.Lock()
 	delete(sockets, uName)
+	for _, v := range sockets {
+		if err := v.WriteJSON(update{"internal", "toggle", uName, false}); err != nil {
+			log.Println("azer azer azer azer", err)
+		}
+	}
 	mutex.Unlock()
 }
 
@@ -133,14 +151,9 @@ func (m *message) send() error {
 
 	conn, exist = sockets[m.Receiver]
 	if !exist || conn == nil {
-		log.Printf("User %s not found or not connected\n", m.Receiver)
-		return fmt.Errorf("user not found or not connected")
+		return nil
 	}
 
-	err = conn.WriteMessage(websocket.TextMessage, responseData)
-	if err != nil {
-		log.Println(err)
-		return errors.New("failed to send message to receiver with error: " + err.Error())
-	}
+	conn.WriteMessage(websocket.TextMessage, responseData)
 	return nil
 }

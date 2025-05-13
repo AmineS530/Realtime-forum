@@ -3,27 +3,35 @@ package dms
 import (
 	"fmt"
 	"strconv"
+	"time"
 
 	helpers "RTF/back-end"
 )
 
 type Message struct {
-	Sender  string `json:"sender"`
-	Content string `json:"message"`
+	Sender  string    `json:"sender"`
+	Content string    `json:"message"`
+	Time    time.Time `json:"time"`
 }
 
 func GetdmHistory(uname1, uname2, page string) ([]Message, error) {
 	if page == "" {
-		return nil, nil
+		page = "0"
 	}
 	p, err := strconv.Atoi(page)
 	if err != nil {
 		helpers.ErrorLog.Println("Error converting pid to int: ", err)
 		return nil, err
 	}
+	if p < 1 {
+		p = 0
+	} else {
+		p *= 10
+	}
+	fmt.Println(uname1, uname2, page, p)
 	rows, err := helpers.DataBase.Query(`
 	SELECT
-		sender.username , d.message
+		sender.username , d.message, d.created_at
 	FROM
 		dms d
 	JOIN
@@ -37,7 +45,7 @@ func GetdmHistory(uname1, uname2, page string) ([]Message, error) {
 	ORDER BY
 		d.message_id
 	LIMIT 10
-	OFFSET ? * 10;
+	OFFSET ?;
 	`, uname1, uname2, uname2, uname1, p)
 	if err != nil {
 		fmt.Println("Error getting posts: ", err)
@@ -47,7 +55,7 @@ func GetdmHistory(uname1, uname2, page string) ([]Message, error) {
 	var messages []Message
 	for rows.Next() {
 		var message Message
-		err := rows.Scan(&message.Sender, &message.Content)
+		err := rows.Scan(&message.Sender, &message.Content, &message.Time)
 		if err != nil {
 			fmt.Println("Error scanning posts: ", err)
 			return nil, err

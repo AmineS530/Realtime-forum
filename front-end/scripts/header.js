@@ -86,4 +86,5 @@ export async function updateNavbar(auth) {
             });
         }
     }
+    window.retrysocket()
 }
