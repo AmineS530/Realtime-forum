@@ -1,7 +1,0 @@
--- refresh posts after creating a new one and sending a notification of new post or add a feed on the side
--- set variable for comment lenght, spot lenght etc
--- reducing some funcion calls and passing variables instead if possible
------------------------------------------
------------------------------------------
-    also type in here when you change something for summary to know what new |
-     i changed the makefile to only ignore the .exec when using make and make it run instantly for now, will see if we need docker later
