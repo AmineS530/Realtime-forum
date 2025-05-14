@@ -2,7 +2,6 @@ package dms
 
 import (
 	"fmt"
-	"strconv"
 	"time"
 
 	helpers "RTF/back-end"
@@ -14,21 +13,18 @@ type Message struct {
 	Time    time.Time `json:"time"`
 }
 
-func GetdmHistory(uname1, uname2, page string) ([]Message, error) {
-	if page == "" {
-		page = "0"
-	}
-	p, err := strconv.Atoi(page)
-	if err != nil {
-		helpers.ErrorLog.Println("Error converting pid to int: ", err)
-		return nil, err
-	}
-	if p < 1 {
-		p = 0
+func GetdmHistory(uname1, uname2, date string) ([]Message, error) {
+	var d time.Time
+	if date == "" {
+		d = time.Now()
 	} else {
-		p *= 10
+		clientDate, err := time.Parse(time.RFC3339, date)
+		if err != nil {
+			return nil, fmt.Errorf("invalid date format")
+		}
+		d = clientDate
 	}
-	fmt.Println(uname1, uname2, page, p)
+	fmt.Println("azer", uname1, uname2, date)
 	rows, err := helpers.DataBase.Query(`
 	SELECT * 
 FROM (
@@ -41,15 +37,16 @@ FROM (
 	JOIN
 		users recipient ON d.recipient_id = recipient.id
 	WHERE
+        d.created_at < ?
+	AND
 		(sender.username = ? AND recipient.username = ?)
    	OR
 		(sender.username = ? AND recipient.username = ?)
 	ORDER BY
 		d.created_at DESC
 	LIMIT 10
-	OFFSET ?
 ) AS sub ORDER BY created_at ASC;
-	`, uname1, uname2, uname2, uname1, p)
+	`, d, uname1, uname2, uname2, uname1)
 	if err != nil {
 		fmt.Println("Error getting posts: ", err)
 		return nil, err
@@ -78,8 +75,8 @@ func AddDm(sUname, rUname, msg string) error {
 
 	_, err := helpers.DataBase.Exec(query, sUname, rUname, msg)
 	if err != nil {
-		helpers.ErrorLog.Fatalln("Database insertion error:", err)
-		return err
+		helpers.ErrorLog.Print("Database insertion error:", err)
+		return fmt.Errorf("could not Save in database")
 	}
 	return nil
 }

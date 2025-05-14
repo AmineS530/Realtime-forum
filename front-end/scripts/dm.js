@@ -74,7 +74,7 @@ function changeDiscussion(elem) {
             method: 'GET',
             headers: {
               'target': elem.value,
-              'page' : 0,
+              'page' : "",
               'X-Requested-With': 'XMLHttpRequest'
             }
         })
@@ -137,7 +137,7 @@ window.MessageScroll = function () {
                 method: 'GET',
                 headers: {
                   'target': elem.value,
-                  'page' : (elem.nextElementSibling.childElementCount-1)/10 | 0,
+                  'page' : new Date(discussion.children[1].title).toISOString(),
                   'X-Requested-With': 'XMLHttpRequest'
                 }
             })
@@ -150,7 +150,7 @@ window.MessageScroll = function () {
                     });
                 }
                 discussion.children[0].insertAdjacentHTML('afterend',formattedHistory)
-                if (data.length!==10) {
+                if (data && data.length!==10) {
                     discussion.children[0].remove()
                 }
                 

@@ -102,7 +102,7 @@ func HandleConnections(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(sockets)
 		if err != nil {
 			log.Println("Error handling request:", err)
-			status_response = `{"sender":"system","content":"failed to send message"}`
+			status_response = `{"sender":"system","message":"failed to send message"}`
 			err = conn.WriteMessage(websocket.TextMessage, []byte(status_response))
 			if err != nil {
 				log.Println(err)
@@ -153,7 +153,9 @@ func getUname(r *http.Request) string {
 func (m *message) send() error {
 	err := dms.AddDm(m.Sender, m.Receiver, m.Message)
 	if err != nil {
-		return errors.New("failed to store message in db with error: " + err.Error())
+		err = errors.New("failed to store message in db with error: " + err.Error())
+		sockets[m.Sender].WriteJSON(message{"system", "", err.Error()})
+		return err
 	}
 	responseData, err := json.Marshal(m)
 	if err != nil {
