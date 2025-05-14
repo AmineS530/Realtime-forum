@@ -30,7 +30,9 @@ func GetdmHistory(uname1, uname2, page string) ([]Message, error) {
 	}
 	fmt.Println(uname1, uname2, page, p)
 	rows, err := helpers.DataBase.Query(`
-	SELECT
+	SELECT * 
+FROM (
+    SELECT
 		sender.username , d.message, d.created_at
 	FROM
 		dms d
@@ -43,9 +45,10 @@ func GetdmHistory(uname1, uname2, page string) ([]Message, error) {
    	OR
 		(sender.username = ? AND recipient.username = ?)
 	ORDER BY
-		d.message_id
+		d.created_at DESC
 	LIMIT 10
-	OFFSET ?;
+	OFFSET ?
+) AS sub ORDER BY created_at ASC;
 	`, uname1, uname2, uname2, uname1, p)
 	if err != nil {
 		fmt.Println("Error getting posts: ", err)
