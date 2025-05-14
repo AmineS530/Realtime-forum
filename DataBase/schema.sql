@@ -56,7 +56,8 @@ CREATE TABLE IF NOT EXISTS `dms` (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (sender_id) REFERENCES users (id),
     FOREIGN KEY (recipient_id) REFERENCES users (id),
-    CHECK (sender_id <> recipient_id)
+    CHECK (sender_id <> recipient_id),
+    UNIQUE(sender_id,recipient_id,created_at)
 );
 -- Add indexes for performance optimization
 CREATE INDEX IF NOT EXISTS idx_comments_post_id ON comments(post_id);
