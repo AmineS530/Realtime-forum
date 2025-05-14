@@ -37,10 +37,12 @@ window.retrysocket = function () {
 
     socket.onclose = function (event) {
         console.log("Disconnected from WebSocket server");
+        discussion.innerHTML += `<li>[system]: web socket closed refresh the page to be able to send messages.</li>`;
     };
 
     socket.onerror = function (error) {
         console.error("WebSocket error:", error);
+        discussion.innerHTML += `<li>[system]: web socket eror ${error}.</li>`;
         // showNotification("connection lost reload the page for dms to work", "error")
     };
 }
@@ -115,14 +117,12 @@ const usename = document.cookie.match(/session-name=(\S+)==;/)
 let isLoadingMessages = false;
 
 window.MessageScroll = function () {
-    const messagesContainer = document.querySelector('#discussion');
 
         console.log('scrolling')
         if (isLoadingMessages) return;
         
         isLoadingMessages = true;
         try {
-            const oldScrollHeight = messagesContainer.scrollHeight;
             elem = document.querySelector('#message-select');
             fetch('/api/v1/get/dmhistory', {
                 method: 'GET',
@@ -140,9 +140,9 @@ window.MessageScroll = function () {
                         formattedHistory += `<li title="${new Date(message.time).toLocaleString()}">[${message.sender}] : ${message.message}</li>`
                     });
                 }
-                messagesContainer.children[0].insertAdjacentHTML('afterend',formattedHistory)
+                discussion.children[0].insertAdjacentHTML('afterend',formattedHistory)
                 if (data.length!==10) {
-                    messagesContainer.children[0].remove()
+                    discussion.children[0].remove()
                 }
                 
                 elem.nextElementSibling.nextElementSibling.value = elem.value
@@ -150,8 +150,6 @@ window.MessageScroll = function () {
             .catch(error => console.error('Error:', error))
             .finally(elem.disabled = false);
 
-            const newScrollHeight = messagesContainer.scrollHeight;
-            messagesContainer.scrollTop = newScrollHeight - oldScrollHeight;
         } catch (error) {
             showErrorPage(error.status, error.message);
         } finally {
