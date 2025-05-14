@@ -1,6 +1,14 @@
 function dms_ToggleShowSidebar(event) {
     document.getElementById("backdrop").classList.toggle("show");
 }
+function playNotificationSound() {
+    // Create a new Audio object and specify the sound file
+    var audio = new Audio('https://www.soundjay.com/buttons/sounds/button-10.mp3'); // You can use a different URL or a local file
+
+    // Play the sound
+    audio.play();
+}
+
 let socket;
 window.retrysocket = function () {
     socket = new WebSocket(`ws://${window.location.host}/api/v1/ws`);
@@ -13,9 +21,13 @@ window.retrysocket = function () {
         const msg = JSON.parse(event.data)
         console.log("Received message:", event.data,"Parsed message:", msg);
         if (msg.sender !== "internal") {
-                discussion.innerHTML += ['system',document.getElementById("username").text,discussion.previousElementSibling.value].includes(msg.sender)?
-            `<li>[${msg.sender}] : ${msg.message}</li>`:
-            `<li>[system]received a new message from ${msg.sender}.</li>`;
+            if (['system',document.getElementById("username").text,discussion.previousElementSibling.value].includes(msg.sender)) {
+                discussion.innerHTML += `<li>[${msg.sender}] : ${msg.message}</li>`;
+            }else {
+                discussion.innerHTML += `<li>[system]received a new message from ${msg.sender}.</li>`;
+                showNotification("new Message from :"+msg.sender)
+            }
+            playNotificationSound();
         } else {
             if (msg.type == "toggle") {
                 discussion.previousElementSibling.querySelector(`[value="${msg.username}"]`).text = (msg.online?'🟢 ':'🔴 ') + msg.username;
