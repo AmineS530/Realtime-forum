@@ -29,8 +29,16 @@ window.retrysocket = function () {
             }
             playNotificationSound();
         } else {
-            if (msg.type == "toggle") {
+            switch (msg.type) {
+            case "toggle":
                 discussion.previousElementSibling.querySelector(`[value="${msg.username}"]`).text = (msg.online?'🟢 ':'🔴 ') + msg.username;
+                break;
+            case "typing":
+                discussion.previousElementSibling.querySelector(`[value="${msg.username}"]`).text = '🟢 '+ msg.username + "⌨"
+                break;
+            case "stoptyping":
+                discussion.previousElementSibling.querySelector(`[value="${msg.username}"]`).text = '🟢 '+ msg.username
+                break;
             }
         }
     };
@@ -89,8 +97,9 @@ function changeDiscussion(elem) {
 
 function  sendDm(event) {
     // console.log(event.target.attributes.value.value)
-    console.log("azer",event.target.previousElementSibling.previousElementSibling.value,event.target[0].value,event);
-    let message = new Message(event.target.previousElementSibling.previousElementSibling.value,event.target[0].value);
+    console.log("azer",discussion.previousElementSibling.value,event.target[0].value,event);
+    let message = new Message(discussion.previousElementSibling.value,event.target[0].value);
+    event.target.reset()
     message.send()
 }
 
@@ -159,4 +168,21 @@ window.MessageScroll = function () {
 };
 
 
+let isTyping = false;
+let typingTimer;
+const typingDelay = 1000;
+
+function startTyping() {
+    if (!isTyping && !discussion.previousElementSibling.disabled) {
+        socket.send(`typing:${discussion.previousElementSibling.value}`)
+    }
+    isTyping = true;
+    
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(() => {
+        isTyping = false;
+        console.log('User stopped typing');
+        socket.send(`stoptyping:${discussion.previousElementSibling.value}`)
+    }, typingDelay);
+};
 console.log("loaded dm.js")

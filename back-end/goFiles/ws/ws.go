@@ -67,6 +67,29 @@ func HandleConnections(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("ws", azer, string(msg), err)
 
 		var request message
+		if string(msg)[:7] == "typing:" {
+			m := string(msg)[7:]
+			fmt.Println(m, "good")
+			conn, exist := sockets[m]
+			if !exist || conn == nil {
+				continue
+			}
+
+			err := conn.WriteMessage(websocket.TextMessage, []byte(`{"sender":"internal","type":"typing","username":"`+uName+`"}`))
+			fmt.Println(err)
+			continue
+		} else if string(msg)[:11] == "stoptyping:" {
+			m := string(msg)[11:]
+			fmt.Println(m, "good")
+			conn, exist := sockets[m]
+			if !exist || conn == nil {
+				continue
+			}
+
+			err := conn.WriteMessage(websocket.TextMessage, []byte(`{"sender":"internal","type":"stoptyping","username":"`+uName+`"}`))
+			fmt.Println(err)
+			continue
+		}
 		err = json.Unmarshal(msg, &request)
 		if err != nil {
 			log.Println("Error parsing JSON:", err)
