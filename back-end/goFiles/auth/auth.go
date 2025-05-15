@@ -2,7 +2,6 @@ package auth
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"strconv"
 	"time"
@@ -85,7 +84,6 @@ func CheckAuthHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if !auth || err != nil {
-		fmt.Println("Error verifying user:", err)
 		json.NewEncoder(w).Encode(map[string]bool{"authenticated": false})
 		return
 	}

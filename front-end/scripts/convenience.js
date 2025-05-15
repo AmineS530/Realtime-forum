@@ -9,6 +9,20 @@ function bindInputTrimming() {
     });
 }
 
+const sounds = {
+    message: new Audio("/front-end/sounds/messageNotif.mp3"),
+    alert: new Audio("/front-end/sounds/alert.mp3"),
+    notification: new Audio("/front-end/sounds/notification.mp3")
+};
+
+function playSound(name) {
+    const sound = sounds[name];
+    sound.volume = 0.75
+    if (sound) {
+        sound.currentTime = 0;
+        sound.play().catch(e => console.warn("Playback failed:", e));
+    }
+}
 // Optimized stylesheet injection with cache busting
 function injectStylesheet(href) {
     if (!document.querySelector(`link[href="${href}"]`)) {
@@ -23,12 +37,46 @@ function delay(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function showNotification(message, type = "OK") {
-    const notification = document.createElement("div");
-    notification.innerText = message;
-    notification.className = `notification ${type}`;
-    document.body.appendChild(notification);
-    setTimeout(() => notification.remove(), 3000);
+let notificationCooldown = false;
+
+function showNotification(message, type = "success", sound = true) {
+  if (notificationCooldown) return;
+
+  notificationCooldown = true;
+
+  const notification = document.createElement("div");
+  notification.className = `notification ${type}`;
+  notification.textContent = message;
+
+  document.body.appendChild(notification);
+
+  // Slide down
+  requestAnimationFrame(() => {
+    notification.style.top = "40px";
+  });
+
+  // Play sound
+  if (sound) {
+    if (type === "success" || type === "info") {
+      playSound("notification");
+    } else {
+      playSound("alert");
+    }
+  }
+
+  setTimeout(() => {
+    notification.style.top = "-100px";
+    notification.style.opacity = "0";
+
+    notification.addEventListener("transitionend", () => {
+      notification.remove();
+    }, { once: true });
+
+    // Reset cooldown after animation finishes
+    setTimeout(() => {
+      notificationCooldown = false;
+    }, 500);
+  }, 1500);
 }
 
 async function viewPosts(event) {
@@ -64,11 +112,11 @@ function escapeHTML(str) {
 }
 async function handleApiError(res) {
     const contentType = res.headers.get('content-type');
-    
+
     if (contentType.includes('text/html')) {
         return;
     }
-    
+
     // Handle JSON errors normally
     const error = await res.json().catch(() => ({}));
     showErrorPage(res.status, error.message || "API request failed");
@@ -92,7 +140,7 @@ function showErrorPage(errorCode, errorMessage) {
             description: "The page you are looking for might have been removed or does not exist."
         },
         500: {
-            title: "Internal Server Error", 
+            title: "Internal Server Error",
             description: "Something went wrong on our end. Please try again later."
         },
         403: {
@@ -107,7 +155,7 @@ function showErrorPage(errorCode, errorMessage) {
 
     // Get the appropriate container
     const targetContainer = document.getElementById('app') || document.body;
-    
+
     // Clear previous content and render error template
     targetContainer.innerHTML = errorPageTemplate;
 

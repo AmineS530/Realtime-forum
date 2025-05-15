@@ -24,7 +24,6 @@ func GetdmHistory(uname1, uname2, date string) ([]Message, error) {
 		}
 		d = clientDate
 	}
-	fmt.Println("azer", uname1, uname2, date)
 	rows, err := helpers.DataBase.Query(`
 	SELECT * 
 FROM (

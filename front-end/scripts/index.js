@@ -135,14 +135,12 @@ async function loadUsers() {
         }
 
         const data = await response.json();
-        console.log("User data:", data);
 
         let formattedHistory = "";
         data.forEach((user) => {
             formattedHistory += `<option value="${user.username}">${user.online?'🟢':'🔴'} ${user.username}</option>`;
         });
 
-        console.log("Formatted options:", formattedHistory);
         document.getElementById("message-select").innerHTML += formattedHistory;
 
     } catch (error) {
@@ -260,7 +258,7 @@ async function submitComment(event) {
     const postDiv = container.closest(".post");
     const postId = postDiv?.id;
 
-    if (!postId) return showNotification("Post ID not found.");
+    if (!postId) return showNotification("Post ID not found.", "error");
 
     const payload = { content: comment, post_id: postId };
     try {

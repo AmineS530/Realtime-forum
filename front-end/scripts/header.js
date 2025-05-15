@@ -36,13 +36,13 @@ export async function updateNavbar(auth) {
                 postSection.style.display = "block";
                 document.body.classList.add("dimmed");
             } else {
-               showNotification("You need to be at home page to create a post", "error");
+               showNotification("You need to be at home page to create a post", "info");
             }
         }); 
 
         // DMs icon
         const showbubbles = document.createElement("li");
-        showbubbles.innerHTML = `<a class="logo" href="#" title="Messages">${svg.two_bubbles}</a>`;
+        showbubbles.innerHTML = `<a class="logo" href="#" title="Show Messages">${svg.two_bubbles}</a>`;
         navList.appendChild(showbubbles);
         showbubbles.querySelector("a").addEventListener("click", (e) => {
             e.preventDefault();

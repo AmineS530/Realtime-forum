@@ -23,10 +23,8 @@ func CommentCreation(w http.ResponseWriter, r *http.Request, uid int) {
 		return
 	}
 	if !PostComment(comment, uid) {
-		w.WriteHeader(http.StatusInternalServerError)
 		helpers.JsRespond(w, "Comment creation failed", http.StatusInternalServerError)
 	}
-	w.WriteHeader(http.StatusOK)
 	helpers.JsRespond(w, "Comment posted successfully", http.StatusOK)
 }
 

@@ -12,7 +12,7 @@
     max-width: 30vw;
     color: var(--bs-offcanvas-color);
     visibility: hidden; 
-    background-color: #fff;
+    background-color: #b4b4b4;
     transition: .2s cubic-bezier(.62,1.56,.72,.89);
     & select {
     font-size: 3vh;
@@ -114,4 +114,92 @@
     .input-group input[type="text"] {
         font-size: 0.9rem;
     }
+}
+.message {
+    margin-bottom: 0.75rem;
+}
+
+.message-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.3rem;
+    font-size: 0.8rem;
+    color: #444;
+    padding-left: 0.3rem;
+    padding-right: 0.5rem;
+}
+
+.message-sender {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #222;
+}
+
+.message-time {
+    color: #777;
+    font-size: 0.75rem;
+}
+
+.message-content {
+    background-color: #f0f0f0;
+    display: inline-block;
+    padding: 0.6rem 0.9rem;
+    border-radius: 12px;
+    max-width: 80%;
+    font-size: 0.9rem;
+    color: #111;
+    margin-left: 1.5rem;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* space between input and button */
+  padding: 8px 12px;
+  background-color: #f9f9f9; /* light background */
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  max-width: 600px;
+  margin: 0 auto; /* center horizontally */
+}
+
+.input-group input.form-control {
+  flex-grow: 1;
+  padding: 10px 14px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline-offset: 2px;
+  transition: border-color 0.2s ease;
+}
+
+.input-group input.form-control:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 5px rgba(74,144,226,0.5);
+}
+
+.input-group button.btn.btn-primary {
+  background-color: #4a90e2;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.input-group button.btn.btn-primary:hover {
+  background-color: #357ABD;
+}
+
+.input-group button.btn.btn-primary svg {
+  width: 1.2em;
+  height: 1.2em;
+  fill: rgb(0, 0, 0);
 }

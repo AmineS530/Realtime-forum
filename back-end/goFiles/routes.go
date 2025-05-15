@@ -20,6 +20,7 @@ func Routes() *http.ServeMux {
 	ProtectedStatic(mux, "/front-end/styles/", "./front-end/styles/")
 	ProtectedStatic(mux, "/front-end/scripts/", "./front-end/scripts/")
 	ProtectedStatic(mux, "/front-end/images/", "./front-end/images/")
+		ProtectedStatic(mux, "/front-end/sounds/", "./front-end/sounds/")
 	mux.HandleFunc("/api/check-auth", auth.ApiOnlyAccess(auth.CheckAuthHandler))
 	mux.HandleFunc("/api/login", auth.LoginHandler)
 	mux.HandleFunc("/api/register", auth.RegisterHandler)

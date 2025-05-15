@@ -50,16 +50,16 @@ button#postSeeMore {
 /* Notification Styles */
 .notification {
     position: fixed;
-    top: 20px;
+    top: -100px; /* Start hidden above */
     left: 50%;
     transform: translateX(-50%);
-    padding: 10px;
+    padding: 10px 20px;
     border-radius: 5px;
-    font-size: 16px;
+    font-weight: bold;
     color: white;
     opacity: 0.9;
-    transition: opacity 0.3s ease;
-    z-index: 9999; /* Ensure it's on top of other content */
+    transition: top 0.5s ease, opacity 0.5s ease;
+    z-index: 1000;
 }
 
 .notification.success {
@@ -71,8 +71,9 @@ button#postSeeMore {
 }
 
 .notification.info {
-    background-color: blue;
+    background-color: #45688d;
 }
+
  /* Profile Container */
 .profile {
     max-width: 600px;
@@ -356,4 +357,22 @@ body.dimmed::before {
     background-color: rgba(58, 58, 58, 0.7); 
     z-index: 9; 
     pointer-events: all; 
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888; 
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

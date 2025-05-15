@@ -4,11 +4,11 @@ const nav = `
 
 <ul class="nav">
     <li>
-        <a href="/" onclick="dms_ToggleShowSidebar(event)" title="Messages">
+        <a href="/" onclick="dms_ToggleShowSidebar(event)" title="Show Messages">
             ${svg.two_bubbles}
         </a>
     <li>
-        <a id="logout" href="/" title="Logout">
+        <a id="logout" href="/">
             ${svg.svg_logout}
         </a>
     </li>
@@ -122,8 +122,8 @@ const dms = `<div id="backdrop" class="" onclick="event.target.id ==='backdrop' 
         </select>
         <ul id="discussion" class="discussion"></ul>
         <form class="input-group" onsubmit="event.preventDefault();sendDm(event)">
-            <input type="text" oninput="startTyping()" class="form-control" placeholder="New Message..." aria-label="Message">
-            <button class="btn btn-primary" type="submit">${svg.svg_send}SEND</button>
+            <input type="text" oninput="startTyping()" class="form-control" minlength="1" maxlength="250" placeholder="New Message..." aria-label="Message">
+            <button class="btn btn-primary" type="submit">${svg.svg_send}</button>
         </form>
     </div>
 </div> `;

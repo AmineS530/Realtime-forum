@@ -1,12 +1,5 @@
 function dms_ToggleShowSidebar(event) {
-    document.getElementById("backdrop").classList.toggle("show");
-}
-function playNotificationSound() {
-    // Create a new Audio object and specify the sound file
-    var audio = new Audio('https://www.soundjay.com/buttons/sounds/button-10.mp3'); // You can use a different URL or a local file
-
-    // Play the sound
-    audio.play();
+    document.getElementById("backdrop").classList.toggle("show");        
 }
 
 let socket;
@@ -19,15 +12,15 @@ window.retrysocket = function () {
     
     socket.onmessage = function (event) {
         const msg = JSON.parse(event.data)
-        console.log("Received message:", event.data,"Parsed message:", msg);
         if (msg.sender !== "internal") {
             if (['system',document.getElementById("username").text,discussion.previousElementSibling.value].includes(msg.sender)) {
-                discussion.innerHTML += `<li>[${msg.sender}] : ${msg.message}</li>`;
+                msg.time = new Date()
+                discussion.innerHTML += messages(msg);
             }else {
                 discussion.innerHTML += `<li>[system]received a new message from ${msg.sender}.</li>`;
-                showNotification("new Message from :"+msg.sender)
+                showNotification("new Message from :"+msg.sender, "success", false)
             }
-            playNotificationSound();
+            playSound("message")
         } else {
             switch (msg.type) {
             case "toggle":
@@ -80,14 +73,12 @@ function changeDiscussion(elem) {
         })
         .then(response => response!== null ?response.json():data=[])
         .then(data => {
-            console.log("azerazerazernbfhqbfhbqfhqbsfjhbqjsbfhqbsdfhqbsdfq",data)
             let formattedHistory = data && data.length===10 ?`<button onclick="window.MessageScroll()" >load more messages</button>`:"";
             if (data) {
                 data.forEach(message => {
-                    formattedHistory += `<li title="${new Date(message.time).toLocaleString()}">[${message.sender}] : ${message.message}</li>`
+                    formattedHistory += messages(message)
                 });
             }
-            console.log("azerazerazerazerazer",formattedHistory)
             elem.nextElementSibling.innerHTML = formattedHistory
             elem.nextElementSibling.nextElementSibling.value = elem.value
         })
@@ -96,23 +87,25 @@ function changeDiscussion(elem) {
 }
 
 function  sendDm(event) {
-    // console.log(event.target.attributes.value.value)
-    console.log("azer",discussion.previousElementSibling.value,event.target[0].value,event);
     let message = new Message(discussion.previousElementSibling.value,event.target[0].value);
     event.target.reset()
     message.send()
 }
 
 class Message {
-    constructor(dest,contents) {
-        if (typeof dest!=='string') {
-            throw new Error("Type must be a string");        }
-
-        if (typeof contents!=='string') {
-            throw new Error("Type must be a string");
+    constructor(dest, contents) {
+        if (typeof dest !== 'string' || !dest.trim()) {
+            throw new Error("Destination must be a non-empty string");
         }
-        // Initialize the body object
-        this.body = {receiver: dest,message: contents};
+
+        if (typeof contents !== 'string' || !contents.trim()) {
+            throw new Error("Message content must be a non-empty string");
+        }
+
+        this.body = {
+            receiver: dest.trim(),
+            message: escapeHTML(contents.trim())
+        };
     }
 
     send() {
@@ -121,7 +114,6 @@ class Message {
 }
 
 const usename = document.cookie.match(/session-name=(\S+)==;/)
-
 
 let isLoadingMessages = false;
 
@@ -146,7 +138,7 @@ window.MessageScroll = function () {
                 let formattedHistory = "";
                 if (data) {
                     data.forEach(message => {
-                        formattedHistory += `<li title="${new Date(message.time).toLocaleString()}">[${message.sender}] : ${message.message}</li>`
+                        formattedHistory += messages(message)
                     });
                 }
                 discussion.children[0].insertAdjacentHTML('afterend',formattedHistory)
@@ -185,4 +177,17 @@ function startTyping() {
         socket.send(`stoptyping:${discussion.previousElementSibling.value}`)
     }, typingDelay);
 };
+
+const messages = (message) => `
+<li class="message" title="${new Date(message.time).toLocaleString()}">
+    <div class="message-meta">
+        <span class="message-sender">${message.sender}</span>
+        <span class="message-time">
+            ${new Date(message.time).toLocaleTimeString([], { month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' })}
+        </span>
+    </div>
+    <div class="message-content">${escapeHTML(message.message)}</div>
+</li>
+`;
+
 console.log("loaded dm.js")

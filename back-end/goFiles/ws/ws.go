@@ -52,7 +52,7 @@ func HandleConnections(w http.ResponseWriter, r *http.Request) {
 	defer conn.Close()
 
 	uName := getUname(r)
-	fmt.Printf("New connection: %s\n", uName)
+	// fmt.Printf("New connection: %s\n", uName)
 
 	addConnToMap(uName, conn)
 	defer deleteConnFromMap(uName)
@@ -64,30 +64,31 @@ func HandleConnections(w http.ResponseWriter, r *http.Request) {
 			log.Println(err)
 			return
 		}
-		fmt.Println("ws", azer, string(msg), err)
 
 		var request message
 		if string(msg)[:7] == "typing:" {
 			m := string(msg)[7:]
-			fmt.Println(m, "good")
 			conn, exist := sockets[m]
 			if !exist || conn == nil {
 				continue
 			}
 
 			err := conn.WriteMessage(websocket.TextMessage, []byte(`{"sender":"internal","type":"typing","username":"`+uName+`"}`))
-			fmt.Println(err)
+			if err != nil {
+				helpers.ErrorLog.Println(err)
+			}
 			continue
 		} else if string(msg)[:11] == "stoptyping:" {
 			m := string(msg)[11:]
-			fmt.Println(m, "good")
 			conn, exist := sockets[m]
 			if !exist || conn == nil {
 				continue
 			}
 
 			err := conn.WriteMessage(websocket.TextMessage, []byte(`{"sender":"internal","type":"stoptyping","username":"`+uName+`"}`))
-			fmt.Println(err)
+			if err != nil {
+				helpers.ErrorLog.Println(err)
+			}
 			continue
 		}
 		err = json.Unmarshal(msg, &request)
@@ -99,9 +100,8 @@ func HandleConnections(w http.ResponseWriter, r *http.Request) {
 		// Respond back with a JSON message
 		err = request.send()
 		var status_response string
-		fmt.Println(sockets)
 		if err != nil {
-			log.Println("Error handling request:", err)
+			helpers.ErrorLog.Println("Error handling request:", err)
 			status_response = `{"sender":"system","message":"failed to send message"}`
 			err = conn.WriteMessage(websocket.TextMessage, []byte(status_response))
 			if err != nil {
@@ -154,7 +154,7 @@ func (m *message) send() error {
 	err := dms.AddDm(m.Sender, m.Receiver, m.Message)
 	if err != nil {
 		err = errors.New("failed to store message in db with error: " + err.Error())
-		sockets[m.Sender].WriteJSON(message{"system", "", err.Error()})
+		helpers.ErrorLog.Println(err)
 		return err
 	}
 	responseData, err := json.Marshal(m)

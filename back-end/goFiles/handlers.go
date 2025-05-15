@@ -30,7 +30,6 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetHandler(w http.ResponseWriter, r *http.Request) {
-	// fmt.Println(r.URL)
 	x := r.PathValue("type")
 	offset := r.URL.Query().Get("offset")
 	switch x {
@@ -69,7 +68,6 @@ func GetHandler(w http.ResponseWriter, r *http.Request) {
 		jsonData, _ := json.Marshal(dms)
 		w.Header().Set("Content-Type", "application/json")
 		w.Write(jsonData)
-		fmt.Println(target, username, dms)
 	default:
 		helpers.JsRespond(w, "Invalid request type", http.StatusBadRequest)
 		return
@@ -81,11 +79,9 @@ func PostHandler(w http.ResponseWriter, r *http.Request) {
 		helpers.JsRespond(w, "Invalid request method", http.StatusMethodNotAllowed)
 		return
 	}
-	fmt.Println(r.URL)
 	jwtToken, _ := auth.ExtractJWT(r)
 	payload, _ := jwt.JWTVerify(jwtToken)
 	x := r.PathValue("type")
-	fmt.Println("here", x)
 	switch x {
 	case "createPost":
 		requests.PostCreation(w, r, payload.Sub)
