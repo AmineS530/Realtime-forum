@@ -43,7 +43,7 @@ FROM (
 		(sender.username = ? AND recipient.username = ?)
 	ORDER BY
 		d.created_at DESC
-	LIMIT 10
+	LIMIT 11
 ) AS sub ORDER BY created_at ASC;
 	`, d, uname1, uname2, uname2, uname1)
 	if err != nil {
@@ -61,7 +61,7 @@ FROM (
 		}
 		messages = append(messages, message)
 	}
-	return messages, nil
+	return messages[:len(message)-1], nil
 }
 
 func AddDm(sUname, rUname, msg string) error {
