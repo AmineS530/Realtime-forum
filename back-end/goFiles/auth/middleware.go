@@ -64,6 +64,8 @@ func ApiOnlyAccess(next http.HandlerFunc) http.HandlerFunc {
 		if !isAPIRequest {
 			if strings.Contains(r.Header.Get("Accept"), "text/html") {
 				helpers.HtmlTemplates.ExecuteTemplate(w, "index.html", nil)
+			} else {
+				helpers.JsRespond(w, "API access only", http.StatusUnauthorized)
 			}
 			return
 		}

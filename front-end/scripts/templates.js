@@ -19,7 +19,7 @@ const header = `
     <header>
       <!-- Logo -->
       <div class="logo">
-        <h1><a href="/" onclick="loadPage('home', event)">Forum</a></h1>
+        <h1><a href="/" onclick="loadPage('home', event)">${WebAppName}</a></h1>
       </div>
       <!-- Navigation -->
       <nav>
@@ -110,23 +110,59 @@ const posts = `
     <button id="load-posts" onclick="viewPosts(event)">Load More Posts</button>
 `;
 
-const dms = `<div id="backdrop" class="" onclick="event.target.id ==='backdrop' ? dms_ToggleShowSidebar(event): event.stopPropagation();">
-
+const dms = `
+<div id="backdrop" onclick="event.target.id === 'backdrop' ? dms_ToggleShowSidebar(event) : event.stopPropagation();">
     <div class="show" id="side-menu" aria-modal="true" role="dialog">
         <div class="side-menu-head">
-            <h1 class="offcanvas-title" style="margin-bottom: 0;line-height: 5vh;">Messages</h1>
-            <button onclick="dms_ToggleShowSidebar(event)" class="btn">  ${svg.two_bubbles}</button>
+            <h1 class="offcanvas-title" style="margin-bottom: 0; line-height: 5vh;">Messages</h1>
+            <button onclick="dms_ToggleShowSidebar(event)" class="btn">
+                ${svg.two_bubbles}
+            </button>
         </div>
-        <select name="message" id="message-select" onchange="changeDiscussion(this)">
-                <option selected disabled hidden>users</option>
-        </select>
-        <ul id="discussion" class="discussion"></ul>
-        <form class="input-group" onsubmit="event.preventDefault();sendDm(event)">
-            <input type="text" oninput="startTyping()" class="form-control" minlength="1" maxlength="250" placeholder="New Message..." aria-label="Message">
-            <button class="btn btn-primary" type="submit">${svg.svg_send}</button>
+
+        <!-- Search input -->
+        <input
+            type="text"
+            id="userSearch"
+            placeholder="Search users..."
+            class="search-bar"
+            onkeyup="searchUser()"
+        />
+
+        <div class="chat-users"></div>
+
+        <!-- Chat messages -->
+          <div id="chat-box" class="chat-box" style="display: none">
+          <div id="chat-header">
+          <button class="close-chat" onclick="closeChat()">✖</button>
+            <span id="chat-username">Chat</span>
+            <div id="typing" class="hidden">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+          </div>
+          </div>
+         <ul id="discussion" class="discussion"></ul>
+         
+        <!-- Message input form -->
+        <form class="input-group" onsubmit="event.preventDefault();sendDm(event)" style="display: none">
+            <input
+                type="text"
+                oninput="startTyping()"
+                class="form-control"
+                minlength="1"
+                maxlength="250"
+                placeholder="New Message..."
+                aria-label="Message"
+            />
+            <button class="btn btn-primary" type="submit">
+                ${svg.svg_send}
+            </button>
         </form>
     </div>
-</div> `;
+</div>
+`;
 
 const postCreation = `
     <center>

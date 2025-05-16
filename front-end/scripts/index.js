@@ -10,15 +10,14 @@ window.loadPage = function (page, event) {
     switch (page) {
         case "home":
             setHeader(true);
-            loadUsers();
             app.innerHTML = templates.posts + templates.dms + templates.postCreation;
-            setupPostCreator();
+            loadUsers();
             loadPosts({ mode: "replace" });
+            setupPostCreator();
             history.pushState({}, "", "/");
             break;
         case "profile":
             loadProfilePage();
-            loadUsers();
             break;
         default:
             showErrorPage(404, "Page not found");
@@ -71,10 +70,10 @@ async function loadProfilePage() {
         <p>Email: ${data.email}</p>
         <a href="/" onclick="loadPage('home', event)">Go Back</a>
         </div>`+ templates.dms;
+        await loadUsers();
         history.pushState({}, "", "/profile");
     } catch (err) {
         console.error("Failed to load profile:", err);
-        // showErrorPage(500, "Network error or unable to load profile");
     }
 }
 
@@ -118,15 +117,20 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 async function loadUsers() {
-    const discussion = document.getElementById("discussion");
+    const container = document.querySelector(".chat-users");
+    if (!container) {
+        console.warn("chat-users container not found in the DOM.");
+        return;
+    }
+
 
     try {
         const response = await fetch("/api/v1/get/users", {
             method: "GET",
             headers: {
-                'X-Requested-With': 'XMLHttpRequest',
+                "X-Requested-With": "XMLHttpRequest",
                 "Content-Type": "application/json",
-            }
+            },
         });
 
         if (!response.ok) {
@@ -134,19 +138,41 @@ async function loadUsers() {
             return;
         }
 
-        const data = await response.json();
+        const users = await response.json();
 
-        let formattedHistory = "";
-        data.forEach((user) => {
-            formattedHistory += `<option value="${user.username}">${user.online?'🟢':'🔴'} ${user.username}</option>`;
+        users.forEach((user) => {
+            const userDiv = document.createElement("div");
+            userDiv.className = "chat-user";
+            userDiv.id = "message-select";
+            userDiv.textContent = `${user.online ? "🟢" : "🔴"} ${user.username}`;
+            userDiv.setAttribute("username", user.username);
+            userDiv.onclick = () => setupChat(user.username);
+            container.appendChild(userDiv);
         });
-
-        document.getElementById("message-select").innerHTML += formattedHistory;
 
     } catch (error) {
         console.error("Error loading users:", error);
         showErrorPage(500, "Network error or unable to load users");
     }
+}
+
+function setupChat(username) {
+    document.getElementById("chat-username").textContent = username;
+    const userList = document.querySelector(".chat-users");
+    const chatBox = document.getElementById("chat-box");
+    const inputGroup = document.querySelector(".input-group");
+    const userSearch = document.getElementById("userSearch");
+    userList.addEventListener("click", (e) => {
+
+        // Display chat box and input
+        userSearch.style.display = "none";
+        chatBox.style.display = "flex";
+        inputGroup.style.display = "flex";
+        userList.style.display = "none";
+
+        // Load chat history
+        changeDiscussion(username);
+    });
 }
 
 
@@ -164,10 +190,6 @@ async function setHeader(authStatus) {
     injectStylesheet("/front-end/styles/dms.css");
     injectStylesheet("/front-end/styles/style.css");
 }
-
-document.addEventListener("DOMContentLoaded", async () => {
-    await setupPostCreator();
-});
 
 async function setupPostCreator() {
     const postSection = document.getElementById("create-post-section");
@@ -208,7 +230,6 @@ async function setupPostCreator() {
         form.reset();
         document.body.classList.remove("dimmed");
         postSection.style.display = "none";
-        showNotification("Post submitted successfully!", "success");
     });
 }
 
@@ -231,7 +252,7 @@ async function submitPost() {
 
         if (!res.ok) throw new Error("Submission failed");
 
-        console.log("Post submitted successfully");
+        showNotification("Post submitted successfully", "success");
 
         // Optionally clear inputs after submission
         document.getElementById("post-form").reset();
@@ -274,7 +295,6 @@ async function submitComment(event) {
         if (!res.ok) throw new Error("Failed to post comment");
 
         const result = await res.json();
-        console.log("Comment posted:", result);
 
         textarea.value = "";
         const newCommentHTML = commentTemplate({

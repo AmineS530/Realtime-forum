@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	helpers "RTF/back-end"
@@ -23,7 +22,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := helpers.HtmlTemplates.ExecuteTemplate(w, "index.html", nil); err != nil {
-		fmt.Println("Error executing template: ", err.Error())
+		helpers.ErrorLog.Println("Error executing template: ", err.Error())
 		helpers.JsRespond(w, "Error executing template", http.StatusInternalServerError)
 		return
 	}

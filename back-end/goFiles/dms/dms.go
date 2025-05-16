@@ -47,7 +47,7 @@ FROM (
 ) AS sub ORDER BY created_at ASC;
 	`, d, uname1, uname2, uname2, uname1)
 	if err != nil {
-		fmt.Println("Error getting posts: ", err)
+		helpers.ErrorLog.Println("Error getting posts: ", err)
 		return nil, err
 	}
 	defer rows.Close()
@@ -56,7 +56,7 @@ FROM (
 		var message Message
 		err := rows.Scan(&message.Sender, &message.Content, &message.Time)
 		if err != nil {
-			fmt.Println("Error scanning posts: ", err)
+			helpers.ErrorLog.Println("Error scanning posts: ", err)
 			return nil, err
 		}
 		messages = append(messages, message)

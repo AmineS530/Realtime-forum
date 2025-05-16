@@ -1,7 +1,6 @@
 package requests
 
 import (
-	"fmt"
 	"strconv"
 	"strings"
 
@@ -47,7 +46,7 @@ func GetPosts(soffset string) ([]Post, error) {
 	LIMIT 3 OFFSET ?
 	`, offset)
 	if err != nil {
-		fmt.Println("Error getting posts: ", err)
+		helpers.ErrorLog.Println("Error getting posts: ", err)
 		return nil, err
 	}
 	defer rows.Close()
@@ -57,7 +56,7 @@ func GetPosts(soffset string) ([]Post, error) {
 		var post Post
 		err := rows.Scan(&post.Pid, &post.Title, &post.Content, &categories, &post.CreationTime, &post.Author)
 		if err != nil {
-			fmt.Println("Error scanning posts: ", err)
+			helpers.ErrorLog.Println("Error scanning posts: ", err)
 			return nil, err
 		}
 		post.Categories = strings.Split(categories, ", ")
@@ -90,7 +89,7 @@ func GetComments(pid string) ([]Comment, error) {
 		c.created_at DESC
 	`, iPid)
 	if err != nil {
-		fmt.Println("Error getting comments: ", err)
+		helpers.ErrorLog.Println("Error getting comments: ", err)
 		return nil, err
 	}
 	defer rows.Close()
@@ -99,7 +98,7 @@ func GetComments(pid string) ([]Comment, error) {
 		var comment Comment
 		err := rows.Scan(&comment.Author, &comment.Content, &comment.CreationTime)
 		if err != nil {
-			fmt.Println("Error scanning comments: ", err)
+			helpers.ErrorLog.Println("Error scanning comments: ", err)
 			return nil, err
 		}
 		comment.Pid = iPid

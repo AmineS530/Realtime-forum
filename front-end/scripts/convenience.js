@@ -1,3 +1,6 @@
+const WebAppName = "EpicHub";
+document.title = WebAppName;
+
 function bindInputTrimming() {
     const inputs = document.querySelectorAll("input, textarea");
     inputs.forEach((input) => {
@@ -40,43 +43,55 @@ function delay(ms) {
 let notificationCooldown = false;
 
 function showNotification(message, type = "success", sound = true) {
-  if (notificationCooldown) return;
+    if (notificationCooldown) return;
 
-  notificationCooldown = true;
+    notificationCooldown = true;
 
-  const notification = document.createElement("div");
-  notification.className = `notification ${type}`;
-  notification.textContent = message;
+    const notification = document.createElement("div");
+    notification.className = `notification ${type}`;
+    notification.textContent = message;
 
-  document.body.appendChild(notification);
+    document.body.appendChild(notification);
 
-  // Slide down
-  requestAnimationFrame(() => {
-    notification.style.top = "40px";
-  });
+    // Slide down
+    requestAnimationFrame(() => {
+        notification.style.top = "40px";
+    });
 
-  // Play sound
-  if (sound) {
-    if (type === "success" || type === "info") {
-      playSound("notification");
-    } else {
-      playSound("alert");
+    // Play sound
+    if (sound) {
+        if (type === "success" || type === "info") {
+            playSound("notification");
+        } else {
+            playSound("alert");
+        }
     }
-  }
 
-  setTimeout(() => {
-    notification.style.top = "-100px";
-    notification.style.opacity = "0";
-
-    notification.addEventListener("transitionend", () => {
-      notification.remove();
-    }, { once: true });
-
-    // Reset cooldown after animation finishes
     setTimeout(() => {
-      notificationCooldown = false;
-    }, 500);
-  }, 1500);
+        notification.style.top = "-100px";
+        notification.style.opacity = "0";
+
+        notification.addEventListener("transitionend", () => {
+            notification.remove();
+        }, { once: true });
+
+        // Reset cooldown after animation finishes
+        setTimeout(() => {
+            notificationCooldown = false;
+        }, 500);
+    }, 1500);
+}
+
+function searchUser() {
+    const input = document.getElementById("userSearch");
+    const filter = input.value.toLowerCase();
+    const usersContainer = document.querySelector(".chat-users");
+    const users = usersContainer.querySelectorAll(".chat-user");
+
+    users.forEach(user => {
+        const username = user.textContent.toLowerCase();
+        user.style.display = username.includes(filter) ? "block" : "none";
+    });
 }
 
 async function viewPosts(event) {
@@ -122,6 +137,19 @@ async function handleApiError(res) {
     showErrorPage(res.status, error.message || "API request failed");
 }
 
+function closeChat() {
+    const chatBox = document.getElementById("chat-box");
+    const inputGroup = document.querySelector(".input-group");
+    const userList = document.querySelector(".chat-users");
+    const discussion = document.getElementById("discussion");
+    const userSearch = document.getElementById("userSearch");
+
+    discussion.innerHTML = "";
+    chatBox.style.display = "none";
+    inputGroup.style.display = "none";
+    userList.style.display = "flex";
+    userSearch.style.display = "flex";
+}
 
 function showErrorPage(errorCode, errorMessage) {
     // Ensure DOM is ready before proceeding
@@ -184,12 +212,7 @@ function showErrorPage(errorCode, errorMessage) {
     if (homeBtn) {
         homeBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            // Ensure loadPage exists before calling
-            if (typeof loadPage === 'function') {
                 loadPage("home");
-            } else {
-                window.location.href = '/';
-            }
         });
     }
 }
