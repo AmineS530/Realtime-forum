@@ -2,6 +2,7 @@ package requests
 
 import (
 	"encoding/json"
+	"html"
 	"net/http"
 	"strings"
 
@@ -25,7 +26,7 @@ func PostCreation(w http.ResponseWriter, r *http.Request, uid int) {
 		helpers.JsRespond(w, "Invalid JSON", http.StatusBadRequest)
 		return
 	}
-	categories := strings.Split(strings.Join(strings.Fields(post.Category), " "), ",")
+	categories := strings.Split(strings.Join(strings.Fields(html.EscapeString(post.Category)), " "), ",")
 	if len(categories) > 3 || len(categories) < 1 {
 		helpers.JsRespond(w, "Invalid category selection", http.StatusBadRequest)
 		return
@@ -49,8 +50,8 @@ func postPost(post postInfo, categories []string, uid int) bool {
 		(title, content, uid, categories)
 	VALUES (?, ?, ?, ?) `
 	_, err := helpers.DataBase.Exec(query,
-		post.Title,
-		post.Content,
+		html.EscapeString(post.Title),
+		html.EscapeString(post.Content),
 		uid,
 		strings.Join(categories, ", "))
 	if err != nil {

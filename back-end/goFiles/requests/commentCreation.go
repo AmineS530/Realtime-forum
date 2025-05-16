@@ -2,6 +2,7 @@ package requests
 
 import (
 	"encoding/json"
+	"html"
 	"net/http"
 
 	helpers "RTF/back-end"
@@ -38,7 +39,7 @@ VALUES
 	_, err := helpers.DataBase.Exec(query,
 		comment.PostID,
 		uid,
-		comment.Content)
+		html.EscapeString(comment.Content))
 	if err != nil {
 		helpers.ErrorLog.Println("Database insertion error:", err)
 		return false

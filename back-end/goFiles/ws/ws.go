@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"html"
 	"log"
 	"net/http"
 	"sync"
@@ -97,6 +98,7 @@ func HandleConnections(w http.ResponseWriter, r *http.Request) {
 			continue
 		}
 		request.Sender = uName
+		request.Message = html.EscapeString(request.Message)
 		// Respond back with a JSON message
 		err = request.send()
 		var status_response string
