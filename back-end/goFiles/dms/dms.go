@@ -61,7 +61,7 @@ FROM (
 		}
 		messages = append(messages, message)
 	}
-	return messages[:len(message)-1], nil
+	return messages[:len(messages)-1], nil
 }
 
 func AddDm(sUname, rUname, msg string) error {
