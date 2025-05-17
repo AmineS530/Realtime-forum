@@ -1,5 +1,10 @@
 function dms_ToggleShowSidebar(event) {
-    document.getElementById("backdrop").classList.toggle("show");
+   const backdrop = document.getElementById("backdrop")
+   if(backdrop) {
+    backdrop.classList.toggle("show");
+    } else {
+        showNotification("Go back to home page to send a message", "info");
+    }
 }
 
 let socket;
@@ -104,128 +109,103 @@ function throttle(func, limit) {
     };
 }
 
-function loadMoreMessages() {
+async function fetchDMHistory(username, page = "") {
+    try {
+        const response = await fetch("/api/v1/get/dmhistory", {
+            method: "GET",
+            headers: {
+                target: username,
+                page: page,
+                "X-Requested-With": "XMLHttpRequest",
+            },
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        throw error;
+    }
+}
+
+async function loadMoreMessages() {
     if (isLoadingMessages) return;
 
-    // Only trigger when user is near the top of the container
     const discussionElem = document.getElementById("discussion");
     if (discussionElem.scrollTop > 50) return;
 
     isLoadingMessages = true;
+
     const selectElem = document.getElementById("chat-username");
     const username = selectElem.textContent;
 
-    const oldestMessageTimestamp = new Date(
-        discussionElem.children[0].title
-    ).toISOString();
-    // Record scroll position before loading new content
+    const oldestMessageTimestamp = new Date(discussionElem.children[0].title).toISOString();
     const oldScrollHeight = discussionElem.scrollHeight;
     const oldScrollTop = discussionElem.scrollTop;
 
     try {
-        fetch("/api/v1/get/dmhistory", {
-            method: "GET",
-            headers: {
-                target: username,
-                page: oldestMessageTimestamp,
-                "X-Requested-With": "XMLHttpRequest",
-            },
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then((data) => {
-                // Format the additional messages
-                let formattedHistory = "";
-                if (data && data.length > 0) {
-                    data.forEach((message) => {
-                        formattedHistory += messages(message);
-                    });
-
-                    // Insert new messages at the beginning
-                    discussionElem.insertAdjacentHTML("afterbegin", formattedHistory);
-
-                    // Maintain scroll position after adding content
-                    discussionElem.scrollTop =
-                        discussionElem.scrollHeight - oldScrollHeight + oldScrollTop;
-
-                    // Only show "no more messages" if we got fewer than 10
-                    if (data.length < 1) {
-                        showNotification("No more messages!", "info");
-                    }
-                } else {
-                    showNotification("No more messages!", "info");
-                }
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-                showNotification(
-                    "Error loading messages. Please try again later.",
-                    "error"
-                );
-            })
-            .finally(() => {
-                isLoadingMessages = false;
+        const data = await fetchDMHistory(username, oldestMessageTimestamp);
+        let formattedHistory = "";
+        if (data && data.length > 1) {
+            data.forEach((message) => {
+                formattedHistory += messages(message);
             });
+
+            discussionElem.insertAdjacentHTML("afterbegin", formattedHistory);
+
+            discussionElem.scrollTop = discussionElem.scrollHeight - oldScrollHeight + oldScrollTop;
+
+            if (data.length < 10) {
+                showNotification("No more messages!", "info");
+            }
+        } else {
+            showNotification("No more messages!", "info");
+        }
     } catch (error) {
-        showErrorPage(error.status, error.message);
+        console.error("Error:", error);
+        showNotification("Error loading messages. Please try again later.", "error");
+    } finally {
         isLoadingMessages = false;
     }
 }
 
-function changeDiscussion(username) {
-    const selectElem = document.getElementById("message-select");
-    selectElem.disabled = true;
+async function changeDiscussion(username) {
+    // const selectElem = document.getElementById("message-select");
+    // selectElem.disabled = true;
 
-    fetch("/api/v1/get/dmhistory", {
-        method: "GET",
-        headers: {
-            target: username,
-            page: "",
-            "X-Requested-With": "XMLHttpRequest",
-        },
-    })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then((data) => {
-            // Format and append each message
-            let formattedHistory = "";
-            if (data && data.length > 0) {
-                data.forEach((message) => {
-                    formattedHistory += messages(message);
-                });
-            }
+    try {
+        const data = await fetchDMHistory(username);
 
-            // Update the discussion container
-            const discussionElem = document.getElementById("discussion");
-            discussionElem.innerHTML = formattedHistory;
+        let formattedHistory = "";
+        if (data && data.length > 0) {
+            data.forEach((message) => {
+                formattedHistory += messages(message);
+            });
+        }
 
-            // Update selected user in any dependent elements
-            if (
-                selectElem.nextElementSibling &&
-                selectElem.nextElementSibling.nextElementSibling
-            ) {
-                selectElem.nextElementSibling.nextElementSibling.value = username;
-            }
+        const discussionElem = document.getElementById("discussion");
+        discussionElem.innerHTML = formattedHistory;
 
-            // Set up scroll event listener after loading initial messages
-            setupScrollListener();
-        })
-        .catch((error) => {
-            console.error("Error:", error);
-            showNotification("Error loading messages.", "error");
-        })
-        .finally(() => {
-            selectElem.disabled = false;
-        });
+        // Optional: Update hidden field or related UI element
+        // if (
+        //     selectElem.nextElementSibling &&
+        //     selectElem.nextElementSibling.nextElementSibling
+        // ) {
+        //     selectElem.nextElementSibling.nextElementSibling.value = username;
+        // }
+
+        setupScrollListener();
+    } catch (error) {
+        console.error("Error:", error);
+        showNotification("Error loading messages.", "error");
+    } 
+    // finally {
+    //  selectElem.disabled = false;
+    // }
 }
+
 
 function setupScrollListener() {
     const discussionElem = document.getElementById("discussion");

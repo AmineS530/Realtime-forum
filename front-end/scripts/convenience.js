@@ -189,7 +189,6 @@ function showErrorPage(errorCode, errorMessage) {
 
     // Get error type details
     const errorType = ERROR_TYPES[errorCode] || ERROR_TYPES.default;
-
     // Update DOM elements safely
     const setElementText = (id, text) => {
         const el = document.getElementById(id);
