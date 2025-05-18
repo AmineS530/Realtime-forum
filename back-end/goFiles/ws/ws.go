@@ -122,7 +122,7 @@ func addConnToMap(uName string, conn *websocket.Conn) {
 	} else {
 		for _, v := range sockets {
 			if err := v.WriteJSON(update{"internal", "toggle", uName, true}); err != nil {
-				log.Println("azer azer azer azer", err)
+				helpers.ErrorLog.Println(err)
 			}
 		}
 	}
@@ -135,13 +135,12 @@ func deleteConnFromMap(uName string) {
 	delete(sockets, uName)
 	for _, v := range sockets {
 		if err := v.WriteJSON(update{"internal", "toggle", uName, false}); err != nil {
-			log.Println("azer azer azer azer", err)
+			helpers.ErrorLog.Println(err)
 		}
 	}
 	mutex.Unlock()
 }
 
-// TODO JWT
 func getUname(r *http.Request) string {
 	payload := r.Context().Value(auth.UserContextKey)
 	data, ok := payload.(*jwt.JwtPayload)

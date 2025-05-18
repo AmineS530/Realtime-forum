@@ -89,7 +89,7 @@ async function fetching(event, endpoint) {
             showNotification("Login failed: " + result.error, "error");
         }
     } catch (error) {
-        showNotification("Network error. Please try again.", "error");
+        showNotification("Please check the form and try again.", "error");
     }
 }
 

@@ -18,11 +18,7 @@ const UserContextKey contextKey = "user"
 func AuthMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		handleAuthError := func(w http.ResponseWriter, r *http.Request, message string) {
-			if strings.Contains(r.Header.Get("Accept"), "text/html") {
-				helpers.HtmlTemplates.ExecuteTemplate(w, "index.html", nil)
-			} else {
-				helpers.JsRespond(w, message, http.StatusUnauthorized)
-			}
+			helpers.JsRespond(w, message, http.StatusUnauthorized)
 		}
 
 		// Extract and verify JWT
@@ -62,11 +58,7 @@ func ApiOnlyAccess(next http.HandlerFunc) http.HandlerFunc {
 			strings.Contains(r.Header.Get("Accept"), "application/json")
 
 		if !isAPIRequest {
-			if strings.Contains(r.Header.Get("Accept"), "text/html") {
-				helpers.HtmlTemplates.ExecuteTemplate(w, "index.html", nil)
-			} else {
-				helpers.JsRespond(w, "API access only", http.StatusUnauthorized)
-			}
+			helpers.JsRespond(w, "API access only", http.StatusUnauthorized)
 			return
 		}
 

@@ -1,7 +1,7 @@
 function dms_ToggleShowSidebar(event) {
-   const backdrop = document.getElementById("backdrop")
-   if(backdrop) {
-    backdrop.classList.toggle("show");
+    const backdrop = document.getElementById("backdrop")
+    if (backdrop) {
+        backdrop.classList.toggle("show");
     } else {
         showNotification("Go back to home page to send a message", "info");
     }
@@ -29,7 +29,7 @@ window.retrysocket = function () {
                 msg.time = new Date();
                 discussion.innerHTML += messages(msg);
             } else {
-                discussion.innerHTML += `<li>[system] You have received a new message from ${msg.sender}.</li>`;
+                // discussion.innerHTML += `<li>[system] You have received a new message from ${msg.sender}.</li>`;
                 showNotification("new Message from :" + msg.sender, "success", false);
             }
             playSound("message");
@@ -41,7 +41,7 @@ window.retrysocket = function () {
                     ).innerHTML = (msg.online ? "🟢 " : "🔴 ") + msg.username;
                     break;
                 case "typing":
-                    document.getElementById("chat-username").textContent = msg.username ;
+                    document.getElementById("chat-username").textContent = msg.username;
                     document.getElementById("typing").classList.remove("hidden");
                     break;
                 case "stoptyping":
@@ -54,13 +54,24 @@ window.retrysocket = function () {
 
     socket.onclose = function (event) {
         console.log("Disconnected from WebSocket server");
-        discussion.innerHTML += `<li>[system]: web socket closed refresh the page to be able to send messages.</li>`;
-    };
+        document.getElementById("backdrop").classList.add("hidden");
+        document.getElementById("nav").classList.add("hidden");
+        document.body.classList.add("dimmed");
+        const errorBannerHTML = `
+        <div id="error-banner" class="error-banner">
+            <p>Connection lost. Please refresh the page to reconnect.</p>
+            <button id="error-ok-btn">OK</button>
+        </div>`;
+        document.body.insertAdjacentHTML("afterbegin", errorBannerHTML);
+        document.getElementById("error-ok-btn").addEventListener("click", () => {
+            window.location.reload();
+        });
 
-    socket.onerror = function (error) {
-        console.error("WebSocket error:", error);
-        discussion.innerHTML += `<li>[system]: web socket eror ${error}.</li>`;
-    };
+        socket.onerror = function (error) {
+            console.error("WebSocket error:", error);
+            discussion.innerHTML += `<li>[system]: web socket error ${error}.</li>`;
+        };
+    }
 }
 
 function sendMessage(message) {
@@ -68,12 +79,12 @@ function sendMessage(message) {
     console.log("Sent message:", message);
 }
 
-function sendDm(event) {
+const sendDm = throttle(function (event) {
     let receiver = document.getElementById("chat-username").textContent;
     let message = new Message(receiver, event.target[0].value);
     event.target.reset();
     message.send();
-}
+}, 200);
 
 class Message {
     constructor(dest, contents) {
@@ -82,7 +93,8 @@ class Message {
         }
 
         if (typeof contents !== "string" || !contents.trim()) {
-            throw new Error("Message content must be a non-empty string");
+            showNotification("Cannot send empty message", "info");
+            return;
         }
 
         this.body = {
@@ -95,8 +107,6 @@ class Message {
         socket.send(JSON.stringify(this.body));
     }
 }
-
-let isLoadingMessages = false;
 
 function throttle(func, limit) {
     let lastCall = 0;
@@ -130,38 +140,66 @@ async function fetchDMHistory(username, page = "") {
     }
 }
 
+let hasMoreMessages = true;
+let lastFetchedTimestamp = null;
+let isLoadingMessages = false;
+
 async function loadMoreMessages() {
     if (isLoadingMessages) return;
 
     const discussionElem = document.getElementById("discussion");
-    if (discussionElem.scrollTop > 50) return;
+    if (!discussionElem) return;
+
+    // Check if we're near the top (within 100px)
+    if (discussionElem.scrollTop > 100) return;
 
     isLoadingMessages = true;
 
-    const selectElem = document.getElementById("chat-username");
-    const username = selectElem.textContent;
-
-    const oldestMessageTimestamp = new Date(discussionElem.children[0].title).toISOString();
-    const oldScrollHeight = discussionElem.scrollHeight;
-    const oldScrollTop = discussionElem.scrollTop;
+    const username = document.getElementById("chat-username")?.textContent;
+    if (!username) {
+        isLoadingMessages = false;
+        return;
+    }
 
     try {
+        const oldestMessage = discussionElem.firstElementChild;
+        if (!oldestMessage) {
+            isLoadingMessages = false;
+            return;
+        }
+
+        // Get timestamp from data-timestamp attribute (must be ISO format)
+        const oldestMessageTimestamp = oldestMessage.getAttribute("data-timestamp");
+
+        // Prevent fetching same messages again
+        if (lastFetchedTimestamp === oldestMessageTimestamp) {
+            isLoadingMessages = false;
+            return;
+        }
+        lastFetchedTimestamp = oldestMessageTimestamp;
+
+        // Store scroll position before loading
+        const oldScrollHeight = discussionElem.scrollHeight;
+        const oldScrollTop = discussionElem.scrollTop;
+
         const data = await fetchDMHistory(username, oldestMessageTimestamp);
-        let formattedHistory = "";
+
         if (data && data.length > 1) {
+            let formattedHistory = "";
             data.forEach((message) => {
                 formattedHistory += messages(message);
             });
 
             discussionElem.insertAdjacentHTML("afterbegin", formattedHistory);
-
-            discussionElem.scrollTop = discussionElem.scrollHeight - oldScrollHeight + oldScrollTop;
-
             if (data.length < 10) {
+                hasMoreMessages = false;
                 showNotification("No more messages!", "info");
             }
+            // Maintain scroll position
+            const newScrollHeight = discussionElem.scrollHeight;
+            discussionElem.scrollTop = newScrollHeight - oldScrollHeight + oldScrollTop;
         } else {
-            showNotification("No more messages!", "info");
+            hasMoreMessages = false;
         }
     } catch (error) {
         console.error("Error:", error);
@@ -172,11 +210,13 @@ async function loadMoreMessages() {
 }
 
 async function changeDiscussion(username) {
-    // const selectElem = document.getElementById("message-select");
-    // selectElem.disabled = true;
+    // Reset tracking when changing discussions
+    hasMoreMessages = true;
+    lastFetchedTimestamp = null;
 
     try {
         const data = await fetchDMHistory(username);
+        const discussionElem = document.getElementById("discussion");
 
         let formattedHistory = "";
         if (data && data.length > 0) {
@@ -184,39 +224,25 @@ async function changeDiscussion(username) {
                 formattedHistory += messages(message);
             });
         }
-
-        const discussionElem = document.getElementById("discussion");
         discussionElem.innerHTML = formattedHistory;
-
-        // Optional: Update hidden field or related UI element
-        // if (
-        //     selectElem.nextElementSibling &&
-        //     selectElem.nextElementSibling.nextElementSibling
-        // ) {
-        //     selectElem.nextElementSibling.nextElementSibling.value = username;
-        // }
-
         setupScrollListener();
     } catch (error) {
         console.error("Error:", error);
-        showNotification("Error loading messages.", "error");
-    } 
-    // finally {
-    //  selectElem.disabled = false;
-    // }
+        showNotification("Error loading messages", "error");
+    }
 }
-
 
 function setupScrollListener() {
     const discussionElem = document.getElementById("discussion");
+    if (!discussionElem) return;
 
-    // Remove any existing listener to prevent duplicates
-    if (window.scrollListener) {
-        discussionElem.removeEventListener("scroll", window.scrollListener);
-    }
+    // Throttled scroll handler
+    window.scrollListener = throttle(() => {
+        if (discussionElem.scrollTop <= 50) {
+            loadMoreMessages();
+        }
+    }, 600);
 
-    // Add new scroll event listener with throttling
-    window.scrollListener = throttle(loadMoreMessages, 500);
     discussionElem.addEventListener("scroll", window.scrollListener);
 }
 
@@ -238,7 +264,7 @@ function startTyping() {
 }
 
 const messages = (message) => `
-<li class="message" title="${new Date(message.time).toLocaleString()}">
+<li class="message" title="${new Date(message.time).toLocaleString()}" data-timestamp="${message.time}">
     <div class="message-meta">
         <span class="message-sender">${message.sender}</span>
         <span class="message-time">

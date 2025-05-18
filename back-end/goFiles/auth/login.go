@@ -63,7 +63,7 @@ func getID(nameOrEmail string) (int, error) {
 	} else if _, exists := helpers.EntryExists("email", lowCase, "users", true); exists {
 		isUsername = false
 	} else {
-		return -1, fmt.Errorf("nvalid Login info")
+		return -1, fmt.Errorf("invalid Login info")
 	}
 	if isUsername {
 		userID = int(getElemVal("id", "users", `LOWER(username) = "`+lowCase+`"`).(int64))

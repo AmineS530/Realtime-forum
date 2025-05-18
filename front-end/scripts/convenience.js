@@ -144,6 +144,8 @@ function closeChat() {
     const discussion = document.getElementById("discussion");
     const userSearch = document.getElementById("userSearch");
 
+    discussion.style.height = "auto";
+
     discussion.innerHTML = "";
     chatBox.style.display = "none";
     inputGroup.style.display = "none";

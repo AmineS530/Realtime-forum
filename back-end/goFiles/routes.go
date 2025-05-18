@@ -22,9 +22,9 @@ func Routes() *http.ServeMux {
 	ProtectedStatic(mux, "/front-end/images/", "./front-end/images/")
 	ProtectedStatic(mux, "/front-end/sounds/", "./front-end/sounds/")
 	mux.HandleFunc("/api/check-auth", auth.ApiOnlyAccess(auth.CheckAuthHandler))
-	mux.HandleFunc("/api/login", auth.LoginHandler)
-	mux.HandleFunc("/api/register", auth.RegisterHandler)
-	mux.HandleFunc("/api/logout", auth.Logout)
+	mux.HandleFunc("/api/login", auth.ApiOnlyAccess(auth.LoginHandler))
+	mux.HandleFunc("/api/register", auth.ApiOnlyAccess(auth.RegisterHandler))
+	mux.HandleFunc("/api/logout", auth.ApiOnlyAccess(auth.Logout))
 	helpers.ServerRoutine()
 
 	return mux
@@ -37,10 +37,9 @@ func ProtectedStatic(mux *http.ServeMux, routePrefix, dirPath string) {
 		ref := r.Referer()
 		if ref == "" || !strings.Contains(ref, r.Host) {
 			helpers.HtmlTemplates.ExecuteTemplate(w, "index.html", nil)
-			// helpers.JsRespond(w, "Direct access forbidden", http.StatusForbidden)
+			helpers.JsRespond(w, "Direct access forbidden", http.StatusForbidden)
 			return
 		}
-		// Strip the prefix correctly without trimming the trailing slash first
 		http.StripPrefix(routePrefix, fs).ServeHTTP(w, r)
 	})
 }

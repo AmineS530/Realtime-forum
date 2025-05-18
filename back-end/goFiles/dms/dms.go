@@ -18,50 +18,52 @@ func GetdmHistory(uname1, uname2, date string) ([]Message, error) {
 	if date == "" {
 		d = time.Now()
 	} else {
-		clientDate, err := time.Parse(time.RFC3339, date)
+		var err error
+		d, err = time.Parse(time.RFC3339, date)
 		if err != nil {
 			return nil, fmt.Errorf("invalid date format")
 		}
-		d = clientDate
 	}
 	rows, err := helpers.DataBase.Query(`
-	SELECT * 
-FROM (
-    SELECT
-		sender.username , d.message, d.created_at
-	FROM
-		dms d
-	JOIN
-		users sender ON d.sender_id = sender.id
-	JOIN
-		users recipient ON d.recipient_id = recipient.id
-	WHERE
-        d.created_at < ?
-	AND
-		(sender.username = ? AND recipient.username = ?)
-   	OR
-		(sender.username = ? AND recipient.username = ?)
-	ORDER BY
-		d.created_at DESC
-	LIMIT 11
-) AS sub ORDER BY created_at ASC;
-	`, d, uname1, uname2, uname2, uname1)
+        SELECT * 
+        FROM (
+            SELECT
+                sender.username, d.message, d.created_at
+            FROM
+                dms d
+            JOIN
+                users sender ON d.sender_id = sender.id
+            JOIN
+                users recipient ON d.recipient_id = recipient.id
+            WHERE
+                d.created_at < ?
+                AND (
+                    (sender.username = ? AND recipient.username = ?)
+                    OR
+                    (sender.username = ? AND recipient.username = ?)
+                )
+            ORDER BY
+                d.created_at DESC
+            LIMIT 10
+        ) AS sub 
+        ORDER BY created_at ASC;
+    `, d, uname1, uname2, uname2, uname1)
 	if err != nil {
-		helpers.ErrorLog.Println("Error getting posts: ", err)
+		helpers.ErrorLog.Println("Error getting messages: ", err)
 		return nil, err
 	}
 	defer rows.Close()
+
 	var messages []Message
 	for rows.Next() {
 		var message Message
-		err := rows.Scan(&message.Sender, &message.Content, &message.Time)
-		if err != nil {
-			helpers.ErrorLog.Println("Error scanning posts: ", err)
+		if err := rows.Scan(&message.Sender, &message.Content, &message.Time); err != nil {
+			helpers.ErrorLog.Println("Error scanning message: ", err)
 			return nil, err
 		}
 		messages = append(messages, message)
 	}
-	return messages[:len(messages)-1], nil
+	return messages, nil
 }
 
 func AddDm(sUname, rUname, msg string) error {

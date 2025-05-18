@@ -169,7 +169,7 @@ function setupChat(username) {
         chatBox.style.display = "flex";
         inputGroup.style.display = "flex";
         userList.style.display = "none";
-
+        document.getElementById("discussion").style.height ="100%";
         // Load chat history
         changeDiscussion(username);
     });

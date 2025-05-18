@@ -1,20 +1,5 @@
 import svg from "./svg.js";
 
-const nav = `
-
-<ul class="nav">
-    <li>
-        <a href="/" onclick="dms_ToggleShowSidebar(event)" title="Show Messages">
-            ${svg.two_bubbles}
-        </a>
-    <li>
-        <a id="logout" href="/">
-            ${svg.svg_logout}
-        </a>
-    </li>
-</ul>
-`;
-
 const header = `
     <header>
       <!-- Logo -->
@@ -22,7 +7,7 @@ const header = `
         <h1><a href="/" onclick="loadPage('home', event)">${WebAppName}</a></h1>
       </div>
       <!-- Navigation -->
-      <nav>
+      <nav id="nav">
         <ul class="nav"></ul>
       </nav>
     </header>
@@ -67,7 +52,7 @@ const auth = `
             <div class="register-box">
                 <form onsubmit="fetching(event,'/api/register')" method="post">
                     <label for="username">Username</label>
-                    <input type="text" id="username" name="Username" maxlength="20" required />
+                    <input type="text" id="username" name="Username" minlength="3" maxlength="18" required />
                     <label for="email">Email</label>
                     <input type="email" id="email" name="Email" maxlength="320" required />
                     <label for="password">Password</label>
@@ -180,4 +165,4 @@ const postCreation = `
     </center>
 `;
 
-export default { nav, header, posts, auth, dms, postCreation };
+export default { header, posts, auth, dms, postCreation };
