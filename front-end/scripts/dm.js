@@ -30,7 +30,7 @@ window.retrysocket = function () {
                 discussion.innerHTML += messages(msg);
             } else {
                 // discussion.innerHTML += `<li>[system] You have received a new message from ${msg.sender}.</li>`;
-                showNotification("new Message from :" + msg.sender, "success", false);
+                showNotification("new Message from " + msg.sender, "success", false);
             }
             playSound("message");
         } else {
