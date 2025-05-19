@@ -163,10 +163,11 @@ function setupChat(username) {
     const inputGroup = document.querySelector(".input-group");
     const userSearch = document.getElementById("userSearch");
     userList.addEventListener("click", (e) => {
-
+        
         // Display chat box and input
         userSearch.style.display = "none";
         chatBox.style.display = "flex";
+        chatBox.title = username;
         inputGroup.style.display = "flex";
         userList.style.display = "none";
         document.getElementById("discussion").style.height ="100%";

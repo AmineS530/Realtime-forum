@@ -23,7 +23,7 @@ window.retrysocket = function () {
                 [
                     "system",
                     document.getElementById("username").text,
-                    discussion.previousElementSibling.value,
+                    discussion.previousElementSibling.title,
                 ].includes(msg.sender)
             ) {
                 msg.time = new Date();
