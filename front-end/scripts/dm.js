@@ -2,6 +2,9 @@ function dms_ToggleShowSidebar(event) {
     const backdrop = document.getElementById("backdrop")
     if (backdrop) {
         backdrop.classList.toggle("show");
+        if (document.getElementById("chat-box").title != "") {
+            closeChat()
+        }
     } else {
         showNotification("Go back to home page to send a message", "info");
     }
@@ -28,6 +31,7 @@ window.retrysocket = function () {
             ) {
                 msg.time = new Date();
                 discussion.innerHTML += messages(msg);
+                discussion.scrollTop = discussion.scrollHeight;
             } else {
                 // discussion.innerHTML += `<li>[system] You have received a new message from ${msg.sender}.</li>`;
                 showNotification("new Message from " + msg.sender, "success", false);
@@ -41,12 +45,14 @@ window.retrysocket = function () {
                     ).innerHTML = (msg.online ? "🟢 " : "🔴 ") + msg.username;
                     break;
                 case "typing":
-                    document.getElementById("chat-username").textContent = msg.username;
-                    document.getElementById("typing").classList.remove("hidden");
+                    if (msg.username == document.getElementById("chat-username").textContent) {
+                        document.getElementById("typing").classList.remove("hidden");
+                    }
                     break;
                 case "stoptyping":
-                    document.getElementById("chat-username").textContent = msg.username;
-                    document.getElementById("typing").classList.add("hidden");
+                    if (msg.username == document.getElementById("chat-username").textContent) {
+                        document.getElementById("typing").classList.add("hidden");
+                    }
                     break;
             }
         }
@@ -81,9 +87,12 @@ function sendMessage(message) {
 
 const sendDm = throttle(function (event) {
     let receiver = document.getElementById("chat-username").textContent;
-    let message = new Message(receiver, event.target[0].value);
+    let input = String(event.target[0].value)
+    let message = new Message(receiver, input.trim());
     event.target.reset();
-    message.send();
+    if (message) {
+        message.send();
+    }
 }, 200);
 
 class Message {
@@ -92,9 +101,9 @@ class Message {
             throw new Error("Destination must be a non-empty string");
         }
 
-        if (typeof contents !== "string" || !contents.trim()) {
+        if (typeof contents !== "string") {
             showNotification("Cannot send empty message", "info");
-            return;
+            return false;
         }
 
         this.body = {
@@ -104,7 +113,11 @@ class Message {
     }
 
     send() {
-        socket.send(JSON.stringify(this.body));
+        if (!(this.body.receiver.trim()) || !(this.body.message.trim())) {
+            showNotification("couldn't send message", "error")
+        } else {
+            socket.send(JSON.stringify(this.body));
+        }
     }
 }
 

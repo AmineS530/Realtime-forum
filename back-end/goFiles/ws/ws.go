@@ -67,7 +67,7 @@ func HandleConnections(w http.ResponseWriter, r *http.Request) {
 		}
 
 		var request message
-		if string(msg)[:7] == "typing:" {
+		if len(msg) > 7 && string(msg)[:7] == "typing:" {
 			m := string(msg)[7:]
 			conn, exist := sockets[m]
 			if !exist || conn == nil {
@@ -79,7 +79,7 @@ func HandleConnections(w http.ResponseWriter, r *http.Request) {
 				helpers.ErrorLog.Println(err)
 			}
 			continue
-		} else if string(msg)[:11] == "stoptyping:" {
+		} else if len(msg) > 11 && string(msg)[:11] == "stoptyping:" {
 			m := string(msg)[11:]
 			conn, exist := sockets[m]
 			if !exist || conn == nil {

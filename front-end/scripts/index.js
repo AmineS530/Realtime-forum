@@ -139,7 +139,8 @@ async function loadUsers() {
         }
 
         const users = await response.json();
-
+        if (!users) return;
+        
         users.forEach((user) => {
             const userDiv = document.createElement("div");
             userDiv.className = "chat-user";

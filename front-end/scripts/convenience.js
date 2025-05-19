@@ -143,6 +143,7 @@ function closeChat() {
     const userList = document.querySelector(".chat-users");
     const discussion = document.getElementById("discussion");
     const userSearch = document.getElementById("userSearch");
+    discussion.previousElementSibling.title = ""
 
     discussion.style.height = "auto";
 
