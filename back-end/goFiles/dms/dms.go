@@ -63,7 +63,17 @@ func GetdmHistory(uname1, uname2, date string) ([]Message, error) {
 		}
 		messages = append(messages, message)
 	}
-	return messages, nil
+	return filter(messages, d), nil
+}
+
+func filter(messages []Message, t time.Time) []Message {
+	var filteredMessages []Message
+	for _, message := range messages {
+		if message.Time.Before(t) {
+			filteredMessages = append(filteredMessages, message)
+		}
+	}
+	return filteredMessages
 }
 
 func AddDm(sUname, rUname, msg string) error {
