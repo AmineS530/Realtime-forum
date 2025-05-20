@@ -36,6 +36,14 @@ window.retrysocket = function () {
                 // discussion.innerHTML += `<li>[system] You have received a new message from ${msg.sender}.</li>`;
                 showNotification("new Message from " + msg.sender, "success", false);
             }
+            if (msg.sender !== "system") {
+                let container = document.querySelector(".chat-users")
+                console.log("azer",container,msg.sender,document.querySelector(`[username="${msg.sender}"]`),container.firstChild)
+                container.insertBefore(
+                    container.querySelector(`[username="${msg.sender}"]`)||container.querySelector(`[username="${msg.receiver}"]`),
+                    container.firstChild
+                )
+            }
             playSound("message");
         } else {
             switch (msg.type) {
