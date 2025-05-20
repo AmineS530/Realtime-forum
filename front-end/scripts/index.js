@@ -282,7 +282,7 @@ async function submitComment(event) {
     const postId = postDiv?.id;
 
     if (!postId) return showNotification("Post ID not found.", "error");
-
+    if (String(comment).length > 255) return showNotification("Comment length exceeded the allowed limit","error")
     const payload = { content: comment, post_id: postId };
     try {
         const res = await fetch("/api/v1/post/createComment", {

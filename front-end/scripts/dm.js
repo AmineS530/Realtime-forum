@@ -80,11 +80,6 @@ window.retrysocket = function () {
     }
 }
 
-function sendMessage(message) {
-    socket.send(message);
-    console.log("Sent message:", message);
-}
-
 const sendDm = throttle(function (event) {
     let receiver = document.getElementById("chat-username").textContent;
     let input = String(event.target[0].value)
@@ -164,7 +159,7 @@ async function loadMoreMessages() {
     if (!discussionElem) return;
 
     // Check if we're near the top (within 100px)
-    if (discussionElem.scrollTop > 100) return;
+    if (discussionElem.scrollTop > 50) return;
 
     isLoadingMessages = true;
 
@@ -239,6 +234,7 @@ async function changeDiscussion(username) {
         }
         discussionElem.innerHTML = formattedHistory;
         setupScrollListener();
+        discussionElem.scrollTop = discussionElem.scrollHeight;
     } catch (error) {
         console.error("Error:", error);
         showNotification("Error loading messages", "error");
@@ -254,7 +250,7 @@ function setupScrollListener() {
         if (discussionElem.scrollTop <= 50) {
             loadMoreMessages();
         }
-    }, 600);
+    }, 400);
 
     discussionElem.addEventListener("scroll", window.scrollListener);
 }

@@ -243,6 +243,7 @@ button#postSeeMore {
 .comment-textarea {
     width: 100%;
     min-height: 100px;
+    word-wrap: break-word;
     padding: 1rem;
     font-size: 1rem;
     border: 2px solid var(--card-border-color);
