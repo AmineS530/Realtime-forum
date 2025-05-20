@@ -248,7 +248,7 @@ async function submitPost() {
     if (payload.category.length > 30) {
         return showNotification("Category length exceeded the allowed limit", "error");
     }
-    if (payload.content.length < 10 || payload.content.length > 1000) {
+    if (payload.content.length < 10 || payload.content.length > 1500) {
         return showNotification("Content length must be between 10 and 1000 characters", "error");
     }
 
@@ -292,7 +292,7 @@ async function submitComment(event) {
     const postId = postDiv?.id;
 
     if (!postId) return showNotification("Post ID not found.", "error");
-    if (String(comment).length > 255) return showNotification("Comment length exceeded the allowed limit","error")
+    if (String(comment).length > 1000) return showNotification("Comment length exceeded the allowed limit","error")
     const payload = { content: comment, post_id: postId };
     try {
         const res = await fetch("/api/v1/post/createComment", {

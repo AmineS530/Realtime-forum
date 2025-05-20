@@ -36,7 +36,7 @@ window.loadComments = async function loadComments(input, offset = 0) {
 <details class="comment-container" open>
     <summary>Click to see comments</summary>
     <div class="comment-input-area">
-        <textarea class="comment-textarea" placeholder="Write your comment here..." rows="3" maxlength="255" ></textarea>
+        <textarea class="comment-textarea" placeholder="Write your comment here..." rows="3" maxlength="1000" ></textarea>
         <button id="submit-comment" type="submit">Post</button>
     </div>
     <div class="comments">${commentHTML}</div>

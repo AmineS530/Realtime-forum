@@ -38,7 +38,6 @@ window.retrysocket = function () {
             }
             if (msg.sender !== "system") {
                 let container = document.querySelector(".chat-users")
-                console.log("azer",container,msg.sender,document.querySelector(`[username="${msg.sender}"]`),container.firstChild)
                 container.insertBefore(
                     container.querySelector(`[username="${msg.sender}"]`)||container.querySelector(`[username="${msg.receiver}"]`),
                     container.firstChild

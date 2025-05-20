@@ -141,6 +141,7 @@ button#postSeeMore {
 } 
 
 .comment {
+    word-wrap: break-word;
     border: 2px solid #ccc;
     padding: 12px;
     border-radius: 6px;

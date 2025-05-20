@@ -37,7 +37,7 @@ func PostCreation(w http.ResponseWriter, r *http.Request, uid int) {
 		helpers.JsRespond(w, "Title and content required", http.StatusBadRequest)
 		return
 	}
-	if len(post.Content) > 1000 || len(post.Title) > 30 {
+	if len(post.Content) > 1500 || len(post.Title) > 30 {
 		helpers.JsRespond(w, "Title or content too long", http.StatusBadRequest)
 		return
 	}

@@ -23,7 +23,7 @@ func CommentCreation(w http.ResponseWriter, r *http.Request, uid int) {
 		http.Error(w, "Invalid JSON", http.StatusBadRequest)
 		return
 	}
-	if len(comment.Content) > 255 {
+	if len(comment.Content) > 1000 {
 		helpers.JsRespond(w, "Comment length exceeds the allowed ", http.StatusBadRequest)
 		return
 	}
