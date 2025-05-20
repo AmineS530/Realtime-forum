@@ -242,6 +242,16 @@ async function submitPost() {
         category: document.getElementById("post-category").value.trim(),
     };
 
+    if (payload.title.length < 3 || payload.title.length > 30) {
+        return showNotification("Title length must be between 3 and 30 characters", "error");
+    }
+    if (payload.category.length > 30) {
+        return showNotification("Category length exceeded the allowed limit", "error");
+    }
+    if (payload.content.length < 10 || payload.content.length > 1000) {
+        return showNotification("Content length must be between 10 and 1000 characters", "error");
+    }
+
     try {
         const res = await fetch("/api/v1/post/createPost", {
             method: "POST",
@@ -311,16 +321,6 @@ async function submitComment(event) {
         console.error("Comment error:", err);
         showNotification("Error posting comment", "error");
     }
-}
-
-function escapeHTML(str) {
-    return str.replace(/[&<>"']/g, (match) => ({
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;',
-        '"': '&quot;',
-        "'": '&#039;',
-    }[match]));
 }
 
 console.log("Loaded inedex.js")

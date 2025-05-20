@@ -12,9 +12,7 @@ $(PORT): $(NAME)
 
 $(NAME): $(ENV_FILE)
 	@echo "\033[1;32mRunning $(NAME) on $(PORT_MSG)\033[0m"
-	@PORT=$(PORT)
-	@go run .
-	@PORT=""
+	@PORT=$(PORT) go run .
 
 $(ENV_FILE):
 	@echo "Checking for .env file..."
